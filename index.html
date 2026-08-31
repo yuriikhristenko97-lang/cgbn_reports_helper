@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЦГБ-Н — Доклады в рацию</title>
+<style>
+:root{
+  --bg:#eef4f7;--card:#fff;--text:#17252d;--muted:#667780;
+  --accent:#238b8b;--accent2:#176b70;--border:#d7e2e7;
+  --shadow:0 8px 28px rgba(28,55,65,.09);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#edf5f7,#f7fafb);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+header{background:linear-gradient(135deg,#176b70,#299b98);color:#fff;padding:28px 18px;box-shadow:0 5px 20px rgba(0,0,0,.12)}
+.header-inner{max-width:1150px;margin:auto}
+h1{margin:0 0 6px;font-size:28px}.subtitle{opacity:.9}
+.container{max-width:1150px;margin:22px auto;padding:0 16px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+label{font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;font-size:15px;outline:none;background:#fff}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(35,139,139,.1)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;transition:.15s}
+button:hover{transform:translateY(-1px)}
+.primary{background:var(--accent);color:white}.secondary{background:#e9f2f3;color:#176b70}.danger{background:#fbe8e8;color:#a43d3d}
+.search{margin-bottom:15px}
+.category{margin:18px 0}
+.category h2{font-size:18px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.report{border:1px solid var(--border);border-radius:12px;padding:13px;margin:9px 0;background:#fbfdfd}
+.report-title{font-weight:700;margin-bottom:8px}
+.report-text{background:#f2f7f8;border-radius:9px;padding:11px;line-height:1.45;white-space:pre-wrap}
+.report-actions{display:flex;gap:8px;margin-top:9px}
+.report-actions button{font-size:13px}
+.hidden{display:none!important}
+.custom-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px}
+textarea{min-height:110px;resize:vertical}
+.saved{margin-top:15px}
+.saved-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:10px;margin:7px 0}
+.toast{position:fixed;right:20px;bottom:20px;background:#17252d;color:white;padding:12px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:.2s}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 0 30px}
+@media(max-width:750px){
+ .controls,.custom-grid{grid-template-columns:1fr}
+ h1{font-size:23px}
+ .panel{padding:14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>🏥 ЦГБ-Н — Доклады в рацию</h1>
+    <div class="subtitle">Быстрый помощник для сотрудников. Заполни данные один раз — остальное сайт сделает сам.</div>
+  </div>
+</header>
+
+<main class="container">
+<section class="panel">
+  <div class="controls">
+    <div>
+      <label>Ваш ТЭГ</label>
+      <input id="tag" placeholder="Например: ОИ-СЛ" autocomplete="off">
+    </div>
+    <div>
+      <label>Пол</label>
+      <select id="gender">
+        <option value="male">Мужской</option>
+        <option value="female">Женский</option>
+      </select>
+    </div>
+    <div>
+      <label>Поиск по докладам</label>
+      <input id="search" placeholder="Например: вызов, патруль, ПРМО...">
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top:12px">
+    <div>
+      <label>Номер вызова / ID</label>
+      <input id="call" placeholder="Например: 123">
+    </div>
+    <div>
+      <label>Напарники</label>
+      <input id="partners" placeholder="Фамилии или «нет»">
+    </div>
+    <div>
+      <label>Название поста</label>
+      <input id="post" placeholder="Например: Аэропорт">
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top:12px">
+    <div>
+      <label>Номер маршрута</label>
+      <input id="route" placeholder="Например: 3">
+    </div>
+    <div>
+      <label>Название фракции</label>
+      <input id="faction" placeholder="Например: ГУВД-П">
+    </div>
+    <div>
+      <label>Результат вызова</label>
+      <select id="result">
+        <option>Помощь оказана на месте</option>
+        <option>Госпитализация</option>
+        <option>Ложный</option>
+        <option>Отменён</option>
+        <option>На базе</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="primary" onclick="copyAllVisible()">📋 Копировать всё</button>
+    <button class="secondary" onclick="saveSettings()">💾 Сохранить данные</button>
+    <button class="danger" onclick="clearSettings()">🗑 Очистить поля</button>
+  </div>
+</section>
+
+<section class="panel">
+  <h2 style="margin-top:0">✍️ Свой доклад</h2>
+  <div class="custom-grid">
+    <div>
+      <label>Название</label>
+      <input id="customTitle" placeholder="Например: Доклад о заступлении">
+    </div>
+    <div>
+      <label>Текст</label>
+      <textarea id="customText" placeholder="Напиши свой доклад. ТЭГ можно использовать как {TAG}"></textarea>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="primary" onclick="saveCustom()">➕ Добавить свой доклад</button>
+  </div>
+  <div id="customList" class="saved"></div>
+</section>
+
+<section class="panel">
+  <div id="reports"></div>
+</section>
+</main>
+
+<footer>ЦГБ-Н • Локальный помощник • Данные сохраняются только в вашем браузере</footer>
+<div id="toast" class="toast">Скопировано!</div>
+
+<script>
+const data = {
+ male: [
+  ["Взятие перерыва",[
+   "r {TAG}. Разрешите взять перерыв?",
+   "r {TAG}. Взял перерыв.",
+   "r {TAG}. Вернулся с перерыва."
+  ]],
+  ["Сдача смены",[
+   "r {TAG}. Сдал смену.",
+   "r {TAG}. Заступил на смену."
+  ]],
+  ["Вызов",[
+   "r {TAG}. РАСМП. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
+   "r {TAG}. РАСМП. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
+   "r {TAG}. РАСМП. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
+   "r {TAG}. РАСМП. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Пост АСМП",[
+   "r {TAG}. АСМП. Выехал на пост: {POST}. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Прибыл на пост: {POST}. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Пост: {POST}. Состояние: стабильно. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Патруль АСМП",[
+   "r {TAG}. АСМП. Выехал в патрулирование. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Продолжаю патрулирование. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Закончил патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Патруль ВСМП",[
+   "r {TAG}. ВСМП. Вылетел в патрулирование. Напарники: {PARTNERS}.",
+   "r {TAG}. ВСМП. Патрулирование. Состояние: стабильное. Напарники: {PARTNERS}.",
+   "r {TAG}. ВСМП. Закончил патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. ВСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Пеший патруль",[
+   "r {TAG}. Вышел в пеший патруль. Маршрут - {ROUTE}. Напарник: {PARTNERS}.",
+   "r {TAG}. Пеший патруль по Маршруту {ROUTE}. Напарник: {PARTNERS}.",
+   "r {TAG}. Закончил пеший патруль по Маршруту {ROUTE}. Возвращаюсь на базу. Напарник: {PARTNERS}.",
+   "r {TAG}. Пеший патруль по Маршруту {ROUTE}. На базе. Напарник: {PARTNERS}."
+  ]],
+  ["ПРМО",[
+   "r {TAG}. АСМП. Выехал на ПРМО. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Прибыл на ПРМО. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. ПРМО. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. ПРМО. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Пересечение юрисдикций",[
+   "ro ЦГБ-Н к МЗ/ЦГБ-П/ОКБ-М. Запрашиваю разрешение на патрулирование вашей юрисдикции на АСМП/ВСМП.",
+   "ro ЦГБ-Н к ЦГБ-П/ОКБ-М. Пересекаю вашу юрисдикцию с целью обработки вызова на АСМП/ВСМП."
+  ]],
+  ["Принятие запросов (для РС)",[
+   "d ЦГБ-Н к {FACTION}. Принято. В ближайшее время отправим вам сотрудников."
+  ]],
+  ["Проведение мероприятий (для РС)",[
+   "ro ЦГБ-Н к ЦГБ-П/ОКБ-М. Пересекаю вашу юрисдикцию с целью проведения мероприятия."
+  ]]
+ ],
+ female: [
+  ["Взятие перерыва",[
+   "r {TAG}. Разрешите взять перерыв?",
+   "r {TAG}. Взяла перерыв.",
+   "r {TAG}. Вернулась с перерыва."
+  ]],
+  ["Сдача смены",[
+   "r {TAG}. Сдала смену.",
+   "r {TAG}. Заступила на смену."
+  ]],
+  ["Вызов",[
+   "r {TAG}. РАСМП. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
+   "r {TAG}. РАСМП. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
+   "r {TAG}. РАСМП. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
+   "r {TAG}. РАСМП. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Пост АСМП",[
+   "r {TAG}. АСМП. Выехала на пост: {POST}. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Прибыла на пост: {POST}. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Пост: {POST}. Состояние: стабильно. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Патруль АСМП",[
+   "r {TAG}. АСМП. Выехала в патрулирование. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Продолжаю патрулирование. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Закончила патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Патруль ВСМП",[
+   "r {TAG}. ВСМП. Вылетела в патрулирование. Напарники: {PARTNERS}.",
+   "r {TAG}. ВСМП. Патрулирование. Состояние: стабильное. Напарники: {PARTNERS}.",
+   "r {TAG}. ВСМП. Закончила патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. ВСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Пеший патруль",[
+   "r {TAG}. Вышла в пеший патруль. Маршрут - {ROUTE}. Напарник: {PARTNERS}.",
+   "r {TAG}. Пеший патруль по Маршруту {ROUTE}. Продолжаю. Напарник: {PARTNERS}.",
+   "r {TAG}. Закончила пеший патруль по Маршруту {ROUTE}. Возвращаюсь на базу. Напарник: {PARTNERS}.",
+   "r {TAG}. Пеший патруль по Маршруту {ROUTE}. На базе. Напарник: {PARTNERS}."
+  ]],
+  ["ПРМО",[
+   "r {TAG}. АСМП. Выехала на ПРМО. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. Прибыла на ПРМО. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. ПРМО. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+   "r {TAG}. АСМП. ПРМО. На базе. Напарники: {PARTNERS}."
+  ]],
+  ["Пересечение юрисдикций",[
+   "ro ЦГБ-Н к МЗ/ЦГБ-П/ОКБ-М. Запрашиваю разрешение на патрулирование вашей юрисдикции на АСМП/ВСМП.",
+   "ro ЦГБ-Н к ЦГБ-П/ОКБ-М. Пересекаю вашу юрисдикцию с целью обработки вызова на АСМП/ВСМП."
+  ]],
+  ["Принятие запросов (для РС)",[
+   "d ЦГБ-Н к {FACTION}. Принято. В ближайшее время отправим вам сотрудников."
+  ]],
+  ["Проведение мероприятий (для РС)",[
+   "ro ЦГБ-Н к ЦГБ-П/ОКБ-М. Пересекаю вашу юрисдикцию с целью проведения мероприятия."
+  ]]
+ ]
+};
+
+const ids = ["tag","call","partners","post","route","faction","result","gender"];
+function vals(){
+ const o={}; ids.forEach(id=>o[id]=document.getElementById(id).value.trim());
+ return o;
+}
+function fill(text){
+ const v=vals();
+ return text.replaceAll("{TAG}",v.tag||"ТЭГ")
+   .replaceAll("{CALL}",v.call||"Номер")
+   .replaceAll("{PARTNERS}",v.partners||"если есть")
+   .replaceAll("{POST}",v.post||"Название")
+   .replaceAll("{ROUTE}",v.route||"Номер маршрута")
+   .replaceAll("{FACTION}",v.faction||"Название Фракции")
+   .replaceAll("{RESULT}",v.result);
+}
+function render(){
+ const gender=document.getElementById("gender").value;
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const root=document.getElementById("reports"); root.innerHTML="";
+ data[gender].forEach(([cat,items])=>{
+   const matched=items.map((x,i)=>[x,i]).filter(([x])=>(cat+" "+x).toLowerCase().includes(q));
+   if(!matched.length)return;
+   const sec=document.createElement("div"); sec.className="category";
+   sec.innerHTML="<h2>"+cat+"</h2>";
+   matched.forEach(([x,i])=>{
+     const div=document.createElement("div");div.className="report";
+     div.innerHTML=`<div class="report-title">Доклад ${i+1}</div>
+       <div class="report-text">${escapeHtml(fill(x))}</div>
+       <div class="report-actions">
+       <button class="primary" onclick="copyText(${JSON.stringify(fill(x))})">📋 Копировать</button>
+       <button class="secondary" onclick="editPrompt(${JSON.stringify(x)})">✏️ Изменить</button>
+       </div>`;
+     sec.appendChild(div);
+   });
+   root.appendChild(sec);
+ });
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+async function copyText(text){
+ try{await navigator.clipboard.writeText(text);showToast("Скопировано!")}
+ catch(e){const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();showToast("Скопировано!")}
+}
+function copyAllVisible(){
+ const gender=document.getElementById("gender").value,q=document.getElementById("search").value.toLowerCase().trim();
+ let out=[];
+ data[gender].forEach(([cat,items])=>items.forEach(x=>{if((cat+" "+x).toLowerCase().includes(q))out.push(fill(x));}));
+ document.querySelectorAll("#customList .custom-copy-source").forEach(x=>out.push(x.value));
+ copyText(out.join("\n"));
+}
+function editPrompt(raw){
+ const result=prompt("Измените текст доклада:",fill(raw));
+ if(result!==null)copyText(result);
+}
+function saveSettings(){
+ localStorage.setItem("cgb_settings",JSON.stringify(vals()));
+ showToast("Данные сохранены");
+}
+function loadSettings(){
+ try{
+  const v=JSON.parse(localStorage.getItem("cgb_settings")||"{}");
+  ids.forEach(id=>{if(v[id]!==undefined)document.getElementById(id).value=v[id]});
+ }catch(e){}
+}
+function clearSettings(){
+ ids.forEach(id=>{if(id!=="gender")document.getElementById(id).value=""});
+ render();showToast("Поля очищены");
+}
+function customData(){return JSON.parse(localStorage.getItem("cgb_custom")||"[]")}
+function saveCustom(){
+ const title=document.getElementById("customTitle").value.trim();
+ let text=document.getElementById("customText").value.trim();
+ if(!title||!text){showToast("Заполни название и текст");return}
+ const arr=customData();arr.push({title,text});localStorage.setItem("cgb_custom",JSON.stringify(arr));
+ document.getElementById("customTitle").value="";document.getElementById("customText").value="";
+ renderCustom();showToast("Свой доклад добавлен");
+}
+function renderCustom(){
+ const root=document.getElementById("customList");root.innerHTML="";
+ customData().forEach((item,i)=>{
+  const div=document.createElement("div");div.className="saved-item";
+  const text=fill(item.text);
+  div.innerHTML=`<div><b>${escapeHtml(item.title)}</b><div style="color:#667780;font-size:13px;margin-top:4px">${escapeHtml(text)}</div></div>
+  <div style="display:flex;gap:6px"><button class="primary" onclick="copyText(${JSON.stringify(text)})">📋</button>
+  <button class="danger" onclick="deleteCustom(${i})">✕</button>
+  <input class="custom-copy-source hidden" value="${escapeHtml(text)}"></div>`;
+  root.appendChild(div);
+ });
+}
+function deleteCustom(i){const arr=customData();arr.splice(i,1);localStorage.setItem("cgb_custom",JSON.stringify(arr));renderCustom()}
+function showToast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1400)}
+document.getElementById("gender").addEventListener("change",render);
+document.getElementById("search").addEventListener("input",render);
+ids.filter(x=>x!=="gender").forEach(id=>document.getElementById(id).addEventListener("input",render));
+loadSettings();render();renderCustom();
+</script>
+</body>
+</html>
