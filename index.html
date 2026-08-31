@@ -68,7 +68,6 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-
 html{scroll-behavior:smooth}
 
 body{
@@ -80,11 +79,10 @@ body{
   line-height:1.5;
 }
 
-/* ===== HEADER ===== */
 header{
   background:linear-gradient(135deg,var(--header-grad-1),var(--header-grad-2));
   color:#fff;
-  padding:18px 20px;
+  padding:14px 20px;
   box-shadow:0 4px 15px rgba(0,0,0,.15);
   position:sticky;
   top:0;
@@ -104,7 +102,7 @@ header{
 .header-title-wrap{flex:1;min-width:200px}
 
 h1{
-  font-size:22px;
+  font-size:20px;
   font-weight:700;
   display:flex;
   align-items:center;
@@ -114,10 +112,10 @@ h1{
 .subtitle{
   opacity:.85;
   font-size:12px;
-  margin-top:3px;
+  margin-top:2px;
 }
 
-.header-actions{display:flex;gap:8px;align-items:center}
+.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
 .icon-btn{
   width:38px;
@@ -136,14 +134,31 @@ h1{
 
 .icon-btn:hover{background:rgba(255,255,255,.22);transform:translateY(-1px)}
 
-/* ===== CONTAINER ===== */
+.shift-timer{
+  background:rgba(0,0,0,.25);
+  border-radius:10px;
+  padding:6px 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,.15);
+  transition:var(--transition);
+}
+
+.shift-timer:hover{background:rgba(0,0,0,.35)}
+
+.shift-timer-icon{font-size:14px}
+.shift-timer-value{font-weight:700;font-variant-numeric:tabular-nums}
+.shift-timer-label{opacity:.8;font-size:11px}
+
 .container{
   max-width:1150px;
   margin:16px auto;
   padding:0 14px;
 }
 
-/* ===== PANELS ===== */
 .panel{
   background:var(--card);
   border:1px solid var(--border);
@@ -164,7 +179,6 @@ h1{
   color:var(--text);
 }
 
-/* ===== CONTROLS ===== */
 .controls{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -203,7 +217,6 @@ input:focus,select:focus,textarea:focus{
 
 input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
 
-/* ===== ACTIONS ===== */
 .actions{
   display:flex;
   gap:8px;
@@ -244,7 +257,13 @@ button:active{transform:translateY(0)}
 }
 .ghost:hover{background:var(--accent-light);color:var(--accent2);border-color:var(--accent)}
 
-/* ===== SEARCH ===== */
+.toggle{
+  background:var(--border-soft);
+  color:var(--muted);
+  border:1px solid var(--border);
+}
+.toggle.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
 .search-wrap{
   position:relative;
   margin-bottom:12px;
@@ -285,7 +304,6 @@ button:active{transform:translateY(0)}
 .search-clear.show{display:flex}
 .search-clear:hover{background:var(--accent-light);color:var(--accent)}
 
-/* ===== CATEGORY TOOLBAR ===== */
 .cat-toolbar{
   display:flex;
   justify-content:space-between;
@@ -326,9 +344,6 @@ button:active{transform:translateY(0)}
   font-size:11px;
 }
 
-.chip.active .count{background:rgba(255,255,255,.3)}
-
-/* ===== CATEGORIES ===== */
 .category{
   margin:8px 0;
   border:1px solid var(--border);
@@ -424,7 +439,6 @@ button:active{transform:translateY(0)}
 
 .category-header:hover .copy-cat-btn{opacity:1}
 
-/* ===== REPORTS ===== */
 .report{
   border:1px solid var(--border);
   border-radius:var(--radius-sm);
@@ -438,6 +452,18 @@ button:active{transform:translateY(0)}
 .report:hover{
   border-color:var(--accent);
   box-shadow:0 2px 8px var(--accent-light);
+}
+
+.report.highlight{
+  border-color:var(--accent);
+  background:var(--accent-light);
+  box-shadow:0 0 0 2px var(--accent-light);
+  animation:pulse 1.5s ease;
+}
+
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 2px var(--accent-light)}
+  50%{box-shadow:0 0 0 6px var(--accent-light)}
 }
 
 .report-top{
@@ -508,7 +534,37 @@ button:active{transform:translateY(0)}
   padding:6px 10px;
 }
 
-/* ===== CUSTOM REPORT ===== */
+.next-suggest{
+  margin-top:8px;
+  padding:8px 10px;
+  background:var(--warning-bg);
+  border:1px dashed var(--warning);
+  border-radius:8px;
+  font-size:12px;
+  color:var(--warning);
+  display:none;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.next-suggest.show{display:flex}
+
+.next-suggest-label{font-weight:600;margin-right:4px}
+
+.next-suggest-btn{
+  background:var(--card);
+  color:var(--warning);
+  border:1px solid var(--warning);
+  padding:4px 10px;
+  font-size:11px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:var(--transition);
+}
+
+.next-suggest-btn:hover{background:var(--warning);color:#fff}
+
 .custom-grid{
   display:grid;
   grid-template-columns:1fr 2fr;
@@ -529,6 +585,7 @@ textarea{
   display:flex;
   flex-wrap:wrap;
   gap:4px;
+  align-items:center;
 }
 
 .var-tag{
@@ -543,7 +600,6 @@ textarea{
 
 .var-tag:hover{background:var(--accent);color:#fff}
 
-/* ===== SAVED / HISTORY ===== */
 .saved-item{
   display:flex;
   justify-content:space-between;
@@ -607,7 +663,6 @@ textarea{
   margin-bottom:6px;
 }
 
-/* ===== TABS ===== */
 .tabs{
   display:flex;
   gap:4px;
@@ -658,7 +713,6 @@ textarea{
   font-weight:700;
 }
 
-/* ===== TOAST ===== */
 .toast{
   position:fixed;
   right:18px;
@@ -687,7 +741,6 @@ textarea{
 .toast.error{background:var(--danger);color:#fff}
 .toast.warning{background:var(--warning);color:#fff}
 
-/* ===== MODAL ===== */
 .modal-overlay{
   position:fixed;
   inset:0;
@@ -743,7 +796,6 @@ textarea{
   margin-top:14px;
 }
 
-/* ===== STATS ===== */
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -757,7 +809,11 @@ textarea{
   border-radius:12px;
   padding:12px;
   text-align:center;
+  cursor:pointer;
+  transition:var(--transition);
 }
+
+.stat:hover{border-color:var(--accent);transform:translateY(-2px)}
 
 .stat-value{
   font-size:22px;
@@ -774,7 +830,114 @@ textarea{
   letter-spacing:.3px;
 }
 
-/* ===== SCROLL TOP ===== */
+.scenarios{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:10px;
+}
+
+.scenario{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  cursor:pointer;
+  transition:var(--transition);
+  position:relative;
+  overflow:hidden;
+}
+
+.scenario:hover{
+  border-color:var(--accent);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
+
+.scenario-icon{
+  font-size:24px;
+  margin-bottom:6px;
+}
+
+.scenario-title{
+  font-weight:700;
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+.scenario-desc{
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+
+.scenario-steps{
+  display:flex;
+  gap:3px;
+  flex-wrap:wrap;
+}
+
+.scenario-step{
+  background:var(--accent-light);
+  color:var(--accent2);
+  padding:2px 7px;
+  border-radius:5px;
+  font-size:10px;
+  font-weight:600;
+}
+
+.scenario-step.current{
+  background:var(--accent);
+  color:#fff;
+}
+
+.scenario-step.done{
+  background:var(--success);
+  color:#fff;
+  opacity:.7;
+}
+
+.scenario-progress{
+  height:3px;
+  background:var(--border-soft);
+  border-radius:2px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.scenario-progress-bar{
+  height:100%;
+  background:var(--accent);
+  transition:width .3s ease;
+}
+
+.notes-area{
+  width:100%;
+  min-height:100px;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:var(--card);
+  color:var(--text);
+  font-family:inherit;
+  font-size:13px;
+  resize:vertical;
+  outline:none;
+  transition:var(--transition);
+}
+
+.notes-area:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-light);
+}
+
+.notes-status{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:6px;
+  display:flex;
+  justify-content:space-between;
+}
+
 .scroll-top{
   position:fixed;
   right:18px;
@@ -798,7 +961,6 @@ textarea{
 .scroll-top.show{display:flex}
 .scroll-top:hover{transform:translateY(-3px);background:var(--accent2)}
 
-/* ===== FOOTER ===== */
 footer{
   text-align:center;
   color:var(--muted);
@@ -813,7 +975,6 @@ footer a:hover{text-decoration:underline}
 
 .copied{background:var(--success) !important;color:#fff !important}
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:850px){
   .controls{grid-template-columns:1fr 1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -823,9 +984,8 @@ footer a:hover{text-decoration:underline}
   .controls,.custom-grid{grid-template-columns:1fr}
   .container{margin:10px auto;padding:0 8px}
   .panel{padding:12px}
-  h1{font-size:18px}
+  h1{font-size:17px}
   .subtitle{font-size:11px}
-  .header-inner{padding:0}
   .cat-toolbar{flex-direction:column;align-items:stretch}
   .cat-toolbar-left{overflow-x:auto;scrollbar-width:none}
   .cat-toolbar-left::-webkit-scrollbar{display:none}
@@ -834,9 +994,10 @@ footer a:hover{text-decoration:underline}
   .stat-value{font-size:18px}
   .scroll-top{right:12px;bottom:70px}
   .toast{right:12px;bottom:12px;left:12px;max-width:none}
+  .shift-timer{font-size:12px;padding:5px 10px}
+  .shift-timer-label{display:none}
 }
 
-/* ===== KEYBOARD HINT ===== */
 kbd{
   background:var(--border-soft);
   color:var(--text);
@@ -846,21 +1007,6 @@ kbd{
   font-family:monospace;
   border:1px solid var(--border);
   box-shadow:0 1px 0 var(--border);
-}
-
-/* ===== PROGRESS BAR ===== */
-.progress{
-  height:3px;
-  background:var(--border-soft);
-  border-radius:2px;
-  overflow:hidden;
-  margin-top:6px;
-}
-
-.progress-bar{
-  height:100%;
-  background:var(--accent);
-  transition:width .3s ease;
 }
 </style>
 </head>
@@ -873,6 +1019,11 @@ kbd{
       <div class="subtitle">Быстрый помощник для сотрудников. Заполни данные один раз — сайт сделает остальное.</div>
     </div>
     <div class="header-actions">
+      <div class="shift-timer" id="shiftTimer" onclick="toggleShiftTimer()" title="Нажми, чтобы начать/остановить смену">
+        <span class="shift-timer-icon">⏱️</span>
+        <span class="shift-timer-value" id="shiftTime">00:00:00</span>
+        <span class="shift-timer-label" id="shiftLabel">Смена не начата</span>
+      </div>
       <button class="icon-btn" onclick="openHelp()" title="Справка (F1)">❓</button>
       <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Сменить тему">🌙</button>
     </div>
@@ -881,27 +1032,25 @@ kbd{
 
 <main class="container">
 
-<!-- СТАТИСТИКА -->
 <section class="stats" id="stats">
-  <div class="stat">
+  <div class="stat" onclick="switchTab('history')" title="Открыть историю">
     <div class="stat-value" id="statCopied">0</div>
     <div class="stat-label">Скопировано</div>
   </div>
-  <div class="stat">
+  <div class="stat" onclick="switchTab('favorites')" title="Открыть избранное">
     <div class="stat-value" id="statFavorites">0</div>
     <div class="stat-label">В избранном</div>
   </div>
-  <div class="stat">
-    <div class="stat-value" id="statCustom">0</div>
-    <div class="stat-label">Своих докладов</div>
+  <div class="stat" onclick="switchTab('scenarios')" title="Открыть сценарии">
+    <div class="stat-value" id="statScenarios">0</div>
+    <div class="stat-label">Сценариев</div>
   </div>
-  <div class="stat">
+  <div class="stat" onclick="switchTab('history')" title="Открыть историю">
     <div class="stat-value" id="statHistory">0</div>
     <div class="stat-label">В истории</div>
   </div>
 </section>
 
-<!-- НАСТРОЙКИ -->
 <section class="panel">
   <div class="panel-title">⚙️ Настройки доклада</div>
 
@@ -918,6 +1067,17 @@ kbd{
       </select>
     </div>
     <div>
+      <label>Тип транспорта</label>
+      <select id="transport">
+        <option value="АСМП">🚐 АСМП</option>
+        <option value="ВСМП">🚁 ВСМП</option>
+        <option value="АСМП/ВСМП">🚐🚁 АСМП/ВСМП (оба)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top:10px">
+    <div>
       <label>Результат вызова</label>
       <select id="result">
         <option>Помощь оказана на месте</option>
@@ -927,9 +1087,6 @@ kbd{
         <option>На базе</option>
       </select>
     </div>
-  </div>
-
-  <div class="controls" style="margin-top:10px">
     <div>
       <label>Номер вызова / ID</label>
       <input id="call" placeholder="Например: 123" autocomplete="off">
@@ -938,13 +1095,28 @@ kbd{
       <label>Напарники</label>
       <input id="partners" placeholder="Фамилии или «нет»" autocomplete="off">
     </div>
-    <div>
-      <label>Название поста</label>
-      <input id="post" placeholder="Например: Аэропорт" autocomplete="off">
-    </div>
   </div>
 
   <div class="controls" style="margin-top:10px">
+    <div>
+      <label>Пост АСМП</label>
+      <input id="post" list="postsList" placeholder="Выберите или введите свой" autocomplete="off">
+      <datalist id="postsList">
+        <option value="Автосалоны">
+        <option value="Автосервис">
+        <option value="Автошкола">
+        <option value="АЗС на трассе Приволжск - Невский">
+        <option value="АТП">
+        <option value="Банк">
+        <option value="Водная школа">
+        <option value='Завод "Красный октябрь"'>
+        <option value="Речной вокзал">
+        <option value="СТО">
+        <option value="Табачный завод">
+        <option value="ТТУ">
+        <option value="Футбольное поле ПГТ Волчанск">
+      </datalist>
+    </div>
     <div>
       <label>Номер маршрута</label>
       <input id="route" placeholder="Например: 3" autocomplete="off">
@@ -952,16 +1124,22 @@ kbd{
     <div>
       <label>Фракция для запроса</label>
       <select id="faction">
-        <option value="ЦГБ-П">ЦГБ-П</option>
         <option value="ОКБ-М">ОКБ-М</option>
-        <option value="МЗ">МЗ</option>
-        <option value="ГУВД-П">ГУВД-П</option>
-        <option value="ГИБДД-П">ГИБДД-П</option>
+        <option value="ЦГБ-П">ЦГБ-П</option>
+        <option value="МО">МО</option>
         <option value="РЖД">РЖД</option>
-        <option value="Армия">Армия</option>
+        <option value="ОГИБДД-Н">ОГИБДД-Н</option>
+        <option value="ОГИБДД-П">ОГИБДД-П</option>
+        <option value="ОМВД-П">ОМВД-П</option>
+        <option value="ОМВД-Н">ОМВД-Н</option>
+        <option value="УГИБДД-М">УГИБДД-М</option>
+        <option value="УМВД-М">УМВД-М</option>
       </select>
     </div>
-    <div>
+  </div>
+
+  <div class="controls" style="margin-top:10px">
+    <div style="grid-column:1/-1">
       <label>Дополнительные данные</label>
       <input id="extra" placeholder="Любая доп. информация" autocomplete="off">
     </div>
@@ -975,37 +1153,46 @@ kbd{
   </div>
 </section>
 
-<!-- ДОКЛАДЫ -->
 <section class="panel">
   <div class="panel-title">📋 Доклады</div>
 
-  <!-- ПОИСК -->
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input id="search" placeholder="Поиск по докладам... (Ctrl+K)" autocomplete="off">
     <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
 
-  <!-- ПАНЕЛЬ ФИЛЬТРОВ -->
   <div class="cat-toolbar">
     <div class="cat-toolbar-left" id="chipBar"></div>
     <div style="display:flex;gap:6px">
+      <button class="toggle" id="quickModeBtn" onclick="toggleQuickMode()" title="После копирования подсвечивается следующий доклад">⚡ Быстрый режим</button>
       <button class="ghost" onclick="expandAll()" title="Раскрыть все">▼ Развернуть</button>
       <button class="ghost" onclick="collapseAll()" title="Свернуть все">▲ Свернуть</button>
     </div>
   </div>
 
-  <!-- ВКЛАДКИ -->
   <div class="tabs">
     <button class="tab active" data-tab="all" onclick="switchTab('all')">📚 Все доклады</button>
     <button class="tab" data-tab="favorites" onclick="switchTab('favorites')">⭐ Избранное <span class="tab-badge" id="favBadge">0</span></button>
+    <button class="tab" data-tab="scenarios" onclick="switchTab('scenarios')">🎬 Сценарии <span class="tab-badge" id="scenBadge">0</span></button>
     <button class="tab" data-tab="history" onclick="switchTab('history')">🕐 История <span class="tab-badge" id="histBadge">0</span></button>
   </div>
 
   <div id="reports"></div>
 </section>
 
-<!-- СВОЙ ДОКЛАД -->
+<section class="panel">
+  <div class="panel-title">📝 Быстрые заметки</div>
+  <textarea class="notes-area" id="notesArea" placeholder="Записывайте важную информацию во время смены: номера, адреса, детали вызовов..."></textarea>
+  <div class="notes-status">
+    <span id="notesStatus">Автосохранение включено</span>
+    <span>
+      <button class="ghost" style="padding:4px 10px;font-size:11px" onclick="copyNotes()">📋 Копировать всё</button>
+      <button class="ghost" style="padding:4px 10px;font-size:11px" onclick="clearNotes()">🗑 Очистить</button>
+    </span>
+  </div>
+</section>
+
 <section class="panel">
   <div class="panel-title">✍️ Свой доклад</div>
 
@@ -1016,7 +1203,7 @@ kbd{
     </div>
     <div>
       <label>Текст</label>
-      <textarea id="customText" placeholder="Напиши свой доклад. Используй {TAG}, {CALL}, {PARTNERS} и другие переменные"></textarea>
+      <textarea id="customText" placeholder="Напиши свой доклад. Используй {TAG}, {CALL}, {TRANSPORT} и другие переменные"></textarea>
       <div class="vars-hint" id="varsHint"></div>
     </div>
   </div>
@@ -1035,13 +1222,10 @@ kbd{
   <span style="opacity:.7">Горячие клавиши: <kbd>Ctrl</kbd>+<kbd>K</kbd> — поиск · <kbd>Esc</kbd> — закрыть · <kbd>F1</kbd> — справка</span>
 </footer>
 
-<!-- КНОПКА НАВЕРХ -->
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-<!-- TOAST -->
 <div id="toast" class="toast"></div>
 
-<!-- МОДАЛЬНОЕ ОКНО -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-title">
@@ -1104,14 +1288,14 @@ const data = {
       "r {TAG}. АСМП. ПРМО. На базе. Напарники: {PARTNERS}."
     ]],
     ["Пересечение юрисдикций","🌐",[
-      "ro ЦГБ-Н к {FACTION}. Запрашиваю разрешение на патрулирование вашей юрисдикции на АСМП/ВСМП.",
-      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью обработки вызова на АСМП/ВСМП."
+      "ro ЦГБ-Н к {FACTION}. Запрашиваю разрешение на патрулирование вашей юрисдикции на {TRANSPORT}.",
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью обработки вызова на {TRANSPORT}."
     ]],
     ["Принятие запросов (для РС)","📨",[
       "d ЦГБ-Н к {FACTION}. Принято. В ближайшее время отправим вам сотрудников."
     ]],
     ["Проведение мероприятий (для РС)","📋",[
-      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью проведения мероприятия."
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью проведения мероприятия на {TRANSPORT}."
     ]]
   ],
   female: [
@@ -1162,20 +1346,125 @@ const data = {
       "r {TAG}. АСМП. ПРМО. На базе. Напарники: {PARTNERS}."
     ]],
     ["Пересечение юрисдикций","🌐",[
-      "ro ЦГБ-Н к {FACTION}. Запрашиваю разрешение на патрулирование вашей юрисдикции на АСМП/ВСМП.",
-      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью обработки вызова на АСМП/ВСМП."
+      "ro ЦГБ-Н к {FACTION}. Запрашиваю разрешение на патрулирование вашей юрисдикции на {TRANSPORT}.",
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью обработки вызова на {TRANSPORT}."
     ]],
     ["Принятие запросов (для РС)","📨",[
       "d ЦГБ-Н к {FACTION}. Принято. В ближайшее время отправим вам сотрудников."
     ]],
     ["Проведение мероприятий (для РС)","📋",[
-      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью проведения мероприятия."
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью проведения мероприятия на {TRANSPORT}."
     ]]
   ]
 };
 
+/* ==================== СЦЕНАРИИ ==================== */
+const scenarios = [
+  {
+    id:"call_full",
+    icon:"🚑",
+    title:"Полный вызов",
+    desc:"Последовательность докладов при вызове",
+    steps:[
+      {cat:"Вызов",idx:0,label:"Принят"},
+      {cat:"Вызов",idx:1,label:"Результат"},
+    ]
+  },
+  {
+    id:"post_full",
+    icon:"📍",
+    title:"Пост АСМП",
+    desc:"Выезд, прибытие, работа, возврат",
+    steps:[
+      {cat:"Пост АСМП",idx:0,label:"Выехал"},
+      {cat:"Пост АСМП",idx:1,label:"Прибыл"},
+      {cat:"Пост АСМП",idx:2,label:"Работа"},
+      {cat:"Пост АСМП",idx:3,label:"Возврат"},
+      {cat:"Пост АСМП",idx:4,label:"На базе"},
+    ]
+  },
+  {
+    id:"patrol_asmp",
+    icon:"🚐",
+    title:"Патруль АСМП",
+    desc:"Патрулирование на автомобиле",
+    steps:[
+      {cat:"Патруль АСМП",idx:0,label:"Выехал"},
+      {cat:"Патруль АСМП",idx:1,label:"Продолжаю"},
+      {cat:"Патруль АСМП",idx:2,label:"Возврат"},
+      {cat:"Патруль АСМП",idx:3,label:"На базе"},
+    ]
+  },
+  {
+    id:"patrol_vcmp",
+    icon:"🚁",
+    title:"Патруль ВСМП",
+    desc:"Патрулирование на вертолёте",
+    steps:[
+      {cat:"Патруль ВСМП",idx:0,label:"Вылетел"},
+      {cat:"Патруль ВСМП",idx:1,label:"Стабильно"},
+      {cat:"Патруль ВСМП",idx:2,label:"Возврат"},
+      {cat:"Патруль ВСМП",idx:3,label:"На базе"},
+    ]
+  },
+  {
+    id:"prmo_full",
+    icon:"🏥",
+    title:"ПРМО",
+    desc:"Медицинское обеспечение мероприятия",
+    steps:[
+      {cat:"ПРМО",idx:0,label:"Выехал"},
+      {cat:"ПРМО",idx:1,label:"Прибыл"},
+      {cat:"ПРМО",idx:2,label:"Возврат"},
+      {cat:"ПРМО",idx:3,label:"На базе"},
+    ]
+  },
+  {
+    id:"shift_change",
+    icon:"🔄",
+    title:"Смена",
+    desc:"Сдача и заступление на смену",
+    steps:[
+      {cat:"Сдача смены",idx:0,label:"Сдал"},
+      {cat:"Сдача смены",idx:1,label:"Заступил"},
+    ]
+  },
+  {
+    id:"break",
+    icon:"⏸️",
+    title:"Перерыв",
+    desc:"Взятие и возврат с перерыва",
+    steps:[
+      {cat:"Взятие перерыва",idx:0,label:"Разрешение"},
+      {cat:"Взятие перерыва",idx:1,label:"Взял"},
+      {cat:"Взятие перерыва",idx:2,label:"Вернулся"},
+    ]
+  }
+];
+
+/* ==================== СВЯЗИ МЕЖДУ ДОКЛАДАМИ ==================== */
+const nextSuggestions = {
+  "Пост АСМП::0":"Пост АСМП::1",
+  "Пост АСМП::1":"Пост АСМП::2",
+  "Пост АСМП::2":"Пост АСМП::3",
+  "Пост АСМП::3":"Пост АСМП::4",
+  "Патруль АСМП::0":"Патруль АСМП::1",
+  "Патруль АСМП::1":"Патруль АСМП::2",
+  "Патруль АСМП::2":"Патруль АСМП::3",
+  "Патруль ВСМП::0":"Патруль ВСМП::1",
+  "Патруль ВСМП::1":"Патруль ВСМП::2",
+  "Патруль ВСМП::2":"Патруль ВСМП::3",
+  "ПРМО::0":"ПРМО::1",
+  "ПРМО::1":"ПРМО::2",
+  "ПРМО::2":"ПРМО::3",
+  "Вызов::0":"Вызов::1",
+  "Взятие перерыва::0":"Взятие перерыва::1",
+  "Взятие перерыва::1":"Взятие перерыва::2",
+  "Сдача смены::0":"Сдача смены::1"
+};
+
 /* ==================== КОНСТАНТЫ ==================== */
-const FIELDS = ["tag","call","partners","post","route","faction","result","gender","extra"];
+const FIELDS = ["tag","call","partners","post","route","faction","result","gender","extra","transport"];
 const VARS = [
   {key:"{TAG}",label:"ТЭГ"},
   {key:"{CALL}",label:"Номер вызова"},
@@ -1184,6 +1473,7 @@ const VARS = [
   {key:"{ROUTE}",label:"Маршрут"},
   {key:"{FACTION}",label:"Фракция"},
   {key:"{RESULT}",label:"Результат"},
+  {key:"{TRANSPORT}",label:"Транспорт (АСМП/ВСМП)"},
   {key:"{EXTRA}",label:"Доп. данные"}
 ];
 const CHAR_WARN = 120;
@@ -1196,7 +1486,10 @@ let state = {
   favorites:new Set(JSON.parse(localStorage.getItem("cgb_favorites")||"[]")),
   history:JSON.parse(localStorage.getItem("cgb_history")||"[]"),
   stats:JSON.parse(localStorage.getItem("cgb_stats")||'{"copied":0}'),
-  custom:JSON.parse(localStorage.getItem("cgb_custom")||"[]")
+  custom:JSON.parse(localStorage.getItem("cgb_custom")||"[]"),
+  scenarioProgress:JSON.parse(localStorage.getItem("cgb_scenario_progress")||"{}"),
+  quickMode:localStorage.getItem("cgb_quick_mode")==="true",
+  lastCopied:null
 };
 
 /* ==================== УТИЛИТЫ ==================== */
@@ -1239,6 +1532,7 @@ function fill(text){
     .replaceAll("{ROUTE}",v.route||"—")
     .replaceAll("{FACTION}",v.faction||"—")
     .replaceAll("{RESULT}",v.result||"—")
+    .replaceAll("{TRANSPORT}",v.transport||"АСМП/ВСМП")
     .replaceAll("{EXTRA}",v.extra||"");
 }
 
@@ -1255,6 +1549,57 @@ function toggleTheme(){
   document.documentElement.setAttribute("data-theme",next);
   localStorage.setItem("cgb_theme",next);
   $("themeBtn").textContent=next==="dark"?"☀️":"🌙";
+}
+
+/* ==================== ТАЙМЕР СМЕНЫ ==================== */
+let shiftInterval=null;
+let shiftStart=parseInt(localStorage.getItem("cgb_shift_start")||"0");
+
+function initShiftTimer(){
+  if(shiftStart>0){
+    startShiftTimer();
+  }
+  updateShiftDisplay();
+}
+
+function toggleShiftTimer(){
+  if(shiftStart>0){
+    shiftStart=0;
+    localStorage.removeItem("cgb_shift_start");
+    if(shiftInterval){clearInterval(shiftInterval);shiftInterval=null}
+    updateShiftDisplay();
+    showToast("Смена остановлена","warning");
+  }else{
+    shiftStart=Date.now();
+    localStorage.setItem("cgb_shift_start",shiftStart);
+    startShiftTimer();
+    showToast("Смена начата! Удачи 🍀","success");
+  }
+}
+
+function startShiftTimer(){
+  if(shiftInterval)clearInterval(shiftInterval);
+  updateShiftDisplay();
+  shiftInterval=setInterval(updateShiftDisplay,1000);
+}
+
+function updateShiftDisplay(){
+  if(shiftStart>0){
+    const elapsed=Math.floor((Date.now()-shiftStart)/1000);
+    const h=Math.floor(elapsed/3600);
+    const m=Math.floor((elapsed%3600)/60);
+    const s=elapsed%60;
+    $("shiftTime").textContent=
+      String(h).padStart(2,"0")+":"+
+      String(m).padStart(2,"0")+":"+
+      String(s).padStart(2,"0");
+    $("shiftLabel").textContent="Смена идёт";
+    $("shiftTimer").style.background="rgba(38,123,89,.4)";
+  }else{
+    $("shiftTime").textContent="00:00:00";
+    $("shiftLabel").textContent="Смена не начата";
+    $("shiftTimer").style.background="rgba(0,0,0,.25)";
+  }
 }
 
 /* ==================== TOAST ==================== */
@@ -1284,6 +1629,14 @@ function openModal(title,bodyHtml,actions){
 }
 function closeModal(){$("modal").classList.remove("show")}
 
+/* ==================== БЫСТРЫЙ РЕЖИМ ==================== */
+function toggleQuickMode(){
+  state.quickMode=!state.quickMode;
+  localStorage.setItem("cgb_quick_mode",state.quickMode);
+  $("quickModeBtn").classList.toggle("active",state.quickMode);
+  showToast(state.quickMode?"Быстрый режим включён ⚡":"Быстрый режим выключен","success");
+}
+
 /* ==================== РЕНДЕРИНГ ==================== */
 function render(){
   const gender=$("gender").value;
@@ -1293,14 +1646,9 @@ function render(){
 
   $("searchClear").classList.toggle("show",q.length>0);
 
-  if(state.currentTab==="favorites"){
-    renderFavorites(root);
-    return;
-  }
-  if(state.currentTab==="history"){
-    renderHistory(root);
-    return;
-  }
+  if(state.currentTab==="favorites"){renderFavorites(root);return}
+  if(state.currentTab==="history"){renderHistory(root);return}
+  if(state.currentTab==="scenarios"){renderScenarios(root);return}
 
   const items=data[gender];
   let totalVisible=0;
@@ -1309,7 +1657,6 @@ function render(){
   items.forEach(([cat,icon,arr],catIdx)=>{
     const matched=arr.map((x,i)=>[x,i]).filter(([x])=>(cat+" "+x).toLowerCase().includes(q));
     if(!matched.length)return;
-
     if(filter!=="all"&&filter!==cat)return;
 
     totalVisible+=matched.length;
@@ -1325,7 +1672,7 @@ function render(){
         <span class="category-icon">${icon}</span>
         <span>${escapeHtml(cat)}</span>
       </div>
-      <button class="secondary copy-cat-btn" onclick="event.stopPropagation();copyCategory('${escapeHtml(cat)}',${catIdx})" title="Копировать всю категорию">📋 Копировать все</button>
+      <button class="secondary copy-cat-btn" onclick="event.stopPropagation();copyCategory('${escapeHtml(cat)}',${catIdx})" title="Копировать всю категорию">📋 Все</button>
       <span class="category-count">${matched.length} ${plural(matched.length,"доклад","доклада","докладов")}</span>
       <span class="category-arrow">▶</span>
     `;
@@ -1345,9 +1692,13 @@ function render(){
       const key=favKey(cat,x);
       const isFav=state.favorites.has(key);
       const charClass=len>CHAR_MAX?"danger":len>CHAR_WARN?"warn":"";
+      const isHighlighted=state.quickMode&&state.lastCopied&&
+        state.lastCopied.cat===cat&&state.lastCopied.idx===i;
 
       const div=document.createElement("div");
-      div.className="report";
+      div.className="report"+(isHighlighted?" highlight":"");
+      div.dataset.cat=cat;
+      div.dataset.idx=i;
       div.innerHTML=`
         <div class="report-top">
           <div class="report-title">${escapeHtml(cat)}</div>
@@ -1358,9 +1709,10 @@ function render(){
         </div>
         <div class="report-text">${escapeHtml(filled)}</div>
         <div class="report-actions">
-          <button class="primary copy-btn" onclick='copyText(${JSON.stringify(filled)},this,${JSON.stringify(cat)},${JSON.stringify(x)})'>📋 Копировать</button>
+          <button class="primary copy-btn" onclick='copyText(${JSON.stringify(filled)},this,${JSON.stringify(cat)},${JSON.stringify(x)},${i})'>📋 Копировать</button>
           <button class="secondary" onclick='editReport(${JSON.stringify(cat)},${JSON.stringify(x)})'>✏️ Изменить</button>
         </div>
+        <div class="next-suggest" data-next="${cat}::${i}"></div>
       `;
       inner.appendChild(div);
     });
@@ -1383,6 +1735,7 @@ function render(){
 
   renderChipBar();
   updateStats();
+  updateQuickModeHighlight();
 }
 
 function renderChipBar(){
@@ -1444,34 +1797,156 @@ function renderFavorites(root){
 }
 
 function renderHistory(root){
-  if(state.history.length===0){
-    root.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">🕐</div>
-        <div>История пуста</div>
-        <div style="margin-top:6px;font-size:12px">Скопированные доклады будут появляться здесь</div>
+  const searchWrap=document.createElement("div");
+  searchWrap.className="search-wrap";
+  searchWrap.innerHTML=`
+    <span class="search-icon">🔍</span>
+    <input id="historySearch" placeholder="Поиск в истории..." autocomplete="off">
+  `;
+  root.appendChild(searchWrap);
+
+  const histList=document.createElement("div");
+  histList.id="histList";
+  root.appendChild(histList);
+
+  const renderList=(filter="")=>{
+    histList.innerHTML="";
+    const filtered=state.history.slice().reverse().filter(item=>
+      !filter||(item.cat+" "+item.text).toLowerCase().includes(filter.toLowerCase())
+    );
+
+    if(filtered.length===0){
+      histList.innerHTML=`
+        <div class="empty">
+          <div class="empty-icon">🕐</div>
+          <div>${state.history.length===0?"История пуста":"Ничего не найдено"}</div>
+          <div style="margin-top:6px;font-size:12px">${state.history.length===0?"Скопированные доклады будут появляться здесь":"Попробуйте изменить запрос"}</div>
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach((item)=>{
+      const realIdx=state.history.indexOf(item);
+      const div=document.createElement("div");
+      div.className="saved-item";
+      div.innerHTML=`
+        <div class="saved-item-text">
+          <div class="saved-item-title">${escapeHtml(item.cat||"Доклад")}</div>
+          <div class="saved-item-body">${escapeHtml(item.text)}</div>
+          <div class="saved-item-time">${formatTime(item.time)}</div>
+        </div>
+        <div class="saved-item-actions">
+          <button class="primary" onclick='copyText(${JSON.stringify(item.text)},this)'>📋</button>
+          <button class="ghost" onclick='repeatReport(${realIdx})' title="Повторить">🔄</button>
+          <button class="danger" onclick='deleteHistory(${realIdx})'>✕</button>
+        </div>
+      `;
+      histList.appendChild(div);
+    });
+  };
+
+  renderList();
+
+  setTimeout(()=>{
+    const inp=$("historySearch");
+    if(inp){
+      inp.addEventListener("input",e=>renderList(e.target.value));
+    }
+  },0);
+
+  if(state.history.length>0){
+    const clearBtn=document.createElement("button");
+    clearBtn.className="danger";
+    clearBtn.style.marginTop="10px";
+    clearBtn.innerHTML="🗑 Очистить всю историю";
+    clearBtn.onclick=clearHistory;
+    root.appendChild(clearBtn);
+  }
+}
+
+function renderScenarios(root){
+  const list=document.createElement("div");
+  list.className="scenarios";
+
+  scenarios.forEach(sc=>{
+    const progress=state.scenarioProgress[sc.id]||0;
+    const total=sc.steps.length;
+    const pct=Math.round((progress/total)*100);
+
+    const card=document.createElement("div");
+    card.className="scenario";
+    card.innerHTML=`
+      <div class="scenario-icon">${sc.icon}</div>
+      <div class="scenario-title">${escapeHtml(sc.title)}</div>
+      <div class="scenario-desc">${escapeHtml(sc.desc)}</div>
+      <div class="scenario-steps">
+        ${sc.steps.map((s,i)=>{
+          let cls="scenario-step";
+          if(i<progress)cls+=" done";
+          else if(i===progress)cls+=" current";
+          return `<span class="${cls}">${i+1}. ${escapeHtml(s.label)}</span>`;
+        }).join("")}
+      </div>
+      <div class="scenario-progress">
+        <div class="scenario-progress-bar" style="width:${pct}%"></div>
       </div>
     `;
+    card.onclick=()=>runScenario(sc);
+    list.appendChild(card);
+  });
+
+  root.appendChild(list);
+
+  if(Object.keys(state.scenarioProgress).some(k=>state.scenarioProgress[k]>0)){
+    const resetBtn=document.createElement("button");
+    resetBtn.className="ghost";
+    resetBtn.style.marginTop="12px";
+    resetBtn.innerHTML="🔄 Сбросить все сценарии";
+    resetBtn.onclick=()=>{
+      state.scenarioProgress={};
+      localStorage.setItem("cgb_scenario_progress","{}");
+      render();
+      showToast("Сценарии сброшены","warning");
+    };
+    root.appendChild(resetBtn);
+  }
+}
+
+function runScenario(sc){
+  const progress=state.scenarioProgress[sc.id]||0;
+  if(progress>=sc.steps.length){
+    showToast("Сценарий уже завершён","warning");
     return;
   }
-  state.history.slice().reverse().forEach((item,idx)=>{
-    const realIdx=state.history.length-1-idx;
-    const div=document.createElement("div");
-    div.className="saved-item";
-    div.innerHTML=`
-      <div class="saved-item-text">
-        <div class="saved-item-title">${escapeHtml(item.cat||"Доклад")}</div>
-        <div class="saved-item-body">${escapeHtml(item.text)}</div>
-        <div class="saved-item-time">${formatTime(item.time)}</div>
-      </div>
-      <div class="saved-item-actions">
-        <button class="primary" onclick='copyText(${JSON.stringify(item.text)},this)'>📋</button>
-        <button class="ghost" onclick='repeatReport(${realIdx})' title="Повторить">🔄</button>
-        <button class="danger" onclick='deleteHistory(${realIdx})'>✕</button>
-      </div>
-    `;
-    root.appendChild(div);
-  });
+  const step=sc.steps[progress];
+  const gender=$("gender").value;
+  const catData=data[gender].find(([c])=>c===step.cat);
+  if(!catData){showToast("Категория не найдена","error");return}
+  const text=catData[2][step.idx];
+  const filled=fill(text);
+
+  openModal(`🎬 ${sc.title} — шаг ${progress+1} из ${sc.steps.length}`,`
+    <div style="margin-bottom:10px;font-size:13px;color:var(--muted)">
+      <b>${escapeHtml(step.label)}</b> — ${escapeHtml(step.cat)}
+    </div>
+    <div class="report-text" style="margin-bottom:12px">${escapeHtml(filled)}</div>
+    <div style="font-size:12px;color:var(--muted)">
+      После копирования шаг будет отмечен как выполненный.
+    </div>
+  `,[
+    {label:"Отмена",class:"ghost",action:()=>{}},
+    {label:"📋 Копировать и далее",class:"primary",action:()=>{
+      copyText(filled,null,step.cat,text);
+      state.scenarioProgress[sc.id]=(progress+1);
+      localStorage.setItem("cgb_scenario_progress",JSON.stringify(state.scenarioProgress));
+      if(progress+1<sc.steps.length){
+        setTimeout(()=>runScenario(sc),400);
+      }else{
+        showToast("🎉 Сценарий завершён!","success");
+      }
+    }}
+  ]);
 }
 
 function renderCustom(){
@@ -1516,6 +1991,42 @@ function renderVarsHint(){
       ta.setSelectionRange(pos+v.key.length,pos+v.key.length);
     };
     hint.appendChild(tag);
+  });
+}
+
+/* ==================== БЫСТРЫЙ РЕЖИМ — ПОДСВЕТКА ==================== */
+function updateQuickModeHighlight(){
+  if(!state.quickMode||!state.lastCopied)return;
+  const key=state.lastCopied.cat+"::"+state.lastCopied.idx;
+  const nextKey=nextSuggestions[key];
+  if(!nextKey)return;
+
+  const [nextCat,nextIdxStr]=nextKey.split("::");
+  const nextIdx=parseInt(nextIdxStr);
+
+  const reports=document.querySelectorAll(".report");
+  reports.forEach(r=>{
+    if(r.dataset.cat===nextCat&&parseInt(r.dataset.idx)===nextIdx){
+      r.classList.add("highlight");
+      r.scrollIntoView({behavior:"smooth",block:"center"});
+
+      const prevReports=document.querySelectorAll(`.report[data-cat="${state.lastCopied.cat}"][data-idx="${state.lastCopied.idx}"]`);
+      prevReports.forEach(pr=>{
+        const suggest=pr.querySelector(".next-suggest");
+        if(suggest){
+          const nextCatData=data[$("gender").value].find(([c])=>c===nextCat);
+          if(nextCatData){
+            const nextText=nextCatData[2][nextIdx];
+            const nextFilled=fill(nextText);
+            suggest.innerHTML=`
+              <span class="next-suggest-label">⚡ Далее:</span>
+              <button class="next-suggest-btn" onclick='copyText(${JSON.stringify(nextFilled)},this,${JSON.stringify(nextCat)},${JSON.stringify(nextText)},${nextIdx})'>📋 ${escapeHtml(nextCatData[0]||"")} — скопировать</button>
+            `;
+            suggest.classList.add("show");
+          }
+        }
+      });
+    }
   });
 }
 
@@ -1568,8 +2079,56 @@ function collapseAll(){
   document.querySelectorAll(".category").forEach(c=>c.classList.remove("open"));
 }
 
+/* ==================== ЗАМЕТКИ ==================== */
+let notesTimer;
+function initNotes(){
+  const saved=localStorage.getItem("cgb_notes")||"";
+  $("notesArea").value=saved;
+  $("notesArea").addEventListener("input",()=>{
+    clearTimeout(notesTimer);
+    $("notesStatus").textContent="Сохранение...";
+    notesTimer=setTimeout(()=>{
+      localStorage.setItem("cgb_notes",$("notesArea").value);
+      $("notesStatus").textContent="✓ Сохранено "+new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+    },500);
+  });
+}
+
+function copyNotes(){
+  const text=$("notesArea").value;
+  if(!text){showToast("Заметки пусты","warning");return}
+  copyText(text);
+}
+
+function clearNotes(){
+  if(!$("notesArea").value){return}
+  openModal("Очистить заметки?",`<div>Все заметки будут удалены. Это действие нельзя отменить.</div>`,[
+    {label:"Отмена",class:"ghost",action:()=>{}},
+    {label:"Очистить",class:"danger",action:()=>{
+      $("notesArea").value="";
+      localStorage.removeItem("cgb_notes");
+      $("notesStatus").textContent="Автосохранение включено";
+      showToast("Заметки очищены","warning");
+    }}
+  ]);
+}
+
+/* ==================== ИСТОРИЯ ==================== */
+function clearHistory(){
+  openModal("Очистить историю?",`<div>Вся история скопированных докладов будет удалена.</div>`,[
+    {label:"Отмена",class:"ghost",action:()=>{}},
+    {label:"Очистить",class:"danger",action:()=>{
+      state.history=[];
+      localStorage.setItem("cgb_history","[]");
+      render();
+      updateStats();
+      showToast("История очищена","warning");
+    }}
+  ]);
+}
+
 /* ==================== КОПИРОВАНИЕ ==================== */
-async function copyText(text,button=null,cat=null,raw=null){
+async function copyText(text,button=null,cat=null,raw=null,idx=null){
   let ok=false;
   try{
     if(navigator.clipboard&&window.isSecureContext){
@@ -1597,16 +2156,26 @@ async function copyText(text,button=null,cat=null,raw=null){
       button.classList.add("copied");
       setTimeout(()=>{button.innerHTML=old;button.classList.remove("copied")},1200);
     }
-    // Сохраняем в историю
     state.stats.copied=(state.stats.copied||0)+1;
     localStorage.setItem("cgb_stats",JSON.stringify(state.stats));
+
     if(cat&&raw!==null){
       state.history.push({cat,text,raw,time:Date.now()});
-      if(state.history.length>50)state.history.shift();
+      if(state.history.length>100)state.history.shift();
       localStorage.setItem("cgb_history",JSON.stringify(state.history));
-      updateStats();
-      if(state.currentTab==="history")render();
+
+      if(state.quickMode&&idx!==null){
+        state.lastCopied={cat,idx};
+        document.querySelectorAll(".next-suggest").forEach(n=>{
+          n.classList.remove("show");
+          n.innerHTML="";
+        });
+        document.querySelectorAll(".report.highlight").forEach(r=>r.classList.remove("highlight"));
+        setTimeout(updateQuickModeHighlight,100);
+      }
     }
+    updateStats();
+    if(state.currentTab==="history")render();
   }else{
     showToast("Не удалось скопировать","error");
   }
@@ -1659,11 +2228,13 @@ function loadSettings(){
 
 function clearSettings(){
   openModal("Очистить поля?",`
-    <div>Все поля (кроме пола) будут очищены. Это действие нельзя отменить.</div>
+    <div>Все поля (кроме пола и транспорта) будут очищены. Это действие нельзя отменить.</div>
   `,[
     {label:"Отмена",class:"ghost",action:()=>{}},
     {label:"Очистить",class:"danger",action:()=>{
-      FIELDS.forEach(id=>{if(id!=="gender")$(id).value=""});
+      FIELDS.forEach(id=>{
+        if(id!=="gender"&&id!=="transport")$(id).value="";
+      });
       render();
       showToast("Поля очищены","warning");
     }}
@@ -1677,6 +2248,8 @@ function exportData(){
     favorites:[...state.favorites],
     history:state.history,
     stats:state.stats,
+    notes:localStorage.getItem("cgb_notes")||"",
+    scenarioProgress:state.scenarioProgress,
     exportedAt:new Date().toISOString()
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
@@ -1707,10 +2280,16 @@ function importData(){
         if(payload.favorites)state.favorites=new Set(payload.favorites);
         if(payload.history)state.history=payload.history;
         if(payload.stats)state.stats=payload.stats;
+        if(payload.notes!==undefined){
+          localStorage.setItem("cgb_notes",payload.notes);
+          $("notesArea").value=payload.notes;
+        }
+        if(payload.scenarioProgress)state.scenarioProgress=payload.scenarioProgress;
         localStorage.setItem("cgb_custom",JSON.stringify(state.custom));
         localStorage.setItem("cgb_favorites",JSON.stringify([...state.favorites]));
         localStorage.setItem("cgb_history",JSON.stringify(state.history));
         localStorage.setItem("cgb_stats",JSON.stringify(state.stats));
+        localStorage.setItem("cgb_scenario_progress",JSON.stringify(state.scenarioProgress));
         saveSettings();
         render();
         renderCustom();
@@ -1779,10 +2358,11 @@ function deleteCustom(i){
 function updateStats(){
   $("statCopied").textContent=state.stats.copied||0;
   $("statFavorites").textContent=state.favorites.size;
-  $("statCustom").textContent=state.custom.length;
+  $("statScenarios").textContent=scenarios.length;
   $("statHistory").textContent=state.history.length;
   $("favBadge").textContent=state.favorites.size;
   $("histBadge").textContent=state.history.length;
+  $("scenBadge").textContent=scenarios.length;
 }
 
 /* ==================== СПРАВКА ==================== */
@@ -1795,22 +2375,32 @@ function openHelp(){
         <li>Нажмите «Сохранить» — данные останутся в браузере</li>
         <li>Выберите нужный доклад и скопируйте его</li>
       </ol>
+
+      <p style="margin-top:12px"><b>🚐🚁 Тип транспорта:</b></p>
+      <p style="margin:6px 0;font-size:12px">В докладах «Пересечение юрисдикций» и «Проведение мероприятий» используется переменная <b>{TRANSPORT}</b>. Выберите нужный тип транспорта в настройках — АСМП, ВСМП или оба сразу.</p>
+
+      <p style="margin-top:12px"><b>🎬 Сценарии:</b></p>
+      <p style="margin:6px 0;font-size:12px">Готовые последовательности докладов. Каждый шаг отмечается как выполненный.</p>
+
+      <p style="margin-top:12px"><b>⚡ Быстрый режим:</b></p>
+      <p style="margin:6px 0;font-size:12px">После копирования доклада автоматически подсвечивается следующий логичный шаг.</p>
+
+      <p style="margin-top:12px"><b>⏱️ Таймер смены:</b></p>
+      <p style="margin:6px 0;font-size:12px">Нажмите на таймер в шапке, чтобы начать отсчёт. Время сохраняется даже после закрытия вкладки.</p>
+
+      <p style="margin-top:12px"><b>📝 Быстрые заметки:</b></p>
+      <p style="margin:6px 0;font-size:12px">Блокнот для записей во время смены. Автосохранение включено.</p>
+
       <p style="margin-top:12px"><b>Переменные:</b></p>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin:6px 0">
         ${VARS.map(v=>`<span class="var-tag">${v.key} — ${v.label}</span>`).join("")}
       </div>
+
       <p style="margin-top:12px"><b>Горячие клавиши:</b></p>
       <ul style="padding-left:20px;margin:6px 0">
         <li><kbd>Ctrl</kbd>+<kbd>K</kbd> — фокус на поиск</li>
         <li><kbd>Esc</kbd> — закрыть окно / очистить поиск</li>
         <li><kbd>F1</kbd> — эта справка</li>
-      </ul>
-      <p style="margin-top:12px"><b>Возможности:</b></p>
-      <ul style="padding-left:20px;margin:6px 0">
-        <li>⭐ Избранное — отмечайте частые доклады</li>
-        <li>🕐 История — последние 50 скопированных</li>
-        <li>📤 Экспорт / 📥 Импорт — резервные копии</li>
-        <li>🌙 Тёмная тема — переключается в шапке</li>
       </ul>
     </div>
   `,[{label:"Понятно",class:"primary",action:()=>{}}]);
@@ -1818,12 +2408,12 @@ function openHelp(){
 
 /* ==================== СОБЫТИЯ ==================== */
 $("gender").addEventListener("change",render);
+$("transport").addEventListener("change",render);
 $("search").addEventListener("input",render);
-FIELDS.filter(x=>x!=="gender").forEach(id=>{
+FIELDS.filter(x=>x!=="gender"&&x!=="transport").forEach(id=>{
   $(id).addEventListener("input",render);
 });
 
-// Горячие клавиши
 document.addEventListener("keydown",e=>{
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){
     e.preventDefault();
@@ -1844,19 +2434,16 @@ document.addEventListener("keydown",e=>{
   }
 });
 
-// Клик вне модалки
 $("modal").addEventListener("click",e=>{
   if(e.target===$("modal"))closeModal();
 });
 
-// Кнопка "наверх"
 window.addEventListener("scroll",()=>{
   $("scrollTop").classList.toggle("show",window.scrollY>300);
 });
 
-// Автосохранение при вводе (debounced)
 let saveTimer;
-FIELDS.filter(x=>x!=="gender").forEach(id=>{
+FIELDS.filter(x=>x!=="gender"&&x!=="transport").forEach(id=>{
   $(id).addEventListener("input",()=>{
     clearTimeout(saveTimer);
     saveTimer=setTimeout(()=>{
@@ -1870,6 +2457,9 @@ FIELDS.filter(x=>x!=="gender").forEach(id=>{
 initTheme();
 loadSettings();
 renderVarsHint();
+initNotes();
+initShiftTimer();
+$("quickModeBtn").classList.toggle("active",state.quickMode);
 render();
 renderCustom();
 updateStats();
