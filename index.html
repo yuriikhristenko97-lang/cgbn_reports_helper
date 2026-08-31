@@ -12,9 +12,9 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(135deg,#edf5f7,#f7fafb);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
-header{background:linear-gradient(135deg,#176b70,#299b98);color:#fff;padding:28px 18px;box-shadow:0 5px 20px rgba(0,0,0,.12)}
+header{background:linear-gradient(135deg,#176b70,#299b98);color:#fff;padding:18px;box-shadow:0 5px 20px rgba(0,0,0,.12)}
 .header-inner{max-width:1150px;margin:auto}
-h1{margin:0 0 6px;font-size:28px}.subtitle{opacity:.9}
+h1{margin:0 0 4px;font-size:24px}.subtitle{opacity:.9;font-size:13px}
 .container{max-width:1150px;margin:22px auto;padding:0 16px}
 .panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
 .controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
@@ -44,9 +44,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 0 30px}
 @media(max-width:750px){
  .controls,.custom-grid{grid-template-columns:1fr}
  h1{font-size:23px}
- .panel{padding:14px}
+ .panel{padding:12px}
 }
-</style>
+.copied{background:#267b59!important;color:#fff!important}.category{margin:12px 0}.report-text{padding:9px}.report-actions{margin-top:7px}</style>
 </head>
 <body>
 <header>
@@ -291,10 +291,10 @@ function render(){
    sec.innerHTML="<h2>"+cat+"</h2>";
    matched.forEach(([x,i])=>{
      const div=document.createElement("div");div.className="report";
-     div.innerHTML=`<div class="report-title">Доклад ${i+1}</div>
+     div.innerHTML=`<div class="report-title">${escapeHtml(cat)}</div>
        <div class="report-text">${escapeHtml(fill(x))}</div>
        <div class="report-actions">
-       <button class="primary" onclick="copyText(${JSON.stringify(fill(x))})">📋 Копировать</button>
+       <button class="primary copy-btn" onclick="copyText(${JSON.stringify(fill(x))}, this)">📋 Копировать</button>
        <button class="secondary" onclick="editPrompt(${JSON.stringify(x)})">✏️ Изменить</button>
        </div>`;
      sec.appendChild(div);
@@ -303,10 +303,38 @@ function render(){
  });
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
-async function copyText(text){
- try{await navigator.clipboard.writeText(text);showToast("Скопировано!")}
- catch(e){const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();showToast("Скопировано!")}
+async function copyText(text, button=null){
+ let ok=false;
+ try{
+   if(navigator.clipboard && window.isSecureContext){
+     await navigator.clipboard.writeText(text);
+     ok=true;
+   }
+ }catch(e){}
+ if(!ok){
+   const t=document.createElement("textarea");
+   t.value=text;
+   t.setAttribute("readonly","");
+   t.style.position="fixed";
+   t.style.left="-9999px";
+   document.body.appendChild(t);
+   t.focus(); t.select(); t.setSelectionRange(0,t.value.length);
+   try{ok=document.execCommand("copy")}catch(e){ok=false}
+   t.remove();
+ }
+ if(ok){
+   showToast("✓ Скопировано в буфер обмена");
+   if(button){
+     const old=button.innerHTML;
+     button.innerHTML="✓ Скопировано";
+     button.classList.add("copied");
+     setTimeout(()=>{button.innerHTML=old;button.classList.remove("copied")},1200);
+   }
+ }else{
+   showToast("Не удалось скопировать — выдели текст вручную");
+ }
 }
+
 function copyAllVisible(){
  const gender=document.getElementById("gender").value,q=document.getElementById("search").value.toLowerCase().trim();
  let out=[];
@@ -347,7 +375,7 @@ function renderCustom(){
   const div=document.createElement("div");div.className="saved-item";
   const text=fill(item.text);
   div.innerHTML=`<div><b>${escapeHtml(item.title)}</b><div style="color:#667780;font-size:13px;margin-top:4px">${escapeHtml(text)}</div></div>
-  <div style="display:flex;gap:6px"><button class="primary" onclick="copyText(${JSON.stringify(text)})">📋</button>
+  <div style="display:flex;gap:6px"><button class="primary copy-btn" onclick="copyText(${JSON.stringify(text)}, this)">📋</button>
   <button class="danger" onclick="deleteCustom(${i})">✕</button>
   <input class="custom-copy-source hidden" value="${escapeHtml(text)}"></div>`;
   root.appendChild(div);
