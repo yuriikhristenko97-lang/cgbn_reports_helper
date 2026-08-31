@@ -6,982 +6,310 @@
 <title>ЦГБ-Н — Доклады в рацию</title>
 <style>
 :root{
-  --bg:#eef4f7;
-  --bg-grad-1:#edf5f7;
-  --bg-grad-2:#f7fafb;
-  --card:#fff;
-  --card-hover:#fbfdfd;
-  --text:#17252d;
-  --muted:#667780;
-  --accent:#238b8b;
-  --accent2:#176b70;
+  --bg:#eef4f7;--bg-grad-1:#edf5f7;--bg-grad-2:#f7fafb;
+  --card:#fff;--text:#17252d;--muted:#667780;
+  --accent:#238b8b;--accent2:#176b70;
   --accent-light:rgba(35,139,139,.10);
-  --border:#d7e2e7;
-  --border-soft:#e3ebee;
+  --border:#d7e2e7;--border-soft:#e3ebee;
   --shadow:0 6px 20px rgba(28,55,65,.08);
-  --shadow-lg:0 12px 32px rgba(28,55,65,.12);
-  --header-grad-1:#176b70;
-  --header-grad-2:#299b98;
-  --cat-bg:#f7fbfb;
-  --cat-bg-hover:#eef7f7;
-  --report-bg:#fbfdfd;
-  --report-text-bg:#f2f7f8;
+  --header-grad-1:#176b70;--header-grad-2:#299b98;
+  --cat-bg:#f7fbfb;--cat-bg-hover:#eef7f7;
+  --report-bg:#fbfdfd;--report-text-bg:#f2f7f8;
   --arrow-bg:#e3f0f1;
-  --success:#267b59;
-  --danger:#a43d3d;
-  --danger-bg:#fbe8e8;
-  --warning:#b87514;
-  --warning-bg:#fdf4e3;
-  --star:#e6a817;
-  --radius:14px;
-  --radius-sm:8px;
+  --success:#267b59;--danger:#a43d3d;--danger-bg:#fbe8e8;
+  --warning:#b87514;--warning-bg:#fdf4e3;
+  --radius:14px;--radius-sm:8px;
   --transition:.2s cubic-bezier(.4,0,.2,1);
 }
-
 [data-theme="dark"]{
-  --bg:#0f1720;
-  --bg-grad-1:#0a1018;
-  --bg-grad-2:#141d28;
-  --card:#1a2533;
-  --card-hover:#1f2c3b;
-  --text:#e6edf3;
-  --muted:#8b9aa8;
-  --accent:#3ab0b0;
-  --accent2:#4cc5c5;
+  --bg:#0f1720;--bg-grad-1:#0a1018;--bg-grad-2:#141d28;
+  --card:#1a2533;--text:#e6edf3;--muted:#8b9aa8;
+  --accent:#3ab0b0;--accent2:#4cc5c5;
   --accent-light:rgba(58,176,176,.15);
-  --border:#2a3847;
-  --border-soft:#223040;
+  --border:#2a3847;--border-soft:#223040;
   --shadow:0 6px 20px rgba(0,0,0,.3);
-  --shadow-lg:0 12px 32px rgba(0,0,0,.4);
-  --header-grad-1:#0d4a4d;
-  --header-grad-2:#1a6b6e;
-  --cat-bg:#16212e;
-  --cat-bg-hover:#1c2a3a;
-  --report-bg:#16212e;
-  --report-text-bg:#0f1923;
+  --header-grad-1:#0d4a4d;--header-grad-2:#1a6b6e;
+  --cat-bg:#16212e;--cat-bg-hover:#1c2a3a;
+  --report-bg:#16212e;--report-text-bg:#0f1923;
   --arrow-bg:#243447;
-  --danger:#e07070;
-  --danger-bg:rgba(224,112,112,.12);
-  --warning:#f0b84a;
-  --warning-bg:rgba(240,184,74,.12);
-  --star:#f5c542;
+  --danger:#e07070;--danger-bg:rgba(224,112,112,.12);
+  --warning:#f0b84a;--warning-bg:rgba(240,184,74,.12);
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-
 body{
   background:linear-gradient(135deg,var(--bg-grad-1),var(--bg-grad-2));
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,Helvetica,sans-serif;
-  color:var(--text);
-  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);min-height:100vh;
   transition:background var(--transition),color var(--transition);
   line-height:1.5;
 }
-
 header{
   background:linear-gradient(135deg,var(--header-grad-1),var(--header-grad-2));
-  color:#fff;
-  padding:14px 20px;
+  color:#fff;padding:14px 20px;
   box-shadow:0 4px 15px rgba(0,0,0,.15);
-  position:sticky;
-  top:0;
-  z-index:50;
+  position:sticky;top:0;z-index:50;
 }
-
 .header-inner{
-  max-width:1150px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  flex-wrap:wrap;
+  max-width:1150px;margin:auto;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;
 }
-
 .header-title-wrap{flex:1;min-width:200px}
-
-h1{
-  font-size:20px;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.subtitle{
-  opacity:.85;
-  font-size:12px;
-  margin-top:2px;
-}
-
-.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-
+h1{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+.subtitle{opacity:.85;font-size:12px;margin-top:2px}
 .icon-btn{
-  width:38px;
-  height:38px;
-  border-radius:10px;
+  width:38px;height:38px;border-radius:10px;
   background:rgba(255,255,255,.12);
   border:1px solid rgba(255,255,255,.18);
-  color:#fff;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:16px;
-  transition:var(--transition);
+  color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:var(--transition);
 }
-
 .icon-btn:hover{background:rgba(255,255,255,.22);transform:translateY(-1px)}
-
-.shift-timer{
-  background:rgba(0,0,0,.25);
-  border-radius:10px;
-  padding:6px 12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:13px;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.15);
-  transition:var(--transition);
-}
-
-.shift-timer:hover{background:rgba(0,0,0,.35)}
-
-.shift-timer-icon{font-size:14px}
-.shift-timer-value{font-weight:700;font-variant-numeric:tabular-nums}
-.shift-timer-label{opacity:.8;font-size:11px}
-
-.container{
-  max-width:1150px;
-  margin:16px auto;
-  padding:0 14px;
-}
-
+.container{max-width:1150px;margin:16px auto;padding:0 14px}
 .panel{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:16px;
-  box-shadow:var(--shadow);
-  margin-bottom:14px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
+  box-shadow:var(--shadow);margin-bottom:14px;
   transition:background var(--transition),border var(--transition);
 }
-
 .panel-title{
-  font-size:15px;
-  font-weight:700;
-  margin-bottom:12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:var(--text);
+  font-size:15px;font-weight:700;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;color:var(--text);
 }
-
-.controls{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.controls + .controls{margin-top:10px !important}
-
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.controls+.controls{margin-top:10px !important}
 label{
-  font-size:12px;
-  font-weight:700;
-  color:var(--muted);
-  display:block;
-  margin-bottom:5px;
-  text-transform:uppercase;
-  letter-spacing:.3px;
+  font-size:12px;font-weight:700;color:var(--muted);
+  display:block;margin-bottom:5px;
+  text-transform:uppercase;letter-spacing:.3px;
 }
-
 input,select,textarea{
-  width:100%;
-  padding:10px 12px;
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  font-size:14px;
-  outline:none;
-  background:var(--card);
-  color:var(--text);
-  transition:var(--transition);
-  font-family:inherit;
+  width:100%;padding:10px 12px;
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  font-size:14px;outline:none;background:var(--card);color:var(--text);
+  transition:var(--transition);font-family:inherit;
 }
-
 input:focus,select:focus,textarea:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px var(--accent-light);
+  border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light);
 }
-
 input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
-
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 button{
-  border:0;
-  border-radius:var(--radius-sm);
-  padding:9px 14px;
-  font-weight:600;
-  cursor:pointer;
-  transition:var(--transition);
-  font-size:13px;
-  font-family:inherit;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+  border:0;border-radius:var(--radius-sm);
+  padding:9px 14px;font-weight:600;cursor:pointer;
+  transition:var(--transition);font-size:13px;
+  font-family:inherit;display:inline-flex;
+  align-items:center;gap:6px;
 }
-
 button:hover{transform:translateY(-1px)}
 button:active{transform:translateY(0)}
-
 .primary{background:var(--accent);color:#fff}
 .primary:hover{background:var(--accent2)}
-
 .secondary{background:var(--accent-light);color:var(--accent2)}
 .secondary:hover{background:var(--accent);color:#fff}
-
 .danger{background:var(--danger-bg);color:var(--danger)}
 .danger:hover{background:var(--danger);color:#fff}
-
-.ghost{
-  background:transparent;
-  color:var(--muted);
-  border:1px solid var(--border);
-}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
 .ghost:hover{background:var(--accent-light);color:var(--accent2);border-color:var(--accent)}
-
-.toggle{
-  background:var(--border-soft);
-  color:var(--muted);
-  border:1px solid var(--border);
-}
-.toggle.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-
-.search-wrap{
-  position:relative;
-  margin-bottom:12px;
-}
-
-.search-wrap input{
-  padding-left:38px;
-  padding-right:32px;
-}
-
+.search-wrap{position:relative;margin-bottom:12px}
+.search-wrap input{padding-left:38px;padding-right:32px}
 .search-icon{
-  position:absolute;
-  left:12px;
-  top:50%;
-  transform:translateY(-50%);
-  color:var(--muted);
-  pointer-events:none;
-  font-size:15px;
+  position:absolute;left:12px;top:50%;
+  transform:translateY(-50%);color:var(--muted);
+  pointer-events:none;font-size:15px;
 }
-
 .search-clear{
-  position:absolute;
-  right:6px;
-  top:50%;
+  position:absolute;right:6px;top:50%;
   transform:translateY(-50%);
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:transparent;
-  color:var(--muted);
-  padding:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
+  width:26px;height:26px;border-radius:50%;
+  background:transparent;color:var(--muted);
+  padding:0;display:none;
+  align-items:center;justify-content:center;font-size:14px;
 }
-
 .search-clear.show{display:flex}
 .search-clear:hover{background:var(--accent-light);color:var(--accent)}
-
 .cat-toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-  flex-wrap:wrap;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-bottom:10px;flex-wrap:wrap;
 }
-
-.cat-toolbar-left{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-}
-
+.cat-toolbar-left{display:flex;gap:6px;flex-wrap:wrap}
 .chip{
-  padding:5px 10px;
-  border-radius:20px;
-  background:var(--accent-light);
-  color:var(--accent2);
-  font-size:12px;
-  font-weight:600;
-  border:1px solid transparent;
-  cursor:pointer;
+  padding:5px 10px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent2);
+  font-size:12px;font-weight:600;
+  border:1px solid transparent;cursor:pointer;
   transition:var(--transition);
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
+  display:inline-flex;align-items:center;gap:5px;
 }
-
 .chip:hover{background:var(--accent);color:#fff}
 .chip.active{background:var(--accent);color:#fff}
-
 .chip .count{
   background:rgba(255,255,255,.25);
-  padding:1px 6px;
-  border-radius:10px;
-  font-size:11px;
+  padding:1px 6px;border-radius:10px;font-size:11px;
 }
-
 .category{
-  margin:8px 0;
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-  background:var(--card);
+  margin:8px 0;border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;background:var(--card);
   transition:var(--transition);
 }
-
 .category:hover{border-color:var(--accent);box-shadow:0 2px 12px var(--accent-light)}
-
 .category-header{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 14px;
-  background:var(--cat-bg);
-  color:var(--text);
-  text-align:left;
-  font-size:14px;
-  font-weight:600;
-  cursor:pointer;
-  border-radius:0;
-  border:0;
-  transition:var(--transition);
-  gap:10px;
+  width:100%;display:flex;justify-content:space-between;
+  align-items:center;padding:12px 14px;
+  background:var(--cat-bg);color:var(--text);
+  text-align:left;font-size:14px;font-weight:600;
+  cursor:pointer;border:0;
+  transition:var(--transition);gap:10px;
 }
-
 .category-header:hover{background:var(--cat-bg-hover)}
-
 .category-header-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex:1;
-  min-width:0;
+  display:flex;align-items:center;gap:10px;
+  flex:1;min-width:0;
 }
-
 .category-icon{
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  background:var(--accent-light);
-  color:var(--accent2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  flex-shrink:0;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--accent-light);color:var(--accent2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
 }
-
 .category-arrow{
-  width:20px;
-  height:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:6px;
-  background:var(--arrow-bg);
-  color:var(--accent2);
-  font-size:10px;
-  transition:transform .25s ease;
-  flex-shrink:0;
+  width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:6px;background:var(--arrow-bg);
+  color:var(--accent2);font-size:10px;
+  transition:transform .25s ease;flex-shrink:0;
 }
-
 .category.open .category-arrow{transform:rotate(90deg)}
-
 .category-count{
-  color:var(--muted);
-  font-size:11px;
-  font-weight:500;
-  white-space:nowrap;
+  color:var(--muted);font-size:11px;
+  font-weight:500;white-space:nowrap;
 }
-
 .category-content{
-  max-height:0;
-  overflow:hidden;
+  max-height:0;overflow:hidden;
   transition:max-height .3s ease;
 }
-
 .category.open .category-content{max-height:5000px}
-
 .category-inner{padding:4px 12px 12px}
-
 .copy-cat-btn{
-  margin-left:auto;
-  font-size:11px;
-  padding:5px 10px;
-  opacity:0;
+  margin-left:auto;font-size:11px;
+  padding:5px 10px;opacity:0;
   transition:var(--transition);
 }
-
 .category-header:hover .copy-cat-btn{opacity:1}
-
 .report{
   border:1px solid var(--border);
   border-radius:var(--radius-sm);
-  padding:10px 12px;
-  margin:7px 0;
+  padding:10px 12px;margin:7px 0;
   background:var(--report-bg);
   transition:var(--transition);
-  position:relative;
 }
-
 .report:hover{
   border-color:var(--accent);
   box-shadow:0 2px 8px var(--accent-light);
 }
-
-.report.highlight{
-  border-color:var(--accent);
-  background:var(--accent-light);
-  box-shadow:0 0 0 2px var(--accent-light);
-  animation:pulse 1.5s ease;
-}
-
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 0 2px var(--accent-light)}
-  50%{box-shadow:0 0 0 6px var(--accent-light)}
-}
-
 .report-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-  margin-bottom:6px;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:8px;margin-bottom:6px;
 }
-
 .report-title{
-  font-weight:600;
-  font-size:12px;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:.3px;
+  font-weight:600;font-size:12px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.3px;
 }
-
-.report-meta{
-  display:flex;
-  gap:6px;
-  align-items:center;
-}
-
+.report-meta{display:flex;gap:6px;align-items:center}
 .char-count{
-  font-size:11px;
-  color:var(--muted);
+  font-size:11px;color:var(--muted);
   background:var(--border-soft);
-  padding:2px 7px;
-  border-radius:10px;
-  font-weight:600;
+  padding:2px 7px;border-radius:10px;font-weight:600;
 }
-
 .char-count.warn{background:var(--warning-bg);color:var(--warning)}
 .char-count.danger{background:var(--danger-bg);color:var(--danger)}
-
-.star-btn{
-  background:transparent;
-  color:var(--muted);
-  padding:3px 6px;
-  font-size:14px;
-  border-radius:6px;
-}
-
-.star-btn:hover{background:var(--accent-light)}
-.star-btn.active{color:var(--star)}
-
 .report-text{
   background:var(--report-text-bg);
-  border-radius:7px;
-  padding:9px 11px;
-  line-height:1.5;
-  white-space:pre-wrap;
+  border-radius:7px;padding:9px 11px;
+  line-height:1.5;white-space:pre-wrap;
   font-size:13px;
   font-family:"SF Mono","Consolas","Monaco",monospace;
   word-break:break-word;
 }
-
-.report-actions{
-  display:flex;
-  gap:6px;
-  margin-top:8px;
-  flex-wrap:wrap;
+.report-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.report-actions button{font-size:12px;padding:6px 10px}
+.empty{text-align:center;padding:20px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:32px;opacity:.4;margin-bottom:6px}
+/* Лекарства */
+.med-mode{display:flex;gap:16px;margin-bottom:14px}
+.med-mode label{
+  font-size:14px;color:var(--text);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  text-transform:none;letter-spacing:0;margin:0;font-weight:500;
 }
-
-.report-actions button{
-  font-size:12px;
-  padding:6px 10px;
+.med-mode input[type="radio"]{
+  width:16px;height:16px;accent-color:var(--accent);
 }
-
-.next-suggest{
-  margin-top:8px;
-  padding:8px 10px;
-  background:var(--warning-bg);
-  border:1px dashed var(--warning);
-  border-radius:8px;
-  font-size:12px;
-  color:var(--warning);
-  display:none;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
+.med-result{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.med-block{
+  padding:12px;background:var(--report-text-bg);
+  border:1px solid var(--border);border-radius:8px;
 }
-
-.next-suggest.show{display:flex}
-
-.next-suggest-label{font-weight:600;margin-right:4px}
-
-.next-suggest-btn{
-  background:var(--card);
-  color:var(--warning);
-  border:1px solid var(--warning);
-  padding:4px 10px;
-  font-size:11px;
-  border-radius:6px;
-  cursor:pointer;
+.med-block-title{
+  font-weight:700;color:var(--text);
+  margin-bottom:8px;font-size:14px;
+}
+.med-block-from{
+  font-size:11px;color:var(--muted);
+  font-family:monospace;margin-bottom:8px;
+  padding:4px 8px;background:var(--card);
+  border-radius:4px;border:1px dashed var(--border);
+}
+.med-list{display:flex;flex-wrap:wrap;gap:6px}
+.med-item{
+  padding:6px 11px;background:var(--card);
+  border:1px solid var(--border);border-radius:6px;
+  font-size:12px;cursor:pointer;
   transition:var(--transition);
 }
-
-.next-suggest-btn:hover{background:var(--warning);color:#fff}
-
-.custom-grid{
-  display:grid;
-  grid-template-columns:1fr 2fr;
-  gap:12px;
+.med-item:hover{
+  background:var(--accent);color:#fff;border-color:var(--accent);
 }
-
-textarea{
-  min-height:90px;
-  resize:vertical;
-  font-family:"SF Mono","Consolas","Monaco",monospace;
-  font-size:13px;
+.med-item.copied{
+  background:var(--success);color:#fff;border-color:var(--success);
 }
-
-.vars-hint{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:6px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:4px;
-  align-items:center;
+.med-hint{
+  font-size:12px;color:var(--muted);
+  padding:10px 12px;background:var(--accent-light);
+  border-radius:8px;margin-bottom:10px;
+  border-left:3px solid var(--accent);
 }
-
-.var-tag{
-  background:var(--accent-light);
-  color:var(--accent2);
-  padding:2px 7px;
-  border-radius:5px;
-  font-family:monospace;
-  cursor:pointer;
-  transition:var(--transition);
+.med-highlight{
+  background:var(--accent-light);color:var(--accent2);
+  padding:1px 4px;border-radius:3px;
 }
-
-.var-tag:hover{background:var(--accent);color:#fff}
-
-.saved-item{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  padding:10px 12px;
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  margin:6px 0;
-  background:var(--report-bg);
-  transition:var(--transition);
-}
-
-.saved-item:hover{border-color:var(--accent)}
-
-.saved-item-text{
-  flex:1;
-  min-width:0;
-}
-
-.saved-item-title{
-  font-weight:700;
-  font-size:13px;
-  margin-bottom:3px;
-}
-
-.saved-item-body{
-  color:var(--muted);
-  font-size:12px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  font-family:monospace;
-}
-
-.saved-item-time{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:3px;
-}
-
-.saved-item-actions{
-  display:flex;
-  gap:5px;
-  align-items:center;
-  flex-shrink:0;
-}
-
-.empty{
-  text-align:center;
-  padding:20px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.empty-icon{
-  font-size:32px;
-  opacity:.4;
-  margin-bottom:6px;
-}
-
-.tabs{
-  display:flex;
-  gap:4px;
-  margin-bottom:12px;
-  border-bottom:1px solid var(--border);
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-
-.tabs::-webkit-scrollbar{display:none}
-
-.tab{
-  padding:8px 14px;
-  background:transparent;
-  color:var(--muted);
-  border-radius:8px 8px 0 0;
-  font-size:13px;
-  font-weight:600;
-  border:0;
-  cursor:pointer;
-  white-space:nowrap;
-  position:relative;
-  transition:var(--transition);
-}
-
-.tab:hover{color:var(--text);background:var(--accent-light)}
-
-.tab.active{color:var(--accent2)}
-
-.tab.active::after{
-  content:"";
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  right:0;
-  height:2px;
-  background:var(--accent);
-  border-radius:2px 2px 0 0;
-}
-
-.tab-badge{
-  background:var(--accent);
-  color:#fff;
-  font-size:10px;
-  padding:1px 6px;
-  border-radius:10px;
-  margin-left:5px;
-  font-weight:700;
-}
-
 .toast{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  background:var(--text);
-  color:var(--card);
-  padding:12px 18px;
-  border-radius:12px;
-  opacity:0;
-  pointer-events:none;
+  position:fixed;right:18px;bottom:18px;
+  background:var(--text);color:var(--card);
+  padding:12px 18px;border-radius:12px;
+  opacity:0;pointer-events:none;
   transform:translateY(20px);
   transition:.25s cubic-bezier(.4,0,.2,1);
-  z-index:999;
-  font-size:13px;
-  font-weight:600;
-  box-shadow:var(--shadow-lg);
-  display:flex;
-  align-items:center;
-  gap:8px;
-  max-width:320px;
+  z-index:999;font-size:13px;font-weight:600;
+  box-shadow:0 12px 32px rgba(0,0,0,.2);
+  display:flex;align-items:center;gap:8px;
+  max-width:360px;
 }
-
 .toast.show{opacity:1;transform:translateY(0)}
-
 .toast.success{background:var(--success);color:#fff}
 .toast.error{background:var(--danger);color:#fff}
-.toast.warning{background:var(--warning);color:#fff}
-
-.modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  backdrop-filter:blur(4px);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:100;
-  padding:20px;
-  animation:fadeIn .2s ease;
-}
-
-.modal-overlay.show{display:flex}
-
-.modal{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:20px;
-  max-width:500px;
-  width:100%;
-  max-height:90vh;
-  overflow-y:auto;
-  box-shadow:var(--shadow-lg);
-  animation:slideUp .25s ease;
-}
-
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-.modal-title{
-  font-size:16px;
-  font-weight:700;
-  margin-bottom:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.modal-close{
-  background:transparent;
-  color:var(--muted);
-  padding:4px 8px;
-  font-size:18px;
-}
-
-.modal-close:hover{background:var(--danger-bg);color:var(--danger)}
-
-.modal-actions{
-  display:flex;
-  gap:8px;
-  justify-content:flex-end;
-  margin-top:14px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.stat{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  text-align:center;
-  cursor:pointer;
-  transition:var(--transition);
-}
-
-.stat:hover{border-color:var(--accent);transform:translateY(-2px)}
-
-.stat-value{
-  font-size:22px;
-  font-weight:700;
-  color:var(--accent);
-  line-height:1;
-}
-
-.stat-label{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px;
-  text-transform:uppercase;
-  letter-spacing:.3px;
-}
-
-.scenarios{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:10px;
-}
-
-.scenario{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  cursor:pointer;
-  transition:var(--transition);
-  position:relative;
-  overflow:hidden;
-}
-
-.scenario:hover{
-  border-color:var(--accent);
-  transform:translateY(-2px);
-  box-shadow:var(--shadow);
-}
-
-.scenario-icon{
-  font-size:24px;
-  margin-bottom:6px;
-}
-
-.scenario-title{
-  font-weight:700;
-  font-size:13px;
-  margin-bottom:4px;
-}
-
-.scenario-desc{
-  font-size:11px;
-  color:var(--muted);
-  margin-bottom:8px;
-}
-
-.scenario-steps{
-  display:flex;
-  gap:3px;
-  flex-wrap:wrap;
-}
-
-.scenario-step{
-  background:var(--accent-light);
-  color:var(--accent2);
-  padding:2px 7px;
-  border-radius:5px;
-  font-size:10px;
-  font-weight:600;
-}
-
-.scenario-step.current{
-  background:var(--accent);
-  color:#fff;
-}
-
-.scenario-step.done{
-  background:var(--success);
-  color:#fff;
-  opacity:.7;
-}
-
-.scenario-progress{
-  height:3px;
-  background:var(--border-soft);
-  border-radius:2px;
-  overflow:hidden;
-  margin-top:8px;
-}
-
-.scenario-progress-bar{
-  height:100%;
-  background:var(--accent);
-  transition:width .3s ease;
-}
-
-.notes-area{
-  width:100%;
-  min-height:100px;
-  padding:10px 12px;
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  background:var(--card);
-  color:var(--text);
-  font-family:inherit;
-  font-size:13px;
-  resize:vertical;
-  outline:none;
-  transition:var(--transition);
-}
-
-.notes-area:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px var(--accent-light);
-}
-
-.notes-status{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:6px;
-  display:flex;
-  justify-content:space-between;
-}
-
-.scroll-top{
-  position:fixed;
-  right:18px;
-  bottom:80px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:var(--accent);
-  color:#fff;
-  border:0;
-  cursor:pointer;
-  box-shadow:var(--shadow-lg);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-  z-index:40;
-  transition:var(--transition);
-}
-
-.scroll-top.show{display:flex}
-.scroll-top:hover{transform:translateY(-3px);background:var(--accent2)}
-
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:10px 0 30px;
-}
-
-footer a{color:var(--accent);text-decoration:none}
-footer a:hover{text-decoration:underline}
-
-.hidden{display:none !important}
-
 .copied{background:var(--success) !important;color:#fff !important}
-
+footer{
+  text-align:center;color:var(--muted);
+  font-size:11px;padding:10px 0 30px;
+}
 @media(max-width:850px){
   .controls{grid-template-columns:1fr 1fr}
-  .stats{grid-template-columns:repeat(2,1fr)}
 }
-
 @media(max-width:600px){
-  .controls,.custom-grid{grid-template-columns:1fr}
+  .controls{grid-template-columns:1fr}
   .container{margin:10px auto;padding:0 8px}
   .panel{padding:12px}
   h1{font-size:17px}
@@ -990,23 +318,7 @@ footer a:hover{text-decoration:underline}
   .cat-toolbar-left{overflow-x:auto;scrollbar-width:none}
   .cat-toolbar-left::-webkit-scrollbar{display:none}
   .copy-cat-btn{opacity:1}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stat-value{font-size:18px}
-  .scroll-top{right:12px;bottom:70px}
   .toast{right:12px;bottom:12px;left:12px;max-width:none}
-  .shift-timer{font-size:12px;padding:5px 10px}
-  .shift-timer-label{display:none}
-}
-
-kbd{
-  background:var(--border-soft);
-  color:var(--text);
-  padding:2px 6px;
-  border-radius:4px;
-  font-size:11px;
-  font-family:monospace;
-  border:1px solid var(--border);
-  box-shadow:0 1px 0 var(--border);
 }
 </style>
 </head>
@@ -1016,43 +328,16 @@ kbd{
   <div class="header-inner">
     <div class="header-title-wrap">
       <h1>🏥 ЦГБ-Н — Доклады в рацию</h1>
-      <div class="subtitle">Быстрый помощник для сотрудников. Заполни данные один раз — сайт сделает остальное.</div>
+      <div class="subtitle">Быстрый помощник для сотрудников</div>
     </div>
-    <div class="header-actions">
-      <div class="shift-timer" id="shiftTimer" onclick="toggleShiftTimer()" title="Нажми, чтобы начать/остановить смену">
-        <span class="shift-timer-icon">⏱️</span>
-        <span class="shift-timer-value" id="shiftTime">00:00:00</span>
-        <span class="shift-timer-label" id="shiftLabel">Смена не начата</span>
-      </div>
-      <button class="icon-btn" onclick="openHelp()" title="Справка (F1)">❓</button>
-      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Сменить тему">🌙</button>
-    </div>
+    <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Сменить тему">🌙</button>
   </div>
 </header>
 
 <main class="container">
 
-<section class="stats" id="stats">
-  <div class="stat" onclick="switchTab('history')" title="Открыть историю">
-    <div class="stat-value" id="statCopied">0</div>
-    <div class="stat-label">Скопировано</div>
-  </div>
-  <div class="stat" onclick="switchTab('favorites')" title="Открыть избранное">
-    <div class="stat-value" id="statFavorites">0</div>
-    <div class="stat-label">В избранном</div>
-  </div>
-  <div class="stat" onclick="switchTab('scenarios')" title="Открыть сценарии">
-    <div class="stat-value" id="statScenarios">0</div>
-    <div class="stat-label">Сценариев</div>
-  </div>
-  <div class="stat" onclick="switchTab('history')" title="Открыть историю">
-    <div class="stat-value" id="statHistory">0</div>
-    <div class="stat-label">В истории</div>
-  </div>
-</section>
-
 <section class="panel">
-  <div class="panel-title">⚙️ Настройки доклада</div>
+  <div class="panel-title">⚙️ Настройки</div>
 
   <div class="controls">
     <div>
@@ -1071,7 +356,7 @@ kbd{
       <select id="transport">
         <option value="АСМП">🚐 АСМП</option>
         <option value="ВСМП">🚁 ВСМП</option>
-        <option value="АСМП/ВСМП">🚐🚁 АСМП/ВСМП (оба)</option>
+        <option value="АСМП/ВСМП">🚐🚁 АСМП/ВСМП</option>
       </select>
     </div>
   </div>
@@ -1147,8 +432,6 @@ kbd{
 
   <div class="actions">
     <button class="primary" onclick="saveSettings()">💾 Сохранить</button>
-    <button class="secondary" onclick="exportData()">📤 Экспорт</button>
-    <button class="secondary" onclick="importData()">📥 Импорт</button>
     <button class="danger" onclick="clearSettings()">🗑 Очистить</button>
   </div>
 </section>
@@ -1158,84 +441,46 @@ kbd{
 
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input id="search" placeholder="Поиск по докладам... (Ctrl+K)" autocomplete="off">
+    <input id="search" placeholder="Поиск по докладам..." autocomplete="off">
     <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
 
   <div class="cat-toolbar">
     <div class="cat-toolbar-left" id="chipBar"></div>
     <div style="display:flex;gap:6px">
-      <button class="toggle" id="quickModeBtn" onclick="toggleQuickMode()" title="После копирования подсвечивается следующий доклад">⚡ Быстрый режим</button>
-      <button class="ghost" onclick="expandAll()" title="Раскрыть все">▼ Развернуть</button>
-      <button class="ghost" onclick="collapseAll()" title="Свернуть все">▲ Свернуть</button>
+      <button class="ghost" onclick="expandAll()">▼ Развернуть</button>
+      <button class="ghost" onclick="collapseAll()">▲ Свернуть</button>
     </div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="all" onclick="switchTab('all')">📚 Все доклады</button>
-    <button class="tab" data-tab="favorites" onclick="switchTab('favorites')">⭐ Избранное <span class="tab-badge" id="favBadge">0</span></button>
-    <button class="tab" data-tab="scenarios" onclick="switchTab('scenarios')">🎬 Сценарии <span class="tab-badge" id="scenBadge">0</span></button>
-    <button class="tab" data-tab="history" onclick="switchTab('history')">🕐 История <span class="tab-badge" id="histBadge">0</span></button>
   </div>
 
   <div id="reports"></div>
 </section>
 
 <section class="panel">
-  <div class="panel-title">📝 Быстрые заметки</div>
-  <textarea class="notes-area" id="notesArea" placeholder="Записывайте важную информацию во время смены: номера, адреса, детали вызовов..."></textarea>
-  <div class="notes-status">
-    <span id="notesStatus">Автосохранение включено</span>
-    <span>
-      <button class="ghost" style="padding:4px 10px;font-size:11px" onclick="copyNotes()">📋 Копировать всё</button>
-      <button class="ghost" style="padding:4px 10px;font-size:11px" onclick="clearNotes()">🗑 Очистить</button>
-    </span>
-  </div>
-</section>
+  <div class="panel-title">💊 Лекарственные препараты</div>
 
-<section class="panel">
-  <div class="panel-title">✍️ Свой доклад</div>
-
-  <div class="custom-grid">
-    <div>
-      <label>Название</label>
-      <input id="customTitle" placeholder="Например: Доклад о заступлении" autocomplete="off">
-    </div>
-    <div>
-      <label>Текст</label>
-      <textarea id="customText" placeholder="Напиши свой доклад. Используй {TAG}, {CALL}, {TRANSPORT} и другие переменные"></textarea>
-      <div class="vars-hint" id="varsHint"></div>
-    </div>
+  <div class="med-mode">
+    <label><input type="radio" name="med-mode" value="symptom" checked> По симптомам</label>
+    <label><input type="radio" name="med-mode" value="medicine"> По препаратам</label>
   </div>
 
-  <div class="actions">
-    <button class="primary" onclick="saveCustom()">➕ Добавить доклад</button>
+  <div class="search-wrap">
+    <span class="search-icon">💊</span>
+    <input id="medSearch" placeholder="Введите запрос (минимум 2 символа)..." autocomplete="off">
   </div>
 
-  <div id="customList" style="margin-top:12px"></div>
+  <div class="med-hint">💡 Нажмите на препарат — скопируется готовая фраза: <b>«Я выпишу Вам от ... препарат ...»</b></div>
+
+  <div class="med-result" id="medResult"></div>
 </section>
 
 </main>
 
 <footer>
-  ЦГБ-Н • Локальный помощник • Данные сохраняются только в вашем браузере<br>
-  <span style="opacity:.7">Горячие клавиши: <kbd>Ctrl</kbd>+<kbd>K</kbd> — поиск · <kbd>Esc</kbd> — закрыть · <kbd>F1</kbd> — справка</span>
+  ЦГБ-Н • Локальный помощник • Данные сохраняются только в вашем браузере
 </footer>
 
-<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
 <div id="toast" class="toast"></div>
-
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="modal-title">
-      <span id="modalTitle">Редактирование</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div id="modalBody"></div>
-    <div class="modal-actions" id="modalActions"></div>
-  </div>
-</div>
 
 <script>
 /* ==================== ДАННЫЕ ==================== */
@@ -1358,138 +603,333 @@ const data = {
   ]
 };
 
-/* ==================== СЦЕНАРИИ ==================== */
-const scenarios = [
-  {
-    id:"call_full",
-    icon:"🚑",
-    title:"Полный вызов",
-    desc:"Последовательность докладов при вызове",
-    steps:[
-      {cat:"Вызов",idx:0,label:"Принят"},
-      {cat:"Вызов",idx:1,label:"Результат"},
-    ]
-  },
-  {
-    id:"post_full",
-    icon:"📍",
-    title:"Пост АСМП",
-    desc:"Выезд, прибытие, работа, возврат",
-    steps:[
-      {cat:"Пост АСМП",idx:0,label:"Выехал"},
-      {cat:"Пост АСМП",idx:1,label:"Прибыл"},
-      {cat:"Пост АСМП",idx:2,label:"Работа"},
-      {cat:"Пост АСМП",idx:3,label:"Возврат"},
-      {cat:"Пост АСМП",idx:4,label:"На базе"},
-    ]
-  },
-  {
-    id:"patrol_asmp",
-    icon:"🚐",
-    title:"Патруль АСМП",
-    desc:"Патрулирование на автомобиле",
-    steps:[
-      {cat:"Патруль АСМП",idx:0,label:"Выехал"},
-      {cat:"Патруль АСМП",idx:1,label:"Продолжаю"},
-      {cat:"Патруль АСМП",idx:2,label:"Возврат"},
-      {cat:"Патруль АСМП",idx:3,label:"На базе"},
-    ]
-  },
-  {
-    id:"patrol_vcmp",
-    icon:"🚁",
-    title:"Патруль ВСМП",
-    desc:"Патрулирование на вертолёте",
-    steps:[
-      {cat:"Патруль ВСМП",idx:0,label:"Вылетел"},
-      {cat:"Патруль ВСМП",idx:1,label:"Стабильно"},
-      {cat:"Патруль ВСМП",idx:2,label:"Возврат"},
-      {cat:"Патруль ВСМП",idx:3,label:"На базе"},
-    ]
-  },
-  {
-    id:"prmo_full",
-    icon:"🏥",
-    title:"ПРМО",
-    desc:"Медицинское обеспечение мероприятия",
-    steps:[
-      {cat:"ПРМО",idx:0,label:"Выехал"},
-      {cat:"ПРМО",idx:1,label:"Прибыл"},
-      {cat:"ПРМО",idx:2,label:"Возврат"},
-      {cat:"ПРМО",idx:3,label:"На базе"},
-    ]
-  },
-  {
-    id:"shift_change",
-    icon:"🔄",
-    title:"Смена",
-    desc:"Сдача и заступление на смену",
-    steps:[
-      {cat:"Сдача смены",idx:0,label:"Сдал"},
-      {cat:"Сдача смены",idx:1,label:"Заступил"},
-    ]
-  },
-  {
-    id:"break",
-    icon:"⏸️",
-    title:"Перерыв",
-    desc:"Взятие и возврат с перерыва",
-    steps:[
-      {cat:"Взятие перерыва",idx:0,label:"Разрешение"},
-      {cat:"Взятие перерыва",idx:1,label:"Взял"},
-      {cat:"Взятие перерыва",idx:2,label:"Вернулся"},
-    ]
+/* ==================== ЛЕКАРСТВА ==================== */
+/*
+  Структура: {
+    "Название симптома": {
+      from: "форма в родительном падеже для фразы «от ...»",
+      meds: ["препарат1", "препарат2", ...]
+    }
   }
-];
+*/
+const medicines = {
+  // ===== ГОЛОВНАЯ БОЛЬ =====
+  "Головная боль слабая": {
+    from: "головной боли слабой",
+    meds: ["Парацетамол","Ибупрофен","Цитрамон","Анальгин","Спазган","Дротаверин","Миг"]
+  },
+  "Головная боль сильная": {
+    from: "головной боли сильной",
+    meds: ["Амигрен","Седальгин-Нео","Каффетин","Солпадеин","Мигрепам","Релпакс","Нурофен","Темпалгин","Пенталгин","Диклофенак"]
+  },
 
-/* ==================== СВЯЗИ МЕЖДУ ДОКЛАДАМИ ==================== */
-const nextSuggestions = {
-  "Пост АСМП::0":"Пост АСМП::1",
-  "Пост АСМП::1":"Пост АСМП::2",
-  "Пост АСМП::2":"Пост АСМП::3",
-  "Пост АСМП::3":"Пост АСМП::4",
-  "Патруль АСМП::0":"Патруль АСМП::1",
-  "Патруль АСМП::1":"Патруль АСМП::2",
-  "Патруль АСМП::2":"Патруль АСМП::3",
-  "Патруль ВСМП::0":"Патруль ВСМП::1",
-  "Патруль ВСМП::1":"Патруль ВСМП::2",
-  "Патруль ВСМП::2":"Патруль ВСМП::3",
-  "ПРМО::0":"ПРМО::1",
-  "ПРМО::1":"ПРМО::2",
-  "ПРМО::2":"ПРМО::3",
-  "Вызов::0":"Вызов::1",
-  "Взятие перерыва::0":"Взятие перерыва::1",
-  "Взятие перерыва::1":"Взятие перерыва::2",
-  "Сдача смены::0":"Сдача смены::1"
+  // ===== СЕРДЕЧНАЯ БОЛЬ =====
+  "Сердечная боль слабая": {
+    from: "сердечной боли слабой",
+    meds: ["Карвалол","Валидол","Андипал"]
+  },
+  "Сердечная боль сильная": {
+    from: "сердечной боли сильной",
+    meds: ["Ацетилсалициловая кислота","Клопидогрел","Варфарин","Ксарелто","Периндоприл","Лозартан","Карведилол","Триметазидин"]
+  },
+
+  // ===== БОЛЬ В ЖИВОТЕ =====
+  "Боль в животе слабая": {
+    from: "боли в животе слабой",
+    meds: ["Но-шпа","Дротаверин","Фестал","Ранитидин"]
+  },
+  "Боль в животе сильная": {
+    from: "боли в животе сильной",
+    meds: ["Метоклопрамид","Спазган","Папаверин","Бускопан"]
+  },
+
+  // ===== БОЛЬ В ГОРЛЕ =====
+  "Боль в горле слабая": {
+    from: "боли в горле слабой",
+    meds: ["Стрепсилс","Септолетте","Анти-ангин"]
+  },
+  "Боль в горле сильная": {
+    from: "боли в горле сильной",
+    meds: ["Граммидин","Гексорал","Стопангин","Тантум верде"]
+  },
+
+  // ===== БОЛЬ В ПЕЧЕНИ =====
+  "Боль в печени слабая": {
+    from: "боли в печени слабой",
+    meds: ["Карсил","Эссенциале форте"]
+  },
+  "Боль в печени сильная": {
+    from: "боли в печени сильной",
+    meds: ["Урсофальк","Гептрал","Берлитион"]
+  },
+
+  // ===== БОЛЬ В ГЛАЗАХ =====
+  "Боль в глазах слабая": {
+    from: "боли в глазах слабой",
+    meds: ["Визин"]
+  },
+  "Боль в глазах сильная": {
+    from: "боли в глазах сильной",
+    meds: ["Альбуцид","Визин"]
+  },
+
+  // ===== БОЛЬ В УШАХ =====
+  "Боль в ушах слабая": {
+    from: "боли в ушах слабой",
+    meds: ["Отипакс"]
+  },
+  "Боль в ушах сильная": {
+    from: "боли в ушах сильной",
+    meds: ["Отинум","Отипакс"]
+  },
+
+  // ===== БОЛЬ В ПОЧКАХ =====
+  "Боль в почках слабая": {
+    from: "боли в почках слабой",
+    meds: ["Уролисан","Урохол"]
+  },
+  "Боль в почках сильная": {
+    from: "боли в почках сильной",
+    meds: ["Уролисан","Урохол","Но-шпа"]
+  },
+
+  // ===== СУДОРОГИ =====
+  "Судороги слабые": {
+    from: "слабых судорог",
+    meds: ["Папаверин","Дротаверин"]
+  },
+  "Судороги сильные": {
+    from: "сильных судорог",
+    meds: ["Карбамазепин","Фенитоин","Вальпроат Натрия","Фенобарбитал","Примидон","Клоназепам","Бекламид","Ламотриджин"]
+  },
+
+  // ===== ТОШНОТА =====
+  "Тошнота слабая": {
+    from: "слабой тошноты",
+    meds: ["Драмина","Авиамарин","Бонин"]
+  },
+  "Тошнота сильная": {
+    from: "сильной тошноты",
+    meds: ["Церукал","Метоклопрамид"]
+  },
+
+  // ===== ДИАРЕЯ =====
+  "Диарея слабая": {
+    from: "слабой диареи",
+    meds: ["Смекта","Энтеросгель","Полисорб"]
+  },
+  "Диарея сильная": {
+    from: "сильной диареи",
+    meds: ["Лоперамид","Имодиум","Лопедиум","Фильтрум-сти"]
+  },
+
+  // ===== ИЗЖОГА =====
+  "Изжога слабая": {
+    from: "слабой изжоги",
+    meds: ["Ренни","Гастал"]
+  },
+  "Изжога сильная": {
+    from: "сильной изжоги",
+    meds: ["Маалокс","Алмагель","Ранитидин"]
+  },
+
+  // ===== НАСМОРК =====
+  "Насморк слабый": {
+    from: "слабого насморка",
+    meds: ["Тизин","Снуп","Отривин"]
+  },
+  "Насморк сильный": {
+    from: "сильного насморка",
+    meds: ["Африн","Нокспрей","Ринонорм"]
+  },
+
+  // ===== КАШЕЛЬ СУХОЙ =====
+  "Кашель сухой слабый": {
+    from: "слабого сухого кашля",
+    meds: ["Гербион"]
+  },
+  "Кашель сухой сильный": {
+    from: "сильного сухого кашля",
+    meds: ["Лазолван","АЦЦ"]
+  },
+
+  // ===== КАШЕЛЬ ВЛАЖНЫЙ =====
+  "Кашель влажный слабый": {
+    from: "слабого влажного кашля",
+    meds: ["Пертуссин"]
+  },
+  "Кашель влажный сильный": {
+    from: "сильного влажного кашля",
+    meds: ["Амбробене","АЦЦ"]
+  },
+
+  // ===== ПРОСТУДА =====
+  "Простуда слабая": {
+    from: "слабой простуды",
+    meds: ["Анвимакс"]
+  },
+  "Простуда сильная": {
+    from: "сильной простуды",
+    meds: ["Терафлю","Колдрекс","Антигриппин"]
+  },
+
+  // ===== АЛЛЕРГИЯ =====
+  "Аллергия слабая": {
+    from: "слабой аллергии",
+    meds: ["Тавегил","Супрастин"]
+  },
+  "Аллергия сильная": {
+    from: "сильной аллергии",
+    meds: ["Зиртек","Цетрин","Кларитин","Эриус","Зодак"]
+  },
+
+  // ===== ОЖОГИ =====
+  "Ожоги слабые": {
+    from: "слабых ожогов",
+    meds: ["Бепантен"]
+  },
+  "Ожоги сильные": {
+    from: "сильных ожогов",
+    meds: ["Солкосерил","Актовегин","Банеоцин"]
+  },
+
+  // ===== УШИБЫ =====
+  "Ушибы слабые": {
+    from: "слабых ушибов",
+    meds: ["Подорожник (мазь)"]
+  },
+  "Ушибы сильные": {
+    from: "сильных ушибов",
+    meds: ["Долобене","Нурофен (гель)"]
+  },
+
+  // ===== ПОВЫШЕННОЕ ДАВЛЕНИЕ =====
+  "Повышенное давление слабое": {
+    from: "слабого повышенного давления",
+    meds: ["Андипал"]
+  },
+  "Повышенное давление сильное": {
+    from: "сильного повышенного давления",
+    meds: ["Лозартан","Каптоприл","Арифон-ретард","Амлодипин (Норваск)","Верошпирон (Спиронолактон)"]
+  },
+
+  // ===== ПОНИЖЕННОЕ ДАВЛЕНИЕ =====
+  "Пониженное давление слабое": {
+    from: "слабого пониженного давления",
+    meds: ["Экдистен"]
+  },
+  "Пониженное давление сильное": {
+    from: "сильного пониженного давления",
+    meds: ["Фетанол","Дофамин","Гептамил","Мидодрин","Ранторин"]
+  },
+
+  // ===== ГЕМОРРОЙ =====
+  "Геморрой слабый": {
+    from: "слабого геморроя",
+    meds: ["Проктонис"]
+  },
+  "Геморрой сильный": {
+    from: "сильного геморроя",
+    meds: ["Релиф","Гепариновая мазь","Прокто-гливенол"]
+  },
+
+  // ===== БЕССОННИЦА =====
+  "Бессонница слабая": {
+    from: "слабой бессонницы",
+    meds: ["Мелаксен"]
+  },
+  "Бессонница сильная": {
+    from: "сильной бессонницы",
+    meds: ["Найтвелл"]
+  },
+
+  // ===== МОЛОЧНИЦА =====
+  "Молочница слабая": {
+    from: "слабой молочницы",
+    meds: ["Клотримазол"]
+  },
+  "Молочница сильная": {
+    from: "сильной молочницы",
+    meds: ["Нистатин","Пимафуцин","Ливарол"]
+  },
+
+  // ===== АСТМА =====
+  "Астма слабая": {
+    from: "слабой астмы",
+    meds: ["Сальбутамол"]
+  },
+  "Астма сильная": {
+    from: "сильной астмы",
+    meds: ["Преднизолон"]
+  },
+
+  // ===== ГАСТРИТ =====
+  "Гастрит слабый": {
+    from: "слабого гастрита",
+    meds: ["Амоксициллин"]
+  },
+  "Гастрит сильный": {
+    from: "сильного гастрита",
+    meds: ["Рабепразол","Азитромицин","Тетрациклин"]
+  },
+
+  // ===== ЯЗВА =====
+  "Язва слабая": {
+    from: "слабой язвы",
+    meds: ["Вентрисол"]
+  },
+  "Язва сильная": {
+    from: "сильной язвы",
+    meds: ["Сукральфат","Де-Нол"]
+  },
+
+  // ===== БЕЗ СТЕПЕНИ (специфические) =====
+  "Потенция": {
+    from: "проблем с потенцией",
+    meds: ["Сиалекс","Виагра"]
+  },
+  "Витамины": {
+    from: "нехватки витаминов",
+    meds: ["Компливит","Витрум","Алфавит","Супрадин"]
+  },
+  "Мочевой пузырь": {
+    from: "проблем с мочевым пузырём",
+    meds: ["Цистон","Нолицин","Канефрон","Фитолизин"]
+  },
+  "Жаропонижающее": {
+    from: "температуры",
+    meds: ["Анальгин","Брустан","Ибуклин","Ремантадин","Нурофен"]
+  },
+  "Антисептики": {
+    from: "ран",
+    meds: ["Хлоргексидин","Перекись водорода","Йод","Зелёнка"]
+  },
+  "Обезболивающее": {
+    from: "боли",
+    meds: ["Парацетамол","Лидокаин","Ибуклин","Дексалгин"]
+  },
+  "Инсульт": {
+    from: "инсульта",
+    meds: ["Гаммалон","Пентоксифиллин"]
+  },
+  "Инфаркт": {
+    from: "инфаркта",
+    meds: ["Антенолол","Омакор"]
+  },
+  "Сахарный диабет": {
+    from: "сахарного диабета",
+    meds: ["Виктоза","Диабетон","Астрозон"]
+  }
 };
 
 /* ==================== КОНСТАНТЫ ==================== */
 const FIELDS = ["tag","call","partners","post","route","faction","result","gender","extra","transport"];
-const VARS = [
-  {key:"{TAG}",label:"ТЭГ"},
-  {key:"{CALL}",label:"Номер вызова"},
-  {key:"{PARTNERS}",label:"Напарники"},
-  {key:"{POST}",label:"Пост"},
-  {key:"{ROUTE}",label:"Маршрут"},
-  {key:"{FACTION}",label:"Фракция"},
-  {key:"{RESULT}",label:"Результат"},
-  {key:"{TRANSPORT}",label:"Транспорт (АСМП/ВСМП)"},
-  {key:"{EXTRA}",label:"Доп. данные"}
-];
 const CHAR_WARN = 120;
 const CHAR_MAX = 200;
 
 /* ==================== СОСТОЯНИЕ ==================== */
 let state = {
-  currentTab:"all",
-  activeFilter:"all",
-  favorites:new Set(JSON.parse(localStorage.getItem("cgb_favorites")||"[]")),
-  history:JSON.parse(localStorage.getItem("cgb_history")||"[]"),
-  stats:JSON.parse(localStorage.getItem("cgb_stats")||'{"copied":0}'),
-  custom:JSON.parse(localStorage.getItem("cgb_custom")||"[]"),
-  scenarioProgress:JSON.parse(localStorage.getItem("cgb_scenario_progress")||"{}"),
-  quickMode:localStorage.getItem("cgb_quick_mode")==="true",
-  lastCopied:null
+  activeFilter:"all"
 };
 
 /* ==================== УТИЛИТЫ ==================== */
@@ -1503,19 +943,20 @@ function plural(n,a,b,c){
   if(n10>=2&&n10<=4&&!(n100>=12&&n100<=14))return b;
   return c;
 }
-function formatTime(ts){
-  const d=new Date(ts);
-  const now=new Date();
-  const diff=(now-d)/1000;
-  if(diff<60)return"только что";
-  if(diff<3600)return Math.floor(diff/60)+" мин назад";
-  if(diff<86400)return Math.floor(diff/3600)+" ч назад";
-  if(diff<604800)return Math.floor(diff/86400)+" дн назад";
-  return d.toLocaleDateString("ru-RU",{day:"numeric",month:"short"});
+function normalize(s){return (s||'').toLowerCase().replace(/\s+/g,' ').trim()}
+function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+function highlight(text,words){
+  let res=text;
+  words.forEach(w=>{
+    if(w.length>1){
+      const re=new RegExp('('+escapeRegExp(w)+')',"gi");
+      res=res.replace(re,'<span class="med-highlight">$1</span>');
+    }
+  });
+  return res;
 }
-function favKey(cat,text){return cat+"::"+text}
 
-/* ==================== ПОЛУЧЕНИЕ ЗНАЧЕНИЙ ==================== */
+/* ==================== ЗНАЧЕНИЯ ==================== */
 function vals(){
   const o={};
   FIELDS.forEach(id=>{o[id]=$(id).value.trim()});
@@ -1551,57 +992,6 @@ function toggleTheme(){
   $("themeBtn").textContent=next==="dark"?"☀️":"🌙";
 }
 
-/* ==================== ТАЙМЕР СМЕНЫ ==================== */
-let shiftInterval=null;
-let shiftStart=parseInt(localStorage.getItem("cgb_shift_start")||"0");
-
-function initShiftTimer(){
-  if(shiftStart>0){
-    startShiftTimer();
-  }
-  updateShiftDisplay();
-}
-
-function toggleShiftTimer(){
-  if(shiftStart>0){
-    shiftStart=0;
-    localStorage.removeItem("cgb_shift_start");
-    if(shiftInterval){clearInterval(shiftInterval);shiftInterval=null}
-    updateShiftDisplay();
-    showToast("Смена остановлена","warning");
-  }else{
-    shiftStart=Date.now();
-    localStorage.setItem("cgb_shift_start",shiftStart);
-    startShiftTimer();
-    showToast("Смена начата! Удачи 🍀","success");
-  }
-}
-
-function startShiftTimer(){
-  if(shiftInterval)clearInterval(shiftInterval);
-  updateShiftDisplay();
-  shiftInterval=setInterval(updateShiftDisplay,1000);
-}
-
-function updateShiftDisplay(){
-  if(shiftStart>0){
-    const elapsed=Math.floor((Date.now()-shiftStart)/1000);
-    const h=Math.floor(elapsed/3600);
-    const m=Math.floor((elapsed%3600)/60);
-    const s=elapsed%60;
-    $("shiftTime").textContent=
-      String(h).padStart(2,"0")+":"+
-      String(m).padStart(2,"0")+":"+
-      String(s).padStart(2,"0");
-    $("shiftLabel").textContent="Смена идёт";
-    $("shiftTimer").style.background="rgba(38,123,89,.4)";
-  }else{
-    $("shiftTime").textContent="00:00:00";
-    $("shiftLabel").textContent="Смена не начата";
-    $("shiftTimer").style.background="rgba(0,0,0,.25)";
-  }
-}
-
 /* ==================== TOAST ==================== */
 let toastTimer;
 function showToast(msg,type="success"){
@@ -1612,32 +1002,7 @@ function showToast(msg,type="success"){
   toastTimer=setTimeout(()=>t.classList.remove("show"),2000);
 }
 
-/* ==================== МОДАЛЬНОЕ ОКНО ==================== */
-function openModal(title,bodyHtml,actions){
-  $("modalTitle").textContent=title;
-  $("modalBody").innerHTML=bodyHtml;
-  const actionsEl=$("modalActions");
-  actionsEl.innerHTML="";
-  actions.forEach(a=>{
-    const btn=document.createElement("button");
-    btn.className=a.class||"secondary";
-    btn.textContent=a.label;
-    btn.onclick=()=>{a.action();if(a.close!==false)closeModal()};
-    actionsEl.appendChild(btn);
-  });
-  $("modal").classList.add("show");
-}
-function closeModal(){$("modal").classList.remove("show")}
-
-/* ==================== БЫСТРЫЙ РЕЖИМ ==================== */
-function toggleQuickMode(){
-  state.quickMode=!state.quickMode;
-  localStorage.setItem("cgb_quick_mode",state.quickMode);
-  $("quickModeBtn").classList.toggle("active",state.quickMode);
-  showToast(state.quickMode?"Быстрый режим включён ⚡":"Быстрый режим выключен","success");
-}
-
-/* ==================== РЕНДЕРИНГ ==================== */
+/* ==================== РЕНДЕРИНГ ДОКЛАДОВ ==================== */
 function render(){
   const gender=$("gender").value;
   const q=$("search").value.toLowerCase().trim();
@@ -1645,10 +1010,6 @@ function render(){
   root.innerHTML="";
 
   $("searchClear").classList.toggle("show",q.length>0);
-
-  if(state.currentTab==="favorites"){renderFavorites(root);return}
-  if(state.currentTab==="history"){renderHistory(root);return}
-  if(state.currentTab==="scenarios"){renderScenarios(root);return}
 
   const items=data[gender];
   let totalVisible=0;
@@ -1663,7 +1024,6 @@ function render(){
 
     const sec=document.createElement("div");
     sec.className="category";
-    sec.dataset.cat=cat;
 
     const header=document.createElement("button");
     header.className="category-header";
@@ -1689,30 +1049,21 @@ function render(){
     matched.forEach(([x,i])=>{
       const filled=fill(x);
       const len=filled.length;
-      const key=favKey(cat,x);
-      const isFav=state.favorites.has(key);
       const charClass=len>CHAR_MAX?"danger":len>CHAR_WARN?"warn":"";
-      const isHighlighted=state.quickMode&&state.lastCopied&&
-        state.lastCopied.cat===cat&&state.lastCopied.idx===i;
 
       const div=document.createElement("div");
-      div.className="report"+(isHighlighted?" highlight":"");
-      div.dataset.cat=cat;
-      div.dataset.idx=i;
+      div.className="report";
       div.innerHTML=`
         <div class="report-top">
           <div class="report-title">${escapeHtml(cat)}</div>
           <div class="report-meta">
-            <span class="char-count ${charClass}" title="Длина доклада">${len} симв.</span>
-            <button class="star-btn ${isFav?'active':''}" onclick="toggleFavorite('${escapeHtml(cat)}',${JSON.stringify(x).replace(/'/g,"&#39;")},this)" title="${isFav?'Убрать из избранного':'В избранное'}">${isFav?'★':'☆'}</button>
+            <span class="char-count ${charClass}">${len} симв.</span>
           </div>
         </div>
         <div class="report-text">${escapeHtml(filled)}</div>
         <div class="report-actions">
-          <button class="primary copy-btn" onclick='copyText(${JSON.stringify(filled)},this,${JSON.stringify(cat)},${JSON.stringify(x)},${i})'>📋 Копировать</button>
-          <button class="secondary" onclick='editReport(${JSON.stringify(cat)},${JSON.stringify(x)})'>✏️ Изменить</button>
+          <button class="primary copy-btn" onclick='copyText(${JSON.stringify(filled)},this)'>📋 Копировать</button>
         </div>
-        <div class="next-suggest" data-next="${cat}::${i}"></div>
       `;
       inner.appendChild(div);
     });
@@ -1728,14 +1079,11 @@ function render(){
       <div class="empty">
         <div class="empty-icon">🔍</div>
         <div>Ничего не найдено по запросу «<b>${escapeHtml(q)}</b>»</div>
-        <div style="margin-top:6px;font-size:12px">Попробуйте изменить запрос или сбросить фильтр</div>
       </div>
     `;
   }
 
   renderChipBar();
-  updateStats();
-  updateQuickModeHighlight();
 }
 
 function renderChipBar(){
@@ -1759,376 +1107,8 @@ function renderChipBar(){
   });
 }
 
-function renderFavorites(root){
-  if(state.favorites.size===0){
-    root.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">⭐</div>
-        <div>В избранном пока пусто</div>
-        <div style="margin-top:6px;font-size:12px">Нажмите ☆ рядом с докладом, чтобы добавить его сюда</div>
-      </div>
-    `;
-    return;
-  }
-  const gender=$("gender").value;
-  const items=data[gender];
-  state.favorites.forEach(key=>{
-    const [cat,raw]=key.split("::",2);
-    const catData=items.find(([c])=>c===cat);
-    if(!catData)return;
-    const filled=fill(raw);
-    const div=document.createElement("div");
-    div.className="report";
-    div.innerHTML=`
-      <div class="report-top">
-        <div class="report-title">${escapeHtml(cat)}</div>
-        <div class="report-meta">
-          <span class="char-count">${filled.length} симв.</span>
-          <button class="star-btn active" onclick="toggleFavorite('${escapeHtml(cat)}',${JSON.stringify(raw).replace(/'/g,"&#39;")},this)" title="Убрать">★</button>
-        </div>
-      </div>
-      <div class="report-text">${escapeHtml(filled)}</div>
-      <div class="report-actions">
-        <button class="primary copy-btn" onclick='copyText(${JSON.stringify(filled)},this,${JSON.stringify(cat)},${JSON.stringify(raw)})'>📋 Копировать</button>
-      </div>
-    `;
-    root.appendChild(div);
-  });
-}
-
-function renderHistory(root){
-  const searchWrap=document.createElement("div");
-  searchWrap.className="search-wrap";
-  searchWrap.innerHTML=`
-    <span class="search-icon">🔍</span>
-    <input id="historySearch" placeholder="Поиск в истории..." autocomplete="off">
-  `;
-  root.appendChild(searchWrap);
-
-  const histList=document.createElement("div");
-  histList.id="histList";
-  root.appendChild(histList);
-
-  const renderList=(filter="")=>{
-    histList.innerHTML="";
-    const filtered=state.history.slice().reverse().filter(item=>
-      !filter||(item.cat+" "+item.text).toLowerCase().includes(filter.toLowerCase())
-    );
-
-    if(filtered.length===0){
-      histList.innerHTML=`
-        <div class="empty">
-          <div class="empty-icon">🕐</div>
-          <div>${state.history.length===0?"История пуста":"Ничего не найдено"}</div>
-          <div style="margin-top:6px;font-size:12px">${state.history.length===0?"Скопированные доклады будут появляться здесь":"Попробуйте изменить запрос"}</div>
-        </div>
-      `;
-      return;
-    }
-
-    filtered.forEach((item)=>{
-      const realIdx=state.history.indexOf(item);
-      const div=document.createElement("div");
-      div.className="saved-item";
-      div.innerHTML=`
-        <div class="saved-item-text">
-          <div class="saved-item-title">${escapeHtml(item.cat||"Доклад")}</div>
-          <div class="saved-item-body">${escapeHtml(item.text)}</div>
-          <div class="saved-item-time">${formatTime(item.time)}</div>
-        </div>
-        <div class="saved-item-actions">
-          <button class="primary" onclick='copyText(${JSON.stringify(item.text)},this)'>📋</button>
-          <button class="ghost" onclick='repeatReport(${realIdx})' title="Повторить">🔄</button>
-          <button class="danger" onclick='deleteHistory(${realIdx})'>✕</button>
-        </div>
-      `;
-      histList.appendChild(div);
-    });
-  };
-
-  renderList();
-
-  setTimeout(()=>{
-    const inp=$("historySearch");
-    if(inp){
-      inp.addEventListener("input",e=>renderList(e.target.value));
-    }
-  },0);
-
-  if(state.history.length>0){
-    const clearBtn=document.createElement("button");
-    clearBtn.className="danger";
-    clearBtn.style.marginTop="10px";
-    clearBtn.innerHTML="🗑 Очистить всю историю";
-    clearBtn.onclick=clearHistory;
-    root.appendChild(clearBtn);
-  }
-}
-
-function renderScenarios(root){
-  const list=document.createElement("div");
-  list.className="scenarios";
-
-  scenarios.forEach(sc=>{
-    const progress=state.scenarioProgress[sc.id]||0;
-    const total=sc.steps.length;
-    const pct=Math.round((progress/total)*100);
-
-    const card=document.createElement("div");
-    card.className="scenario";
-    card.innerHTML=`
-      <div class="scenario-icon">${sc.icon}</div>
-      <div class="scenario-title">${escapeHtml(sc.title)}</div>
-      <div class="scenario-desc">${escapeHtml(sc.desc)}</div>
-      <div class="scenario-steps">
-        ${sc.steps.map((s,i)=>{
-          let cls="scenario-step";
-          if(i<progress)cls+=" done";
-          else if(i===progress)cls+=" current";
-          return `<span class="${cls}">${i+1}. ${escapeHtml(s.label)}</span>`;
-        }).join("")}
-      </div>
-      <div class="scenario-progress">
-        <div class="scenario-progress-bar" style="width:${pct}%"></div>
-      </div>
-    `;
-    card.onclick=()=>runScenario(sc);
-    list.appendChild(card);
-  });
-
-  root.appendChild(list);
-
-  if(Object.keys(state.scenarioProgress).some(k=>state.scenarioProgress[k]>0)){
-    const resetBtn=document.createElement("button");
-    resetBtn.className="ghost";
-    resetBtn.style.marginTop="12px";
-    resetBtn.innerHTML="🔄 Сбросить все сценарии";
-    resetBtn.onclick=()=>{
-      state.scenarioProgress={};
-      localStorage.setItem("cgb_scenario_progress","{}");
-      render();
-      showToast("Сценарии сброшены","warning");
-    };
-    root.appendChild(resetBtn);
-  }
-}
-
-function runScenario(sc){
-  const progress=state.scenarioProgress[sc.id]||0;
-  if(progress>=sc.steps.length){
-    showToast("Сценарий уже завершён","warning");
-    return;
-  }
-  const step=sc.steps[progress];
-  const gender=$("gender").value;
-  const catData=data[gender].find(([c])=>c===step.cat);
-  if(!catData){showToast("Категория не найдена","error");return}
-  const text=catData[2][step.idx];
-  const filled=fill(text);
-
-  openModal(`🎬 ${sc.title} — шаг ${progress+1} из ${sc.steps.length}`,`
-    <div style="margin-bottom:10px;font-size:13px;color:var(--muted)">
-      <b>${escapeHtml(step.label)}</b> — ${escapeHtml(step.cat)}
-    </div>
-    <div class="report-text" style="margin-bottom:12px">${escapeHtml(filled)}</div>
-    <div style="font-size:12px;color:var(--muted)">
-      После копирования шаг будет отмечен как выполненный.
-    </div>
-  `,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"📋 Копировать и далее",class:"primary",action:()=>{
-      copyText(filled,null,step.cat,text);
-      state.scenarioProgress[sc.id]=(progress+1);
-      localStorage.setItem("cgb_scenario_progress",JSON.stringify(state.scenarioProgress));
-      if(progress+1<sc.steps.length){
-        setTimeout(()=>runScenario(sc),400);
-      }else{
-        showToast("🎉 Сценарий завершён!","success");
-      }
-    }}
-  ]);
-}
-
-function renderCustom(){
-  const root=$("customList");
-  root.innerHTML="";
-  if(state.custom.length===0){
-    root.innerHTML=`<div class="empty" style="padding:10px"><div style="font-size:12px">Свои доклады появятся здесь</div></div>`;
-    return;
-  }
-  state.custom.forEach((item,i)=>{
-    const text=fill(item.text);
-    const div=document.createElement("div");
-    div.className="saved-item";
-    div.innerHTML=`
-      <div class="saved-item-text">
-        <div class="saved-item-title">${escapeHtml(item.title)}</div>
-        <div class="saved-item-body">${escapeHtml(text)}</div>
-      </div>
-      <div class="saved-item-actions">
-        <button class="primary" onclick='copyText(${JSON.stringify(text)},this)'>📋</button>
-        <button class="secondary" onclick='editCustom(${i})'>✏️</button>
-        <button class="danger" onclick='deleteCustom(${i})'>✕</button>
-      </div>
-    `;
-    root.appendChild(div);
-  });
-}
-
-function renderVarsHint(){
-  const hint=$("varsHint");
-  hint.innerHTML="<span style='margin-right:4px'>Переменные:</span>";
-  VARS.forEach(v=>{
-    const tag=document.createElement("span");
-    tag.className="var-tag";
-    tag.textContent=v.key;
-    tag.title=v.label;
-    tag.onclick=()=>{
-      const ta=$("customText");
-      const pos=ta.selectionStart;
-      ta.value=ta.value.slice(0,pos)+v.key+ta.value.slice(ta.selectionEnd);
-      ta.focus();
-      ta.setSelectionRange(pos+v.key.length,pos+v.key.length);
-    };
-    hint.appendChild(tag);
-  });
-}
-
-/* ==================== БЫСТРЫЙ РЕЖИМ — ПОДСВЕТКА ==================== */
-function updateQuickModeHighlight(){
-  if(!state.quickMode||!state.lastCopied)return;
-  const key=state.lastCopied.cat+"::"+state.lastCopied.idx;
-  const nextKey=nextSuggestions[key];
-  if(!nextKey)return;
-
-  const [nextCat,nextIdxStr]=nextKey.split("::");
-  const nextIdx=parseInt(nextIdxStr);
-
-  const reports=document.querySelectorAll(".report");
-  reports.forEach(r=>{
-    if(r.dataset.cat===nextCat&&parseInt(r.dataset.idx)===nextIdx){
-      r.classList.add("highlight");
-      r.scrollIntoView({behavior:"smooth",block:"center"});
-
-      const prevReports=document.querySelectorAll(`.report[data-cat="${state.lastCopied.cat}"][data-idx="${state.lastCopied.idx}"]`);
-      prevReports.forEach(pr=>{
-        const suggest=pr.querySelector(".next-suggest");
-        if(suggest){
-          const nextCatData=data[$("gender").value].find(([c])=>c===nextCat);
-          if(nextCatData){
-            const nextText=nextCatData[2][nextIdx];
-            const nextFilled=fill(nextText);
-            suggest.innerHTML=`
-              <span class="next-suggest-label">⚡ Далее:</span>
-              <button class="next-suggest-btn" onclick='copyText(${JSON.stringify(nextFilled)},this,${JSON.stringify(nextCat)},${JSON.stringify(nextText)},${nextIdx})'>📋 ${escapeHtml(nextCatData[0]||"")} — скопировать</button>
-            `;
-            suggest.classList.add("show");
-          }
-        }
-      });
-    }
-  });
-}
-
-/* ==================== ДЕЙСТВИЯ ==================== */
-function toggleFavorite(cat,raw,btn){
-  const key=favKey(cat,raw);
-  if(state.favorites.has(key)){
-    state.favorites.delete(key);
-    btn.classList.remove("active");
-    btn.textContent="☆";
-    showToast("Убрано из избранного","warning");
-  }else{
-    state.favorites.add(key);
-    btn.classList.add("active");
-    btn.textContent="★";
-    showToast("Добавлено в избранное","success");
-  }
-  localStorage.setItem("cgb_favorites",JSON.stringify([...state.favorites]));
-  updateStats();
-  if(state.currentTab==="favorites")render();
-}
-
-function copyCategory(cat,catIdx){
-  const gender=$("gender").value;
-  const arr=data[gender][catIdx][2];
-  const texts=arr.map(fill).join("\n");
-  copyText(texts,null,cat);
-  showToast(`Скопирована категория «${cat}» (${arr.length})`,"success");
-}
-
-function switchTab(tab){
-  state.currentTab=tab;
-  document.querySelectorAll(".tab").forEach(t=>{
-    t.classList.toggle("active",t.dataset.tab===tab);
-  });
-  render();
-}
-
-function clearSearch(){
-  $("search").value="";
-  state.activeFilter="all";
-  render();
-  $("search").focus();
-}
-
-function expandAll(){
-  document.querySelectorAll(".category").forEach(c=>c.classList.add("open"));
-}
-function collapseAll(){
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("open"));
-}
-
-/* ==================== ЗАМЕТКИ ==================== */
-let notesTimer;
-function initNotes(){
-  const saved=localStorage.getItem("cgb_notes")||"";
-  $("notesArea").value=saved;
-  $("notesArea").addEventListener("input",()=>{
-    clearTimeout(notesTimer);
-    $("notesStatus").textContent="Сохранение...";
-    notesTimer=setTimeout(()=>{
-      localStorage.setItem("cgb_notes",$("notesArea").value);
-      $("notesStatus").textContent="✓ Сохранено "+new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
-    },500);
-  });
-}
-
-function copyNotes(){
-  const text=$("notesArea").value;
-  if(!text){showToast("Заметки пусты","warning");return}
-  copyText(text);
-}
-
-function clearNotes(){
-  if(!$("notesArea").value){return}
-  openModal("Очистить заметки?",`<div>Все заметки будут удалены. Это действие нельзя отменить.</div>`,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"Очистить",class:"danger",action:()=>{
-      $("notesArea").value="";
-      localStorage.removeItem("cgb_notes");
-      $("notesStatus").textContent="Автосохранение включено";
-      showToast("Заметки очищены","warning");
-    }}
-  ]);
-}
-
-/* ==================== ИСТОРИЯ ==================== */
-function clearHistory(){
-  openModal("Очистить историю?",`<div>Вся история скопированных докладов будет удалена.</div>`,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"Очистить",class:"danger",action:()=>{
-      state.history=[];
-      localStorage.setItem("cgb_history","[]");
-      render();
-      updateStats();
-      showToast("История очищена","warning");
-    }}
-  ]);
-}
-
 /* ==================== КОПИРОВАНИЕ ==================== */
-async function copyText(text,button=null,cat=null,raw=null,idx=null){
+async function copyText(text,button=null){
   let ok=false;
   try{
     if(navigator.clipboard&&window.isSecureContext){
@@ -2156,60 +1136,114 @@ async function copyText(text,button=null,cat=null,raw=null,idx=null){
       button.classList.add("copied");
       setTimeout(()=>{button.innerHTML=old;button.classList.remove("copied")},1200);
     }
-    state.stats.copied=(state.stats.copied||0)+1;
-    localStorage.setItem("cgb_stats",JSON.stringify(state.stats));
-
-    if(cat&&raw!==null){
-      state.history.push({cat,text,raw,time:Date.now()});
-      if(state.history.length>100)state.history.shift();
-      localStorage.setItem("cgb_history",JSON.stringify(state.history));
-
-      if(state.quickMode&&idx!==null){
-        state.lastCopied={cat,idx};
-        document.querySelectorAll(".next-suggest").forEach(n=>{
-          n.classList.remove("show");
-          n.innerHTML="";
-        });
-        document.querySelectorAll(".report.highlight").forEach(r=>r.classList.remove("highlight"));
-        setTimeout(updateQuickModeHighlight,100);
-      }
-    }
-    updateStats();
-    if(state.currentTab==="history")render();
   }else{
     showToast("Не удалось скопировать","error");
   }
 }
 
-function editReport(cat,raw){
-  const filled=fill(raw);
-  openModal("Редактирование доклада",`
-    <label>Текст доклада</label>
-    <textarea id="editText" style="min-height:120px">${escapeHtml(filled)}</textarea>
-    <div style="margin-top:8px;font-size:12px;color:var(--muted)">
-      Изменения не сохранят шаблон — только этот экземпляр.
-    </div>
-  `,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"Скопировать",class:"primary",action:()=>{
-      const v=$("editText").value;
-      copyText(v,null,cat,raw);
-    }}
-  ]);
+function copyCategory(cat,catIdx){
+  const gender=$("gender").value;
+  const arr=data[gender][catIdx][2];
+  const texts=arr.map(fill).join("\n");
+  copyText(texts);
+  showToast(`Скопирована категория «${cat}» (${arr.length})`,"success");
 }
 
-function repeatReport(idx){
-  const item=state.history[idx];
-  if(!item)return;
-  copyText(item.text,null,item.cat,item.raw);
+/* ==================== ЛЕКАРСТВА ==================== */
+const normSymptoms=Object.keys(medicines).map(s=>({symptom:s,norm:normalize(s)}));
+const medToSymptoms=new Map();
+Object.keys(medicines).forEach(sym=>{
+  medicines[sym].meds.forEach(m=>{
+    const nm=normalize(m);
+    if(!medToSymptoms.has(nm))medToSymptoms.set(nm,new Set());
+    medToSymptoms.get(nm).add(sym);
+  });
+});
+
+function getMode(){
+  const r=document.querySelector('input[name="med-mode"]:checked');
+  return r?r.value:"symptom";
 }
 
-function deleteHistory(idx){
-  state.history.splice(idx,1);
-  localStorage.setItem("cgb_history",JSON.stringify(state.history));
-  render();
-  updateStats();
-  showToast("Удалено из истории","warning");
+function renderBlock(title,fromText,items){
+  const block=document.createElement("div");
+  block.className="med-block";
+  const strong=document.createElement("div");
+  strong.className="med-block-title";
+  strong.innerHTML=title;
+  block.appendChild(strong);
+
+  const fromDiv=document.createElement("div");
+  fromDiv.className="med-block-from";
+  fromDiv.textContent="Фраза: «Я выпишу Вам от "+fromText+" препарат \"...\" стоимостью 500 рублей, Вы согласны?»";
+  block.appendChild(fromDiv);
+
+  const list=document.createElement("div");
+  list.className="med-list";
+  items.forEach(m=>{
+    const span=document.createElement("span");
+    span.className="med-item";
+    span.innerText=m;
+    span.onclick=()=>{
+      const phrase=`say Я выпишу Вам от ${fromText} препарат "${m}" стоимостью 500 рублей, Вы согласны?`;
+      copyText(phrase,span);
+    };
+    list.appendChild(span);
+  });
+  block.appendChild(list);
+  $("medResult").appendChild(block);
+}
+
+let medTimer;
+function searchMedicines(){
+  clearTimeout(medTimer);
+  medTimer=setTimeout(()=>{
+    const mode=getMode();
+    const input=normalize($("medSearch").value);
+    $("medResult").innerHTML="";
+
+    if(input.length<2)return;
+
+    const words=input.split(" ");
+    let found=false;
+
+    if(mode==="symptom"){
+      normSymptoms.forEach(obj=>{
+        const ok=words.every(w=>obj.norm.indexOf(w)!==-1);
+        if(ok){
+          found=true;
+          const symObj=medicines[obj.symptom];
+          renderBlock(highlight(obj.symptom,words),symObj.from,symObj.meds);
+        }
+      });
+    }else{
+      medToSymptoms.forEach((setSym,medNorm)=>{
+        if(medNorm.indexOf(input)!==-1){
+          found=true;
+          let display=null;
+          let originalSym=null;
+          outer:for(const s in medicines){
+            for(let i=0;i<medicines[s].meds.length;i++){
+              if(normalize(medicines[s].meds[i])===medNorm){
+                display=medicines[s].meds[i];
+                originalSym=s;
+                break outer;
+              }
+            }
+          }
+          if(!display)display=medNorm;
+          const symptomsArr=Array.from(setSym);
+          const fromText=originalSym?medicines[originalSym].from:"боли";
+          const title=highlight(display,[input])+" — применяется при: "+symptomsArr.join(", ");
+          renderBlock(title,fromText,symptomsArr);
+        }
+      });
+    }
+
+    if(!found){
+      $("medResult").innerHTML='<div class="empty"><div class="empty-icon">💊</div><div>Ничего не найдено</div></div>';
+    }
+  },200);
 }
 
 /* ==================== НАСТРОЙКИ ==================== */
@@ -2227,183 +1261,26 @@ function loadSettings(){
 }
 
 function clearSettings(){
-  openModal("Очистить поля?",`
-    <div>Все поля (кроме пола и транспорта) будут очищены. Это действие нельзя отменить.</div>
-  `,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"Очистить",class:"danger",action:()=>{
-      FIELDS.forEach(id=>{
-        if(id!=="gender"&&id!=="transport")$(id).value="";
-      });
-      render();
-      showToast("Поля очищены","warning");
-    }}
-  ]);
+  if(!confirm("Очистить все поля?"))return;
+  FIELDS.forEach(id=>{
+    if(id!=="gender"&&id!=="transport")$(id).value="";
+  });
+  render();
+  showToast("Поля очищены","warning");
 }
 
-function exportData(){
-  const payload={
-    settings:vals(),
-    custom:state.custom,
-    favorites:[...state.favorites],
-    history:state.history,
-    stats:state.stats,
-    notes:localStorage.getItem("cgb_notes")||"",
-    scenarioProgress:state.scenarioProgress,
-    exportedAt:new Date().toISOString()
-  };
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download=`cgb-backup-${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast("✓ Резервная копия создана","success");
+function clearSearch(){
+  $("search").value="";
+  state.activeFilter="all";
+  render();
+  $("search").focus();
 }
 
-function importData(){
-  const input=document.createElement("input");
-  input.type="file";
-  input.accept="application/json";
-  input.onchange=e=>{
-    const file=e.target.files[0];
-    if(!file)return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      try{
-        const payload=JSON.parse(ev.target.result);
-        if(payload.settings){
-          FIELDS.forEach(id=>{if(payload.settings[id]!==undefined)$(id).value=payload.settings[id]});
-        }
-        if(payload.custom)state.custom=payload.custom;
-        if(payload.favorites)state.favorites=new Set(payload.favorites);
-        if(payload.history)state.history=payload.history;
-        if(payload.stats)state.stats=payload.stats;
-        if(payload.notes!==undefined){
-          localStorage.setItem("cgb_notes",payload.notes);
-          $("notesArea").value=payload.notes;
-        }
-        if(payload.scenarioProgress)state.scenarioProgress=payload.scenarioProgress;
-        localStorage.setItem("cgb_custom",JSON.stringify(state.custom));
-        localStorage.setItem("cgb_favorites",JSON.stringify([...state.favorites]));
-        localStorage.setItem("cgb_history",JSON.stringify(state.history));
-        localStorage.setItem("cgb_stats",JSON.stringify(state.stats));
-        localStorage.setItem("cgb_scenario_progress",JSON.stringify(state.scenarioProgress));
-        saveSettings();
-        render();
-        renderCustom();
-        updateStats();
-        showToast("✓ Данные импортированы","success");
-      }catch(err){
-        showToast("Ошибка чтения файла","error");
-      }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
+function expandAll(){
+  document.querySelectorAll(".category").forEach(c=>c.classList.add("open"));
 }
-
-/* ==================== СВОИ ДОКЛАДЫ ==================== */
-function saveCustom(){
-  const title=$("customTitle").value.trim();
-  const text=$("customText").value.trim();
-  if(!title||!text){showToast("Заполните название и текст","error");return}
-  state.custom.push({title,text,time:Date.now()});
-  localStorage.setItem("cgb_custom",JSON.stringify(state.custom));
-  $("customTitle").value="";
-  $("customText").value="";
-  renderCustom();
-  updateStats();
-  showToast("✓ Свой доклад добавлен","success");
-}
-
-function editCustom(i){
-  const item=state.custom[i];
-  openModal("Редактирование своего доклада",`
-    <label>Название</label>
-    <input id="editCustomTitle" value="${escapeHtml(item.title)}">
-    <label style="margin-top:10px">Текст</label>
-    <textarea id="editCustomText" style="min-height:120px">${escapeHtml(item.text)}</textarea>
-  `,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"Сохранить",class:"primary",action:()=>{
-      const t=$("editCustomTitle").value.trim();
-      const x=$("editCustomText").value.trim();
-      if(!t||!x){showToast("Заполните все поля","error");return}
-      state.custom[i]={title:t,text:x,time:item.time||Date.now()};
-      localStorage.setItem("cgb_custom",JSON.stringify(state.custom));
-      renderCustom();
-      showToast("✓ Сохранено","success");
-    }}
-  ]);
-}
-
-function deleteCustom(i){
-  openModal("Удалить доклад?",`
-    <div>Доклад «<b>${escapeHtml(state.custom[i].title)}</b>» будет удалён.</div>
-  `,[
-    {label:"Отмена",class:"ghost",action:()=>{}},
-    {label:"Удалить",class:"danger",action:()=>{
-      state.custom.splice(i,1);
-      localStorage.setItem("cgb_custom",JSON.stringify(state.custom));
-      renderCustom();
-      updateStats();
-      showToast("Удалено","warning");
-    }}
-  ]);
-}
-
-/* ==================== СТАТИСТИКА ==================== */
-function updateStats(){
-  $("statCopied").textContent=state.stats.copied||0;
-  $("statFavorites").textContent=state.favorites.size;
-  $("statScenarios").textContent=scenarios.length;
-  $("statHistory").textContent=state.history.length;
-  $("favBadge").textContent=state.favorites.size;
-  $("histBadge").textContent=state.history.length;
-  $("scenBadge").textContent=scenarios.length;
-}
-
-/* ==================== СПРАВКА ==================== */
-function openHelp(){
-  openModal("📖 Справка",`
-    <div style="font-size:13px;line-height:1.6">
-      <p><b>Как пользоваться:</b></p>
-      <ol style="padding-left:20px;margin:6px 0">
-        <li>Заполните ТЭГ и другие поля один раз</li>
-        <li>Нажмите «Сохранить» — данные останутся в браузере</li>
-        <li>Выберите нужный доклад и скопируйте его</li>
-      </ol>
-
-      <p style="margin-top:12px"><b>🚐🚁 Тип транспорта:</b></p>
-      <p style="margin:6px 0;font-size:12px">В докладах «Пересечение юрисдикций» и «Проведение мероприятий» используется переменная <b>{TRANSPORT}</b>. Выберите нужный тип транспорта в настройках — АСМП, ВСМП или оба сразу.</p>
-
-      <p style="margin-top:12px"><b>🎬 Сценарии:</b></p>
-      <p style="margin:6px 0;font-size:12px">Готовые последовательности докладов. Каждый шаг отмечается как выполненный.</p>
-
-      <p style="margin-top:12px"><b>⚡ Быстрый режим:</b></p>
-      <p style="margin:6px 0;font-size:12px">После копирования доклада автоматически подсвечивается следующий логичный шаг.</p>
-
-      <p style="margin-top:12px"><b>⏱️ Таймер смены:</b></p>
-      <p style="margin:6px 0;font-size:12px">Нажмите на таймер в шапке, чтобы начать отсчёт. Время сохраняется даже после закрытия вкладки.</p>
-
-      <p style="margin-top:12px"><b>📝 Быстрые заметки:</b></p>
-      <p style="margin:6px 0;font-size:12px">Блокнот для записей во время смены. Автосохранение включено.</p>
-
-      <p style="margin-top:12px"><b>Переменные:</b></p>
-      <div style="display:flex;flex-wrap:wrap;gap:4px;margin:6px 0">
-        ${VARS.map(v=>`<span class="var-tag">${v.key} — ${v.label}</span>`).join("")}
-      </div>
-
-      <p style="margin-top:12px"><b>Горячие клавиши:</b></p>
-      <ul style="padding-left:20px;margin:6px 0">
-        <li><kbd>Ctrl</kbd>+<kbd>K</kbd> — фокус на поиск</li>
-        <li><kbd>Esc</kbd> — закрыть окно / очистить поиск</li>
-        <li><kbd>F1</kbd> — эта справка</li>
-      </ul>
-    </div>
-  `,[{label:"Понятно",class:"primary",action:()=>{}}]);
+function collapseAll(){
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("open"));
 }
 
 /* ==================== СОБЫТИЯ ==================== */
@@ -2414,32 +1291,9 @@ FIELDS.filter(x=>x!=="gender"&&x!=="transport").forEach(id=>{
   $(id).addEventListener("input",render);
 });
 
-document.addEventListener("keydown",e=>{
-  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){
-    e.preventDefault();
-    $("search").focus();
-    $("search").select();
-  }
-  if(e.key==="Escape"){
-    if($("modal").classList.contains("show")){closeModal();return}
-    if(document.activeElement===$("search")&&$("search").value){
-      clearSearch();
-      $("search").blur();
-      return;
-    }
-  }
-  if(e.key==="F1"){
-    e.preventDefault();
-    openHelp();
-  }
-});
-
-$("modal").addEventListener("click",e=>{
-  if(e.target===$("modal"))closeModal();
-});
-
-window.addEventListener("scroll",()=>{
-  $("scrollTop").classList.toggle("show",window.scrollY>300);
+$("medSearch").addEventListener("input",searchMedicines);
+document.querySelectorAll('input[name="med-mode"]').forEach(r=>{
+  r.addEventListener("change",searchMedicines);
 });
 
 let saveTimer;
@@ -2456,13 +1310,7 @@ FIELDS.filter(x=>x!=="gender"&&x!=="transport").forEach(id=>{
 /* ==================== ИНИЦИАЛИЗАЦИЯ ==================== */
 initTheme();
 loadSettings();
-renderVarsHint();
-initNotes();
-initShiftTimer();
-$("quickModeBtn").classList.toggle("active",state.quickMode);
 render();
-renderCustom();
-updateStats();
 </script>
 </body>
 </html>
