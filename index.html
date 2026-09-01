@@ -352,12 +352,12 @@ footer{
       </select>
     </div>
     <div>
-      <label>Тип транспорта</label>
+      <label>Тип бригады / подразделения</label>
       <select id="transport">
-        <option value="АСМП">🚐 АСМП</option>
+        <option value="АСМП">🚑 АСМП</option>
+        <option value="РАСМП">🚑 РАСМП</option>
         <option value="ВСМП">🚁 ВСМП</option>
-        <option value="ЛТС">🚐 ЛТС</option>
-      </select>
+              </select>
     </div>
   </div>
 
@@ -384,23 +384,26 @@ footer{
 
   <div class="controls" style="margin-top:10px">
     <div>
-      <label>Пост АСМП</label>
-      <input id="post" list="postsList" placeholder="Выберите или введите свой" autocomplete="off">
-      <datalist id="postsList">
-        <option value="Автосалоны">
-        <option value="Автосервис">
-        <option value="Автошкола">
-        <option value="АЗС на трассе Приволжск - Невский">
-        <option value="АТП">
-        <option value="Банк">
-        <option value="Водная школа">
-        <option value='Завод "Красный октябрь"'>
-        <option value="Речной вокзал">
-        <option value="СТО">
-        <option value="Табачный завод">
-        <option value="ТТУ">
-        <option value="Футбольное поле ПГТ Волчанск">
-      </datalist>
+      <label>Пост</label>
+      <select id="post">
+        <option value="">— Выберите пост —</option>
+        <option value="КПП">КПП</option>
+        <option value="Плац">Плац</option>
+        <option value="Лазарет">Лазарет</option>
+        <option value="Автосалоны">Автосалоны</option>
+        <option value="Автосервис">Автосервис</option>
+        <option value="Автошкола">Автошкола</option>
+        <option value="АЗС на трассе Приволжск - Невский">АЗС на трассе Приволжск - Невский</option>
+        <option value="АТП">АТП</option>
+        <option value="Банк">Банк</option>
+        <option value="Водная школа">Водная школа</option>
+        <option value='Завод "Красный октябрь"'>Завод "Красный октябрь"</option>
+        <option value="Речной вокзал">Речной вокзал</option>
+        <option value="СТО">СТО</option>
+        <option value="Табачный завод">Табачный завод</option>
+        <option value="ТТУ">ТТУ</option>
+        <option value="Футбольное поле ПГТ Волчанск">Футбольное поле ПГТ Волчанск</option>
+      </select>
     </div>
     <div>
       <label>Номер маршрута</label>
@@ -425,7 +428,11 @@ footer{
   </div>
 
   <div class="controls" style="margin-top:10px">
-    <div style="grid-column:1/-1">
+    <div>
+      <label>Количество вылеченных</label>
+      <input id="count" type="number" min="0" placeholder="Например: 5" autocomplete="off">
+    </div>
+    <div style="grid-column:2/-1">
       <label>Дополнительные данные</label>
       <input id="extra" placeholder="Любая доп. информация" autocomplete="off">
     </div>
@@ -497,10 +504,10 @@ const data = {
       "r {TAG}. Заступил на смену."
     ]],
     ["Вызов","🚑",[
-      "r {TAG}. РАСМП. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
-      "r {TAG}. РАСМП. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
-      "r {TAG}. РАСМП. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
-      "r {TAG}. РАСМП. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
     ]],
     ["Пост АСМП","📍",[
       "r {TAG}. АСМП. Выехал на пост: {POST}. Напарники: {PARTNERS}.",
@@ -508,6 +515,19 @@ const data = {
       "r {TAG}. АСМП. Пост: {POST}. Состояние: стабильно. Напарники: {PARTNERS}.",
       "r {TAG}. АСМП. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
       "r {TAG}. АСМП. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]], 
+    ["Пост ВМУ","🏥",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехал на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыл на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Состояние: стабильное. Вылечено: {COUNT}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Поставка ВС РП","📦",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехал на поставку ВС РП. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыл для участия в поставке. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП окончена. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП. На базе. Напарники: {PARTNERS}."
     ]],
     ["Патруль АСМП","🚐",[
       "r {TAG}. АСМП. Выехал в патрулирование. Напарники: {PARTNERS}.",
@@ -555,10 +575,10 @@ const data = {
       "r {TAG}. Заступила на смену."
     ]],
     ["Вызов","🚑",[
-      "r {TAG}. РАСМП. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
-      "r {TAG}. РАСМП. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
-      "r {TAG}. РАСМП. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
-      "r {TAG}. РАСМП. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
     ]],
     ["Пост АСМП","📍",[
       "r {TAG}. АСМП. Выехала на пост: {POST}. Напарники: {PARTNERS}.",
@@ -566,6 +586,19 @@ const data = {
       "r {TAG}. АСМП. Пост: {POST}. Состояние: стабильно. Напарники: {PARTNERS}.",
       "r {TAG}. АСМП. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
       "r {TAG}. АСМП. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]], 
+    ["Пост ВМУ","🏥",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехала на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыла на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Состояние: стабильное. Вылечено: {COUNT}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Поставка ВС РП","📦",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехала на поставку ВС РП. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыла для участия в поставке. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП окончена. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП. На базе. Напарники: {PARTNERS}."
     ]],
     ["Патруль АСМП","🚐",[
       "r {TAG}. АСМП. Выехала в патрулирование. Напарники: {PARTNERS}.",
@@ -924,7 +957,7 @@ const medicines = {
 };
 
 /* ==================== КОНСТАНТЫ ==================== */
-const FIELDS = ["tag","call","partners","post","route","faction","result","gender","extra","transport"];
+const FIELDS = ["tag","call","partners","post","route","faction","result","gender","count","extra","transport"];
 const CHAR_WARN = 120;
 const CHAR_MAX = 200;
 
@@ -966,7 +999,7 @@ function vals(){
 
 function fill(text){
   const v=vals();
-  return text
+  let result=text
     .replaceAll("{TAG}",v.tag||"ТЭГ")
     .replaceAll("{CALL}",v.call||"№")
     .replaceAll("{PARTNERS}",v.partners||"—")
@@ -974,8 +1007,17 @@ function fill(text){
     .replaceAll("{ROUTE}",v.route||"—")
     .replaceAll("{FACTION}",v.faction||"—")
     .replaceAll("{RESULT}",v.result||"—")
-    .replaceAll("{TRANSPORT}",v.transport||"АСМП/ВСМП")
+    .replaceAll("{TRANSPORT}",v.transport||"АСМП")
+    .replaceAll("{BRIGADE}",v.transport||"АСМП")
+    .replaceAll("{COUNT}",v.count||"—")
     .replaceAll("{EXTRA}",v.extra||"");
+
+  // Если напарник не указан — полностью убираем эту часть доклада.
+  if(!v.partners || /^(нет|—|-|без напарника|без напарников)$/i.test(v.partners.trim())){
+    result = result.replace(/\s*Напарник(?:и)?:\s*(?:—|-|нет|без напарника|без напарников)\.?/gi,"");
+    result = result.replace(/\s*Напарник(?:и)?:\s*[^.]+\.?/gi,"");
+  }
+  return result.replace(/\s+\./g,".").trim();
 }
 
 /* ==================== ТЕМА ==================== */
