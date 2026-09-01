@@ -320,6 +320,1470 @@ footer{
   .copy-cat-btn{opacity:1}
   .toast{right:12px;bottom:12px;left:12px;max-width:none}
 }
+
+.custom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.custom-preview{margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--input);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.45;min-height:44px;white-space:pre-wrap}
+textarea{width:100%;resize:vertical;box-sizing:border-box}
+@media(max-width:800px){.custom-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-wrap">
+      <h1>🏥 ЦГБ-Н — Доклады в рацию</h1>
+      <div class="subtitle">Быстрый помощник для сотрудников</div>
+    </div>
+    <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Сменить тему">🌙</button>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="panel">
+  <div class="panel-title">⚙️ Настройки</div>
+
+  <div class="controls">
+    <div>
+      <label>Ваш ТЭГ</label>
+      <input id="tag" placeholder="Например: ОИ-СЛ" autocomplete="off">
+    </div>
+    <div>
+      <label>Пол</label>
+      <select id="gender">
+        <option value="male">Мужской</option>
+        <option value="female">Женский</option>
+      </select>
+    </div>
+    <div>
+      <label>Тип бригады / подразделения</label>
+      <select id="transport">
+        <option value="АСМП">🚑 АСМП</option>
+        <option value="РАСМП">🚑 РАСМП</option>
+        <option value="ВСМП">🚁 ВСМП</option>
+        <option value="ЛТС">🚐 ЛТС</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top:10px">
+    <div>
+      <label>Результат вызова</label>
+      <select id="result">
+        <option>Помощь оказана на месте</option>
+        <option>Госпитализация</option>
+        <option>Ложный</option>
+        <option>Отменён</option>
+        <option>На базе</option>
+      </select>
+    </div>
+    <div>
+      <label>Номер вызова / ID</label>
+      <input id="call" placeholder="Например: 123" autocomplete="off">
+    </div>
+    <div>
+      <label>Напарники</label>
+      <input id="partners" placeholder="Фамилии или «нет»" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top:10px">
+    <div>
+      <label>Пост</label>
+      <select id="post">
+        <option value="">— Выберите пост —</option>
+        <option value="КПП">КПП</option>
+        <option value="Плац">Плац</option>
+        <option value="Лазарет">Лазарет</option>
+        <option value="Автосалоны">Автосалоны</option>
+        <option value="Автосервис">Автосервис</option>
+        <option value="Автошкола">Автошкола</option>
+        <option value="АЗС на трассе Приволжск - Невский">АЗС на трассе Приволжск - Невский</option>
+        <option value="АТП">АТП</option>
+        <option value="Банк">Банк</option>
+        <option value="Водная школа">Водная школа</option>
+        <option value='Завод "Красный октябрь"'>Завод "Красный октябрь"</option>
+        <option value="Речной вокзал">Речной вокзал</option>
+        <option value="СТО">СТО</option>
+        <option value="Табачный завод">Табачный завод</option>
+        <option value="ТТУ">ТТУ</option>
+        <option value="Футбольное поле ПГТ Волчанск">Футбольное поле ПГТ Волчанск</option>
+      </select>
+    </div>
+    <div>
+      <label>Номер маршрута</label>
+      <input id="route" placeholder="Например: 3" autocomplete="off">
+    </div>
+    <div>
+      <label>Фракция для запроса</label>
+      <select id="faction">
+        <option value="МЗ">МЗ</option>
+        <option value="ОКБ-М">ОКБ-М</option>
+        <option value="ЦГБ-П">ЦГБ-П</option>
+        <option value="МО">МО</option>
+        <option value="РЖД">РЖД</option>
+        <option value="ОГИБДД-Н">ОГИБДД-Н</option>
+        <option value="ОГИБДД-П">ОГИБДД-П</option>
+        <option value="ОМВД-П">ОМВД-П</option>
+        <option value="ОМВД-Н">ОМВД-Н</option>
+        <option value="УГИБДД-М">УГИБДД-М</option>
+        <option value="УМВД-М">УМВД-М</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top:10px">
+    <div>
+      <label>Количество вылеченных</label>
+      <input id="count" type="number" min="0" placeholder="Например: 5" autocomplete="off">
+    </div>
+    <div style="grid-column:2/-1">
+      <label>Дополнительные данные</label>
+      <input id="extra" placeholder="Любая доп. информация" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="primary" onclick="saveSettings()">💾 Сохранить</button>
+    <button class="danger" onclick="clearSettings()">🗑 Очистить</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-title">📋 Доклады</div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input id="search" placeholder="Поиск по докладам..." autocomplete="off">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
+
+  <div class="cat-toolbar">
+    <div class="cat-toolbar-left" id="chipBar"></div>
+    <div style="display:flex;gap:6px">
+      <button class="ghost" onclick="expandAll()">▼ Развернуть</button>
+      <button class="ghost" onclick="collapseAll()">▲ Свернуть</button>
+    </div>
+  </div>
+
+  <div id="reports"></div>
+</section>
+
+<section class="panel custom-panel">
+  <div class="panel-title">💬 Конструктор запросов</div>
+  <div class="custom-grid">
+    <div><label>Тип запроса</label><select id="requestType">
+      <option value="jurisdiction">Пересечение юрисдикции</option>
+      <option value="patrol">Разрешение на патрулирование</option>
+      <option value="call">Обработка вызова</option>
+      <option value="help">Запрос помощи</option>
+      <option value="escort">Запрос сопровождения</option>
+      <option value="event">Проведение мероприятия</option>
+      <option value="joint">Совместный патруль</option>
+      <option value="other">Свой запрос</option>
+    </select></div>
+    <div><label>Кому</label><select id="requestFaction"></select></div>
+    <div><label>Тип ответа</label><select id="requestAnswer">
+      <option value="allow">Разрешаем</option><option value="deny">Отказываем</option>
+      <option value="accepted">Запрос принят</option><option value="later">Рассмотрим позже</option>
+    </select></div>
+  </div>
+  <div style="margin-top:10px"><label>Дополнительный текст</label>
+    <textarea id="requestText" rows="2" placeholder="Например: Просим разрешить патрулирование в районе..."></textarea>
+  </div>
+  <div class="custom-preview" id="requestPreview"></div>
+  <div class="actions">
+    <button class="primary" onclick="copyGeneratedRequest()">📋 Копировать запрос</button>
+    <button class="secondary" onclick="copyGeneratedAnswer()">↩️ Копировать ответ</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-title">💊 Лекарственные препараты</div>
+
+  <div class="med-mode">
+    <label><input type="radio" name="med-mode" value="symptom" checked> По симптомам</label>
+    <label><input type="radio" name="med-mode" value="medicine"> По препаратам</label>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">💊</span>
+    <input id="medSearch" placeholder="Введите запрос (минимум 2 символа)..." autocomplete="off">
+  </div>
+
+  <div class="med-hint">💡 Нажмите на препарат — скопируется готовая фраза: <b>«Я выпишу Вам от ... препарат ...»</b></div>
+
+  <div class="med-result" id="medResult"></div>
+</section>
+
+</main>
+
+<footer>
+  ЦГБ-Н • Локальный помощник • Данные сохраняются только в вашем браузере
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* ==================== ДАННЫЕ ==================== */
+const data = {
+  male: [
+    ["Взятие перерыва","⏸️",[
+      "r {TAG}. Разрешите взять перерыв?",
+      "r {TAG}. Взял перерыв.",
+      "r {TAG}. Вернулся с перерыва."
+    ]],
+    ["Сдача смены","🔄",[
+      "r {TAG}. Сдал смену.",
+      "r {TAG}. Заступил на смену."
+    ]],
+    ["Вызов","🚑",[
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Пост АСМП","📍",[
+      "r {TAG}. АСМП. Выехал на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Прибыл на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Пост: {POST}. Состояние: стабильно. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]], 
+    ["Пост ВМУ","🏥",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехал на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыл на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Состояние: стабильное. Вылечено: {COUNT}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Поставка ВС РП","📦",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехал на поставку ВС РП. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыл для участия в поставке. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП окончена. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Патруль АСМП","🚐",[
+      "r {TAG}. АСМП. Выехал в патрулирование. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Продолжаю патрулирование. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Закончил патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Патруль ВСМП","🚁",[
+      "r {TAG}. ВСМП. Вылетел в патрулирование. Напарники: {PARTNERS}.",
+      "r {TAG}. ВСМП. Патрулирование. Состояние: стабильное. Напарники: {PARTNERS}.",
+      "r {TAG}. ВСМП. Закончил патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Пеший патруль","🚶",[
+      "r {TAG}. Вышел в пеший патруль. Маршрут - {ROUTE}. Напарник: {PARTNERS}.",
+      "r {TAG}. Пеший патруль по Маршруту {ROUTE}. Напарник: {PARTNERS}.",
+      "r {TAG}. Закончил пеший патруль по Маршруту {ROUTE}. Возвращаюсь на базу. Напарник: {PARTNERS}.",
+      "r {TAG}. Пеший патруль по Маршруту {ROUTE}. На базе. Напарник: {PARTNERS}."
+    ]],
+    ["ПРМО","🏥",[
+      "r {TAG}. АСМП. Выехал на ПРМО. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Прибыл на ПРМО. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. ПРМО. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. ПРМО. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["РС состав","👥",[
+      "ro {TAG}. РС состав собран. Количество сотрудников: {COUNT}. Старший: {EXTRA}.",
+      "ro {TAG}. Начинаю построение РС состава. Цель: {EXTRA}.",
+      "ro {TAG}. РС состав построен. Личный состав готов к выполнению поставленных задач.",
+      "ro {TAG}. Провожу перекличку РС состава. Количество сотрудников: {COUNT}.",
+      "ro {TAG}. Перекличка РС состава окончена. Личный состав на месте.",
+      "ro {TAG}. Построение РС состава окончено. Приступаем к выполнению поставленных задач.",
+      "ro {TAG}. РС состав распущен. Сотрудники свободны от построения."
+    ]],
+    ["Пересечение юрисдикций","🌐",[
+      "ro ЦГБ-Н к {FACTION}. Запрашиваю разрешение на патрулирование вашей юрисдикции на {TRANSPORT}.",
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью обработки вызова на {TRANSPORT}."
+    ]],
+    ["Ответы на запросы","📡",[
+      "ro ЦГБ-Н к {FACTION}. Разрешаем. Приятного патрулирования.",
+      "ro ЦГБ-Н к {FACTION}. Отказываем в пересечении юрисдикции.",
+      "ro ЦГБ-Н к {FACTION}. Запрос принят. Можете приступать к патрулированию.",
+      "ro ЦГБ-Н к {FACTION}. Разрешаем пересечение юрисдикции для обработки вызова.",
+      "ro ЦГБ-Н к {FACTION}. Отказываем в пересечении юрисдикции. Патрулирование запрещено.",
+      "ro ЦГБ-Н к {FACTION}. Разрешаем проведение мероприятия. Удачного проведения."
+    ]],
+    ["Принятие запросов (для РС)","📨",[
+      "d ЦГБ-Н к {FACTION}. Принято. В ближайшее время отправим вам сотрудников."
+    ]],
+    ["Проведение мероприятий (для РС)","📋",[
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью проведения мероприятия на {TRANSPORT}."
+    ]]
+  ],
+  female: [
+    ["Взятие перерыва","⏸️",[
+      "r {TAG}. Разрешите взять перерыв?",
+      "r {TAG}. Взяла перерыв.",
+      "r {TAG}. Вернулась с перерыва."
+    ]],
+    ["Сдача смены","🔄",[
+      "r {TAG}. Сдала смену.",
+      "r {TAG}. Заступила на смену."
+    ]],
+    ["Вызов","🚑",[
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Принят. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - {RESULT}. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - Ложный/Отменён. Напарники: {PARTNERS}.",
+      "r {TAG}. {BRIGADE}. Вызов {CALL} - На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Пост АСМП","📍",[
+      "r {TAG}. АСМП. Выехала на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Прибыла на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Пост: {POST}. Состояние: стабильно. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]], 
+    ["Пост ВМУ","🏥",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехала на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыла на пост: {POST}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Состояние: стабильное. Вылечено: {COUNT}. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Пост: {POST}. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Поставка ВС РП","📦",[
+      "r {TAG}. ВМУ. {BRIGADE}. Выехала на поставку ВС РП. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Прибыла для участия в поставке. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП окончена. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВМУ. {BRIGADE}. Поставка ВС РП. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Патруль АСМП","🚐",[
+      "r {TAG}. АСМП. Выехала в патрулирование. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Продолжаю патрулирование. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Закончила патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Патруль ВСМП","🚁",[
+      "r {TAG}. ВСМП. Вылетела в патрулирование. Напарники: {PARTNERS}.",
+      "r {TAG}. ВСМП. Патрулирование. Состояние: стабильное. Напарники: {PARTNERS}.",
+      "r {TAG}. ВСМП. Закончила патрулирование. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. ВСМП. Патрулирование. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["Пеший патруль","🚶",[
+      "r {TAG}. Вышла в пеший патруль. Маршрут - {ROUTE}. Напарник: {PARTNERS}.",
+      "r {TAG}. Пеший патруль по Маршруту {ROUTE}. Продолжаю. Напарник: {PARTNERS}.",
+      "r {TAG}. Закончила пеший патруль по Маршруту {ROUTE}. Возвращаюсь на базу. Напарник: {PARTNERS}.",
+      "r {TAG}. Пеший патруль по Маршруту {ROUTE}. На базе. Напарник: {PARTNERS}."
+    ]],
+    ["ПРМО","🏥",[
+      "r {TAG}. АСМП. Выехала на ПРМО. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. Прибыла на ПРМО. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. ПРМО. Возвращаюсь на базу. Напарники: {PARTNERS}.",
+      "r {TAG}. АСМП. ПРМО. На базе. Напарники: {PARTNERS}."
+    ]],
+    ["РС состав","👥",[
+      "ro {TAG}. РС состав собран. Количество сотрудников: {COUNT}. Старший: {EXTRA}.",
+      "ro {TAG}. Начинаю построение РС состава. Цель: {EXTRA}.",
+      "ro {TAG}. РС состав построен. Личный состав готов к выполнению поставленных задач.",
+      "ro {TAG}. Провожу перекличку РС состава. Количество сотрудников: {COUNT}.",
+      "ro {TAG}. Перекличка РС состава окончена. Личный состав на месте.",
+      "ro {TAG}. Построение РС состава окончено. Приступаем к выполнению поставленных задач.",
+      "ro {TAG}. РС состав распущен. Сотрудники свободны от построения."
+    ]],
+    ["Пересечение юрисдикций","🌐",[
+      "ro ЦГБ-Н к {FACTION}. Запрашиваю разрешение на патрулирование вашей юрисдикции на {TRANSPORT}.",
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью обработки вызова на {TRANSPORT}."
+    ]],
+    ["Ответы на запросы","📡",[
+      "ro ЦГБ-Н к {FACTION}. Разрешаем. Приятного патрулирования.",
+      "ro ЦГБ-Н к {FACTION}. Отказываем в пересечении юрисдикции.",
+      "ro ЦГБ-Н к {FACTION}. Запрос принят. Можете приступать к патрулированию.",
+      "ro ЦГБ-Н к {FACTION}. Разрешаем пересечение юрисдикции для обработки вызова.",
+      "ro ЦГБ-Н к {FACTION}. Отказываем в пересечении юрисдикции. Патрулирование запрещено.",
+      "ro ЦГБ-Н к {FACTION}. Разрешаем проведение мероприятия. Удачного проведения."
+    ]],
+    ["Принятие запросов (для РС)","📨",[
+      "d ЦГБ-Н к {FACTION}. Принято. В ближайшее время отправим вам сотрудников."
+    ]],
+    ["Проведение мероприятий (для РС)","📋",[
+      "ro ЦГБ-Н к {FACTION}. Пересекаю вашу юрисдикцию с целью проведения мероприятия на {TRANSPORT}."
+    ]]
+  ]
+};
+
+/* ==================== ЛЕКАРСТВА ==================== */
+/*
+  Структура: {
+    "Название симптома": {
+      from: "форма в родительном падеже для фразы «от ...»",
+      meds: ["препарат1", "препарат2", ...]
+    }
+  }
+*/
+const medicines = {
+  // ===== ГОЛОВНАЯ БОЛЬ =====
+  "Головная боль слабая": {
+    from: "головной боли слабой",
+    meds: ["Парацетамол","Ибупрофен","Цитрамон","Анальгин","Спазган","Дротаверин","Миг"]
+  },
+  "Головная боль сильная": {
+    from: "головной боли сильной",
+    meds: ["Амигрен","Седальгин-Нео","Каффетин","Солпадеин","Мигрепам","Релпакс","Нурофен","Темпалгин","Пенталгин","Диклофенак"]
+  },
+
+  // ===== СЕРДЕЧНАЯ БОЛЬ =====
+  "Сердечная боль слабая": {
+    from: "сердечной боли слабой",
+    meds: ["Карвалол","Валидол","Андипал"]
+  },
+  "Сердечная боль сильная": {
+    from: "сердечной боли сильной",
+    meds: ["Ацетилсалициловая кислота","Клопидогрел","Варфарин","Ксарелто","Периндоприл","Лозартан","Карведилол","Триметазидин"]
+  },
+
+  // ===== БОЛЬ В ЖИВОТЕ =====
+  "Боль в животе слабая": {
+    from: "боли в животе слабой",
+    meds: ["Но-шпа","Дротаверин","Фестал","Ранитидин"]
+  },
+  "Боль в животе сильная": {
+    from: "боли в животе сильной",
+    meds: ["Метоклопрамид","Спазган","Папаверин","Бускопан"]
+  },
+
+  // ===== БОЛЬ В ГОРЛЕ =====
+  "Боль в горле слабая": {
+    from: "боли в горле слабой",
+    meds: ["Стрепсилс","Септолетте","Анти-ангин"]
+  },
+  "Боль в горле сильная": {
+    from: "боли в горле сильной",
+    meds: ["Граммидин","Гексорал","Стопангин","Тантум верде"]
+  },
+
+  // ===== БОЛЬ В ПЕЧЕНИ =====
+  "Боль в печени слабая": {
+    from: "боли в печени слабой",
+    meds: ["Карсил","Эссенциале форте"]
+  },
+  "Боль в печени сильная": {
+    from: "боли в печени сильной",
+    meds: ["Урсофальк","Гептрал","Берлитион"]
+  },
+
+  // ===== БОЛЬ В ГЛАЗАХ =====
+  "Боль в глазах слабая": {
+    from: "боли в глазах слабой",
+    meds: ["Визин"]
+  },
+  "Боль в глазах сильная": {
+    from: "боли в глазах сильной",
+    meds: ["Альбуцид","Визин"]
+  },
+
+  // ===== БОЛЬ В УШАХ =====
+  "Боль в ушах слабая": {
+    from: "боли в ушах слабой",
+    meds: ["Отипакс"]
+  },
+  "Боль в ушах сильная": {
+    from: "боли в ушах сильной",
+    meds: ["Отинум","Отипакс"]
+  },
+
+  // ===== БОЛЬ В ПОЧКАХ =====
+  "Боль в почках слабая": {
+    from: "боли в почках слабой",
+    meds: ["Уролисан","Урохол"]
+  },
+  "Боль в почках сильная": {
+    from: "боли в почках сильной",
+    meds: ["Уролисан","Урохол","Но-шпа"]
+  },
+
+  // ===== СУДОРОГИ =====
+  "Судороги слабые": {
+    from: "слабых судорог",
+    meds: ["Папаверин","Дротаверин"]
+  },
+  "Судороги сильные": {
+    from: "сильных судорог",
+    meds: ["Карбамазепин","Фенитоин","Вальпроат Натрия","Фенобарбитал","Примидон","Клоназепам","Бекламид","Ламотриджин"]
+  },
+
+  // ===== ТОШНОТА =====
+  "Тошнота слабая": {
+    from: "слабой тошноты",
+    meds: ["Драмина","Авиамарин","Бонин"]
+  },
+  "Тошнота сильная": {
+    from: "сильной тошноты",
+    meds: ["Церукал","Метоклопрамид"]
+  },
+
+  // ===== ДИАРЕЯ =====
+  "Диарея слабая": {
+    from: "слабой диареи",
+    meds: ["Смекта","Энтеросгель","Полисорб"]
+  },
+  "Диарея сильная": {
+    from: "сильной диареи",
+    meds: ["Лоперамид","Имодиум","Лопедиум","Фильтрум-сти"]
+  },
+
+  // ===== ИЗЖОГА =====
+  "Изжога слабая": {
+    from: "слабой изжоги",
+    meds: ["Ренни","Гастал"]
+  },
+  "Изжога сильная": {
+    from: "сильной изжоги",
+    meds: ["Маалокс","Алмагель","Ранитидин"]
+  },
+
+  // ===== НАСМОРК =====
+  "Насморк слабый": {
+    from: "слабого насморка",
+    meds: ["Тизин","Снуп","Отривин"]
+  },
+  "Насморк сильный": {
+    from: "сильного насморка",
+    meds: ["Африн","Нокспрей","Ринонорм"]
+  },
+
+  // ===== КАШЕЛЬ СУХОЙ =====
+  "Кашель сухой слабый": {
+    from: "слабого сухого кашля",
+    meds: ["Гербион"]
+  },
+  "Кашель сухой сильный": {
+    from: "сильного сухого кашля",
+    meds: ["Лазолван","АЦЦ"]
+  },
+
+  // ===== КАШЕЛЬ ВЛАЖНЫЙ =====
+  "Кашель влажный слабый": {
+    from: "слабого влажного кашля",
+    meds: ["Пертуссин"]
+  },
+  "Кашель влажный сильный": {
+    from: "сильного влажного кашля",
+    meds: ["Амбробене","АЦЦ"]
+  },
+
+  // ===== ПРОСТУДА =====
+  "Простуда слабая": {
+    from: "слабой простуды",
+    meds: ["Анвимакс"]
+  },
+  "Простуда сильная": {
+    from: "сильной простуды",
+    meds: ["Терафлю","Колдрекс","Антигриппин"]
+  },
+
+  // ===== АЛЛЕРГИЯ =====
+  "Аллергия слабая": {
+    from: "слабой аллергии",
+    meds: ["Тавегил","Супрастин"]
+  },
+  "Аллергия сильная": {
+    from: "сильной аллергии",
+    meds: ["Зиртек","Цетрин","Кларитин","Эриус","Зодак"]
+  },
+
+  // ===== ОЖОГИ =====
+  "Ожоги слабые": {
+    from: "слабых ожогов",
+    meds: ["Бепантен"]
+  },
+  "Ожоги сильные": {
+    from: "сильных ожогов",
+    meds: ["Солкосерил","Актовегин","Банеоцин"]
+  },
+
+  // ===== УШИБЫ =====
+  "Ушибы слабые": {
+    from: "слабых ушибов",
+    meds: ["Подорожник (мазь)"]
+  },
+  "Ушибы сильные": {
+    from: "сильных ушибов",
+    meds: ["Долобене","Нурофен (гель)"]
+  },
+
+  // ===== ПОВЫШЕННОЕ ДАВЛЕНИЕ =====
+  "Повышенное давление слабое": {
+    from: "слабого повышенного давления",
+    meds: ["Андипал"]
+  },
+  "Повышенное давление сильное": {
+    from: "сильного повышенного давления",
+    meds: ["Лозартан","Каптоприл","Арифон-ретард","Амлодипин (Норваск)","Верошпирон (Спиронолактон)"]
+  },
+
+  // ===== ПОНИЖЕННОЕ ДАВЛЕНИЕ =====
+  "Пониженное давление слабое": {
+    from: "слабого пониженного давления",
+    meds: ["Экдистен"]
+  },
+  "Пониженное давление сильное": {
+    from: "сильного пониженного давления",
+    meds: ["Фетанол","Дофамин","Гептамил","Мидодрин","Ранторин"]
+  },
+
+  // ===== ГЕМОРРОЙ =====
+  "Геморрой слабый": {
+    from: "слабого геморроя",
+    meds: ["Проктонис"]
+  },
+  "Геморрой сильный": {
+    from: "сильного геморроя",
+    meds: ["Релиф","Гепариновая мазь","Прокто-гливенол"]
+  },
+
+  // ===== БЕССОННИЦА =====
+  "Бессонница слабая": {
+    from: "слабой бессонницы",
+    meds: ["Мелаксен"]
+  },
+  "Бессонница сильная": {
+    from: "сильной бессонницы",
+    meds: ["Найтвелл"]
+  },
+
+  // ===== МОЛОЧНИЦА =====
+  "Молочница слабая": {
+    from: "слабой молочницы",
+    meds: ["Клотримазол"]
+  },
+  "Молочница сильная": {
+    from: "сильной молочницы",
+    meds: ["Нистатин","Пимафуцин","Ливарол"]
+  },
+
+  // ===== АСТМА =====
+  "Астма слабая": {
+    from: "слабой астмы",
+    meds: ["Сальбутамол"]
+  },
+  "Астма сильная": {
+    from: "сильной астмы",
+    meds: ["Преднизолон"]
+  },
+
+  // ===== ГАСТРИТ =====
+  "Гастрит слабый": {
+    from: "слабого гастрита",
+    meds: ["Амоксициллин"]
+  },
+  "Гастрит сильный": {
+    from: "сильного гастрита",
+    meds: ["Рабепразол","Азитромицин","Тетрациклин"]
+  },
+
+  // ===== ЯЗВА =====
+  "Язва слабая": {
+    from: "слабой язвы",
+    meds: ["Вентрисол"]
+  },
+  "Язва сильная": {
+    from: "сильной язвы",
+    meds: ["Сукральфат","Де-Нол"]
+  },
+
+  // ===== БЕЗ СТЕПЕНИ (специфические) =====
+  "Потенция": {
+    from: "проблем с потенцией",
+    meds: ["Сиалекс","Виагра"]
+  },
+  "Витамины": {
+    from: "нехватки витаминов",
+    meds: ["Компливит","Витрум","Алфавит","Супрадин"]
+  },
+  "Мочевой пузырь": {
+    from: "проблем с мочевым пузырём",
+    meds: ["Цистон","Нолицин","Канефрон","Фитолизин"]
+  },
+  "Жаропонижающее": {
+    from: "температуры",
+    meds: ["Анальгин","Брустан","Ибуклин","Ремантадин","Нурофен"]
+  },
+  "Антисептики": {
+    from: "ран",
+    meds: ["Хлоргексидин","Перекись водорода","Йод","Зелёнка"]
+  },
+  "Обезболивающее": {
+    from: "боли",
+    meds: ["Парацетамол","Лидокаин","Ибуклин","Дексалгин"]
+  },
+  "Инсульт": {
+    from: "инсульта",
+    meds: ["Гаммалон","Пентоксифиллин"]
+  },
+  "Инфаркт": {
+    from: "инфаркта",
+    meds: ["Антенолол","Омакор"]
+  },
+  "Сахарный диабет": {
+    from: "сахарного диабета",
+    meds: ["Виктоза","Диабетон","Астрозон"]
+  }
+};
+
+/* ==================== КОНСТАНТЫ ==================== */
+const FIELDS = ["tag","call","partners","post","route","faction","result","gender","count","extra","transport"];
+const CHAR_WARN = 120;
+const CHAR_MAX = 200;
+
+/* ==================== СОСТОЯНИЕ ==================== */
+let state = {
+  activeFilter:"all"
+};
+
+/* ==================== УТИЛИТЫ ==================== */
+function $(id){return document.getElementById(id)}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+function plural(n,a,b,c){
+  const n10=n%10,n100=n%100;
+  if(n10===1&&n100!==11)return a;
+  if(n10>=2&&n10<=4&&!(n100>=12&&n100<=14))return b;
+  return c;
+}
+function normalize(s){return (s||'').toLowerCase().replace(/\s+/g,' ').trim()}
+function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+function highlight(text,words){
+  let res=text;
+  words.forEach(w=>{
+    if(w.length>1){
+      const re=new RegExp('('+escapeRegExp(w)+')',"gi");
+      res=res.replace(re,'<span class="med-highlight">$1</span>');
+    }
+  });
+  return res;
+}
+
+/* ==================== ЗНАЧЕНИЯ ==================== */
+function vals(){
+  const o={};
+  FIELDS.forEach(id=>{o[id]=$(id).value.trim()});
+  return o;
+}
+
+function fill(text){
+  const v=vals();
+  let result=text
+    .replaceAll("{TAG}",v.tag||"ТЭГ")
+    .replaceAll("{CALL}",v.call||"№")
+    .replaceAll("{PARTNERS}",v.partners||"—")
+    .replaceAll("{POST}",v.post||"—")
+    .replaceAll("{ROUTE}",v.route||"—")
+    .replaceAll("{FACTION}",v.faction||"—")
+    .replaceAll("{RESULT}",v.result||"—")
+    .replaceAll("{TRANSPORT}",v.transport||"АСМП")
+    .replaceAll("{BRIGADE}",v.transport||"АСМП")
+    .replaceAll("{COUNT}",v.count||"—")
+    .replaceAll("{EXTRA}",v.extra||"");
+
+  // Работа с напарниками:
+  // нет напарника — полностью убираем этот фрагмент;
+  // один напарник — «Напарник»; несколько — «Напарники».
+  const partnerText = v.partners.trim();
+  const noPartner = !partnerText || /^(нет|—|-|без напарника|без напарников)$/i.test(partnerText);
+
+  if(noPartner){
+    result = result.replace(/\s*Напарник(?:и)?:\s*[^.]+\.?/gi,"");
+  }else{
+    const partnerCount = partnerText.split(/\s*(?:,|;|\n|\s+и\s+)\s*/i).filter(Boolean).length;
+    const label = partnerCount === 1 ? "Напарник" : "Напарники";
+    result = result.replace(/Напарники:/g,label).replace(/Напарник:/g,label);
+  }
+  return result.replace(/\s+\./g,".").trim();
+}
+
+/* ==================== ТЕМА ==================== */
+function initTheme(){
+  const saved=localStorage.getItem("cgb_theme");
+  const theme=saved||(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  document.documentElement.setAttribute("data-theme",theme);
+  $("themeBtn").textContent=theme==="dark"?"☀️":"🌙";
+}
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute("data-theme");
+  const next=cur==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",next);
+  localStorage.setItem("cgb_theme",next);
+  $("themeBtn").textContent=next==="dark"?"☀️":"🌙";
+}
+
+/* ==================== TOAST ==================== */
+let toastTimer;
+function showToast(msg,type="success"){
+  const t=$("toast");
+  t.textContent=msg;
+  t.className="toast show "+type;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+/* ==================== РЕНДЕРИНГ ДОКЛАДОВ ==================== */
+function render(){
+  const gender=$("gender").value;
+  const q=$("search").value.toLowerCase().trim();
+  const root=$("reports");
+  root.innerHTML="";
+
+  $("searchClear").classList.toggle("show",q.length>0);
+
+  const items=data[gender];
+  let totalVisible=0;
+  const filter=state.activeFilter;
+
+  items.forEach(([cat,icon,arr],catIdx)=>{
+    const matched=arr.map((x,i)=>[x,i]).filter(([x])=>(cat+" "+x).toLowerCase().includes(q));
+    if(!matched.length)return;
+    if(filter!=="all"&&filter!==cat)return;
+
+    totalVisible+=matched.length;
+
+    const sec=document.createElement("div");
+    sec.className="category";
+
+    const header=document.createElement("button");
+    header.className="category-header";
+    header.innerHTML=`
+      <div class="category-header-left">
+        <span class="category-icon">${icon}</span>
+        <span>${escapeHtml(cat)}</span>
+      </div>
+      <button class="secondary copy-cat-btn" onclick="event.stopPropagation();copyCategory('${escapeHtml(cat)}',${catIdx})" title="Копировать всю категорию">📋 Все</button>
+      <span class="category-count">${matched.length} ${plural(matched.length,"доклад","доклада","докладов")}</span>
+      <span class="category-arrow">▶</span>
+    `;
+    header.onclick=(e)=>{
+      if(e.target.closest(".copy-cat-btn"))return;
+      sec.classList.toggle("open");
+    };
+
+    const content=document.createElement("div");
+    content.className="category-content";
+    const inner=document.createElement("div");
+    inner.className="category-inner";
+
+    matched.forEach(([x,i])=>{
+      const filled=fill(x);
+      const len=filled.length;
+      const charClass=len>CHAR_MAX?"danger":len>CHAR_WARN?"warn":"";
+
+      const div=document.createElement("div");
+      div.className="report";
+      div.innerHTML=`
+        <div class="report-top">
+          <div class="report-title">${escapeHtml(cat)}</div>
+          <div class="report-meta">
+            <span class="char-count ${charClass}">${len} симв.</span>
+          </div>
+        </div>
+        <div class="report-text">${escapeHtml(filled)}</div>
+        <div class="report-actions">
+          <button class="primary copy-btn" onclick='copyText(${JSON.stringify(filled)},this)'>📋 Копировать</button>
+        </div>
+      `;
+      inner.appendChild(div);
+    });
+
+    content.appendChild(inner);
+    sec.appendChild(header);
+    sec.appendChild(content);
+    root.appendChild(sec);
+  });
+
+  if(totalVisible===0){
+    root.innerHTML=`
+      <div class="empty">
+        <div class="empty-icon">🔍</div>
+        <div>Ничего не найдено по запросу «<b>${escapeHtml(q)}</b>»</div>
+      </div>
+    `;
+  }
+
+  renderChipBar();
+}
+
+function renderChipBar(){
+  const gender=$("gender").value;
+  const bar=$("chipBar");
+  bar.innerHTML="";
+
+  const allChip=document.createElement("button");
+  allChip.className="chip "+(state.activeFilter==="all"?"active":"");
+  const totalAll=data[gender].reduce((s,[,,a])=>s+a.length,0);
+  allChip.innerHTML=`Все <span class="count">${totalAll}</span>`;
+  allChip.onclick=()=>{state.activeFilter="all";render()};
+  bar.appendChild(allChip);
+
+  data[gender].forEach(([cat,icon,arr])=>{
+    const chip=document.createElement("button");
+    chip.className="chip "+(state.activeFilter===cat?"active":"");
+    chip.innerHTML=`${icon} ${escapeHtml(cat)} <span class="count">${arr.length}</span>`;
+    chip.onclick=()=>{state.activeFilter=cat;render()};
+    bar.appendChild(chip);
+  });
+}
+
+/* ==================== КОПИРОВАНИЕ ==================== */
+async function copyText(text,button=null){
+  let ok=false;
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      ok=true;
+    }
+  }catch(e){}
+  if(!ok){
+    const t=document.createElement("textarea");
+    t.value=text;
+    t.setAttribute("readonly","");
+    t.style.position="fixed";
+    t.style.left="-9999px";
+    document.body.appendChild(t);
+    t.focus();
+    t.select();
+    try{ok=document.execCommand("copy")}catch(e){ok=false}
+    t.remove();
+  }
+  if(ok){
+    showToast("✓ Скопировано в буфер","success");
+    if(button){
+      const old=button.innerHTML;
+      button.innerHTML="✓ Скопировано";
+      button.classList.add("copied");
+      setTimeout(()=>{button.innerHTML=old;button.classList.remove("copied")},1200);
+    }
+  }else{
+    showToast("Не удалось скопировать","error");
+  }
+}
+
+function copyCategory(cat,catIdx){
+  const gender=$("gender").value;
+  const arr=data[gender][catIdx][2];
+  const texts=arr.map(fill).join("\n");
+  copyText(texts);
+  showToast(`Скопирована категория «${cat}» (${arr.length})`,"success");
+}
+
+/* ==================== ЛЕКАРСТВА ==================== */
+const normSymptoms=Object.keys(medicines).map(s=>({symptom:s,norm:normalize(s)}));
+const medToSymptoms=new Map();
+Object.keys(medicines).forEach(sym=>{
+  medicines[sym].meds.forEach(m=>{
+    const nm=normalize(m);
+    if(!medToSymptoms.has(nm))medToSymptoms.set(nm,new Set());
+    medToSymptoms.get(nm).add(sym);
+  });
+});
+
+function getMode(){
+  const r=document.querySelector('input[name="med-mode"]:checked');
+  return r?r.value:"symptom";
+}
+
+function renderBlock(title,fromText,items){
+  const block=document.createElement("div");
+  block.className="med-block";
+  const strong=document.createElement("div");
+  strong.className="med-block-title";
+  strong.innerHTML=title;
+  block.appendChild(strong);
+
+  const fromDiv=document.createElement("div");
+  fromDiv.className="med-block-from";
+  fromDiv.textContent="Фраза: «Я выпишу Вам от "+fromText+" препарат \"...\" стоимостью 500 рублей, Вы согласны?»";
+  block.appendChild(fromDiv);
+
+  const list=document.createElement("div");
+  list.className="med-list";
+  items.forEach(m=>{
+    const span=document.createElement("span");
+    span.className="med-item";
+    span.innerText=m;
+    span.onclick=()=>{
+      const phrase=`say Я выпишу Вам от ${fromText} препарат "${m}" стоимостью 500 рублей, Вы согласны?`;
+      copyText(phrase,span);
+    };
+    list.appendChild(span);
+  });
+  block.appendChild(list);
+  $("medResult").appendChild(block);
+}
+
+let medTimer;
+function searchMedicines(){
+  clearTimeout(medTimer);
+  medTimer=setTimeout(()=>{
+    const mode=getMode();
+    const input=normalize($("medSearch").value);
+    $("medResult").innerHTML="";
+
+    if(input.length<2)return;
+
+    const words=input.split(" ");
+    let found=false;
+
+    if(mode==="symptom"){
+      normSymptoms.forEach(obj=>{
+        const ok=words.every(w=>obj.norm.indexOf(w)!==-1);
+        if(ok){
+          found=true;
+          const symObj=medicines[obj.symptom];
+          renderBlock(highlight(obj.symptom,words),symObj.from,symObj.meds);
+        }
+      });
+    }else{
+      medToSymptoms.forEach((setSym,medNorm)=>{
+        if(medNorm.indexOf(input)!==-1){
+          found=true;
+          let display=null;
+          let originalSym=null;
+          outer:for(const s in medicines){
+            for(let i=0;i<medicines[s].meds.length;i++){
+              if(normalize(medicines[s].meds[i])===medNorm){
+                display=medicines[s].meds[i];
+                originalSym=s;
+                break outer;
+              }
+            }
+          }
+          if(!display)display=medNorm;
+          const symptomsArr=Array.from(setSym);
+          const fromText=originalSym?medicines[originalSym].from:"боли";
+          const title=highlight(display,[input])+" — применяется при: "+symptomsArr.join(", ");
+          renderBlock(title,fromText,symptomsArr);
+        }
+      });
+    }
+
+    if(!found){
+      $("medResult").innerHTML='<div class="empty"><div class="empty-icon">💊</div><div>Ничего не найдено</div></div>';
+    }
+  },200);
+}
+
+/* ==================== НАСТРОЙКИ ==================== */
+function saveSettings(){
+  const v=vals();
+  localStorage.setItem("cgb_settings",JSON.stringify(v));
+  showToast("✓ Настройки сохранены","success");
+}
+
+function loadSettings(){
+  try{
+    const v=JSON.parse(localStorage.getItem("cgb_settings")||"{}");
+    FIELDS.forEach(id=>{if(v[id]!==undefined)$(id).value=v[id]});
+  }catch(e){}
+}
+
+function clearSettings(){
+  if(!confirm("Очистить все поля?"))return;
+  FIELDS.forEach(id=>{
+    if(id!=="gender"&&id!=="transport")$(id).value="";
+  });
+  render();
+  showToast("Поля очищены","warning");
+}
+
+function clearSearch(){
+  $("search").value="";
+  state.activeFilter="all";
+  render();
+  $("search").focus();
+}
+
+function expandAll(){
+  document.querySelectorAll(".category").forEach(c=>c.classList.add("open"));
+}
+function collapseAll(){
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("open"));
+}
+
+
+/* ==================== КОНСТРУКТОР ЗАПРОСОВ ==================== */
+const requestFactions=["МЗ","ОКБ-М","ЦГБ-П","МО","РЖД","ОГИБДД-Н","ОГИБДД-П","ОМВД-П","ОМВД-Н","УГИБДД-М","УМВД-М"];
+const requestTypes={
+  jurisdiction:"Просим разрешить пересечение вашей юрисдикции.",
+  patrol:"Просим разрешить патрулирование вашей юрисдикции.",
+  call:"Просим разрешить пересечение вашей юрисдикции для обработки вызова.",
+  help:"Просим направить сотрудников для оказания помощи.",
+  escort:"Просим предоставить сопровождение.",
+  event:"Просим разрешить проведение мероприятия на вашей территории.",
+  joint:"Предлагаем провести совместный патруль.",
+  other:""
+};
+function initRequestBuilder(){
+  const sel=$("requestFaction"); if(!sel)return;
+  sel.innerHTML=requestFactions.map(x=>`<option value="${escapeHtml(x)}">${escapeHtml(x)}</option>`).join("");
+  ["requestType","requestFaction","requestAnswer","requestText"].forEach(id=>$(id).addEventListener(id==="requestText"?"input":"change",renderRequestPreview));
+  renderRequestPreview();
+}
+function getRequestText(){const extra=$("requestText").value.trim();return extra||requestTypes[$("requestType").value]||"Ваш запрос.";}
+function getAnswerText(){return ({allow:"Разрешаем. Приятного патрулирования.",deny:"Отказываем в запросе.",accepted:"Запрос принят. Можете приступать к выполнению.",later:"Запрос принят. Ожидайте дальнейшего ответа."})[$("requestAnswer").value];}
+function requestPrefix(){return `ro ЦГБ-Н к ${$("requestFaction").value}.`;}
+function renderRequestPreview(){const p=$("requestPreview");if(p)p.textContent=requestPrefix()+" "+getRequestText()+" Тип транспорта: "+$("transport").value+".";}
+function generatedRequest(){return (requestPrefix()+" "+getRequestText()+" Тип транспорта: "+$("transport").value+".").replace(/\s+/g," ").trim();}
+function generatedAnswer(){return (requestPrefix()+" "+getAnswerText()).replace(/\s+/g," ").trim();}
+function copyGeneratedRequest(){copyText(generatedRequest());}
+function copyGeneratedAnswer(){copyText(generatedAnswer());}
+
+/* ==================== СОБЫТИЯ ==================== */
+$("gender").addEventListener("change",render);
+$("transport").addEventListener("change",()=>{render();renderRequestPreview()});
+$("search").addEventListener("input",render);
+FIELDS.filter(x=>x!=="gender"&&x!=="transport").forEach(id=>{
+  $(id).addEventListener("input",render);
+});
+
+$("medSearch").addEventListener("input",searchMedicines);
+document.querySelectorAll('input[name="med-mode"]').forEach(r=>{
+  r.addEventListener("change",searchMedicines);
+});
+
+let saveTimer;
+FIELDS.filter(x=>x!=="gender"&&x!=="transport").forEach(id=>{
+  $(id).addEventListener("input",()=>{
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>{
+      const v=vals();
+      localStorage.setItem("cgb_settings",JSON.stringify(v));
+    },800);
+  });
+});
+
+/* ==================== ИНИЦИАЛИЗАЦИЯ ==================== */
+initTheme();
+loadSettings();
+initRequestBuilder();
+render();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЦГБ-Н — Доклады в рацию</title>
+<style>
+:root{
+  --bg:#eef4f7;--bg-grad-1:#edf5f7;--bg-grad-2:#f7fafb;
+  --card:#fff;--text:#17252d;--muted:#667780;
+  --accent:#238b8b;--accent2:#176b70;
+  --accent-light:rgba(35,139,139,.10);
+  --border:#d7e2e7;--border-soft:#e3ebee;
+  --shadow:0 6px 20px rgba(28,55,65,.08);
+  --header-grad-1:#176b70;--header-grad-2:#299b98;
+  --cat-bg:#f7fbfb;--cat-bg-hover:#eef7f7;
+  --report-bg:#fbfdfd;--report-text-bg:#f2f7f8;
+  --arrow-bg:#e3f0f1;
+  --success:#267b59;--danger:#a43d3d;--danger-bg:#fbe8e8;
+  --warning:#b87514;--warning-bg:#fdf4e3;
+  --radius:14px;--radius-sm:8px;
+  --transition:.2s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0f1720;--bg-grad-1:#0a1018;--bg-grad-2:#141d28;
+  --card:#1a2533;--text:#e6edf3;--muted:#8b9aa8;
+  --accent:#3ab0b0;--accent2:#4cc5c5;
+  --accent-light:rgba(58,176,176,.15);
+  --border:#2a3847;--border-soft:#223040;
+  --shadow:0 6px 20px rgba(0,0,0,.3);
+  --header-grad-1:#0d4a4d;--header-grad-2:#1a6b6e;
+  --cat-bg:#16212e;--cat-bg-hover:#1c2a3a;
+  --report-bg:#16212e;--report-text-bg:#0f1923;
+  --arrow-bg:#243447;
+  --danger:#e07070;--danger-bg:rgba(224,112,112,.12);
+  --warning:#f0b84a;--warning-bg:rgba(240,184,74,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:linear-gradient(135deg,var(--bg-grad-1),var(--bg-grad-2));
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);min-height:100vh;
+  transition:background var(--transition),color var(--transition);
+  line-height:1.5;
+}
+header{
+  background:linear-gradient(135deg,var(--header-grad-1),var(--header-grad-2));
+  color:#fff;padding:14px 20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+  position:sticky;top:0;z-index:50;
+}
+.header-inner{
+  max-width:1150px;margin:auto;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;
+}
+.header-title-wrap{flex:1;min-width:200px}
+h1{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+.subtitle{opacity:.85;font-size:12px;margin-top:2px}
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:var(--transition);
+}
+.icon-btn:hover{background:rgba(255,255,255,.22);transform:translateY(-1px)}
+.container{max-width:1150px;margin:16px auto;padding:0 14px}
+.panel{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
+  box-shadow:var(--shadow);margin-bottom:14px;
+  transition:background var(--transition),border var(--transition);
+}
+.panel-title{
+  font-size:15px;font-weight:700;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;color:var(--text);
+}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.controls+.controls{margin-top:10px !important}
+label{
+  font-size:12px;font-weight:700;color:var(--muted);
+  display:block;margin-bottom:5px;
+  text-transform:uppercase;letter-spacing:.3px;
+}
+input,select,textarea{
+  width:100%;padding:10px 12px;
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  font-size:14px;outline:none;background:var(--card);color:var(--text);
+  transition:var(--transition);font-family:inherit;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light);
+}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{
+  border:0;border-radius:var(--radius-sm);
+  padding:9px 14px;font-weight:600;cursor:pointer;
+  transition:var(--transition);font-size:13px;
+  font-family:inherit;display:inline-flex;
+  align-items:center;gap:6px;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.primary{background:var(--accent);color:#fff}
+.primary:hover{background:var(--accent2)}
+.secondary{background:var(--accent-light);color:var(--accent2)}
+.secondary:hover{background:var(--accent);color:#fff}
+.danger{background:var(--danger-bg);color:var(--danger)}
+.danger:hover{background:var(--danger);color:#fff}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.ghost:hover{background:var(--accent-light);color:var(--accent2);border-color:var(--accent)}
+.search-wrap{position:relative;margin-bottom:12px}
+.search-wrap input{padding-left:38px;padding-right:32px}
+.search-icon{
+  position:absolute;left:12px;top:50%;
+  transform:translateY(-50%);color:var(--muted);
+  pointer-events:none;font-size:15px;
+}
+.search-clear{
+  position:absolute;right:6px;top:50%;
+  transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;
+  background:transparent;color:var(--muted);
+  padding:0;display:none;
+  align-items:center;justify-content:center;font-size:14px;
+}
+.search-clear.show{display:flex}
+.search-clear:hover{background:var(--accent-light);color:var(--accent)}
+.cat-toolbar{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-bottom:10px;flex-wrap:wrap;
+}
+.cat-toolbar-left{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  padding:5px 10px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent2);
+  font-size:12px;font-weight:600;
+  border:1px solid transparent;cursor:pointer;
+  transition:var(--transition);
+  display:inline-flex;align-items:center;gap:5px;
+}
+.chip:hover{background:var(--accent);color:#fff}
+.chip.active{background:var(--accent);color:#fff}
+.chip .count{
+  background:rgba(255,255,255,.25);
+  padding:1px 6px;border-radius:10px;font-size:11px;
+}
+.category{
+  margin:8px 0;border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;background:var(--card);
+  transition:var(--transition);
+}
+.category:hover{border-color:var(--accent);box-shadow:0 2px 12px var(--accent-light)}
+.category-header{
+  width:100%;display:flex;justify-content:space-between;
+  align-items:center;padding:12px 14px;
+  background:var(--cat-bg);color:var(--text);
+  text-align:left;font-size:14px;font-weight:600;
+  cursor:pointer;border:0;
+  transition:var(--transition);gap:10px;
+}
+.category-header:hover{background:var(--cat-bg-hover)}
+.category-header-left{
+  display:flex;align-items:center;gap:10px;
+  flex:1;min-width:0;
+}
+.category-icon{
+  width:28px;height:28px;border-radius:8px;
+  background:var(--accent-light);color:var(--accent2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.category-arrow{
+  width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:6px;background:var(--arrow-bg);
+  color:var(--accent2);font-size:10px;
+  transition:transform .25s ease;flex-shrink:0;
+}
+.category.open .category-arrow{transform:rotate(90deg)}
+.category-count{
+  color:var(--muted);font-size:11px;
+  font-weight:500;white-space:nowrap;
+}
+.category-content{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s ease;
+}
+.category.open .category-content{max-height:5000px}
+.category-inner{padding:4px 12px 12px}
+.copy-cat-btn{
+  margin-left:auto;font-size:11px;
+  padding:5px 10px;opacity:0;
+  transition:var(--transition);
+}
+.category-header:hover .copy-cat-btn{opacity:1}
+.report{
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;margin:7px 0;
+  background:var(--report-bg);
+  transition:var(--transition);
+}
+.report:hover{
+  border-color:var(--accent);
+  box-shadow:0 2px 8px var(--accent-light);
+}
+.report-top{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:8px;margin-bottom:6px;
+}
+.report-title{
+  font-weight:600;font-size:12px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.3px;
+}
+.report-meta{display:flex;gap:6px;align-items:center}
+.char-count{
+  font-size:11px;color:var(--muted);
+  background:var(--border-soft);
+  padding:2px 7px;border-radius:10px;font-weight:600;
+}
+.char-count.warn{background:var(--warning-bg);color:var(--warning)}
+.char-count.danger{background:var(--danger-bg);color:var(--danger)}
+.report-text{
+  background:var(--report-text-bg);
+  border-radius:7px;padding:9px 11px;
+  line-height:1.5;white-space:pre-wrap;
+  font-size:13px;
+  font-family:"SF Mono","Consolas","Monaco",monospace;
+  word-break:break-word;
+}
+.report-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.report-actions button{font-size:12px;padding:6px 10px}
+.empty{text-align:center;padding:20px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:32px;opacity:.4;margin-bottom:6px}
+/* Лекарства */
+.med-mode{display:flex;gap:16px;margin-bottom:14px}
+.med-mode label{
+  font-size:14px;color:var(--text);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  text-transform:none;letter-spacing:0;margin:0;font-weight:500;
+}
+.med-mode input[type="radio"]{
+  width:16px;height:16px;accent-color:var(--accent);
+}
+.med-result{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.med-block{
+  padding:12px;background:var(--report-text-bg);
+  border:1px solid var(--border);border-radius:8px;
+}
+.med-block-title{
+  font-weight:700;color:var(--text);
+  margin-bottom:8px;font-size:14px;
+}
+.med-block-from{
+  font-size:11px;color:var(--muted);
+  font-family:monospace;margin-bottom:8px;
+  padding:4px 8px;background:var(--card);
+  border-radius:4px;border:1px dashed var(--border);
+}
+.med-list{display:flex;flex-wrap:wrap;gap:6px}
+.med-item{
+  padding:6px 11px;background:var(--card);
+  border:1px solid var(--border);border-radius:6px;
+  font-size:12px;cursor:pointer;
+  transition:var(--transition);
+}
+.med-item:hover{
+  background:var(--accent);color:#fff;border-color:var(--accent);
+}
+.med-item.copied{
+  background:var(--success);color:#fff;border-color:var(--success);
+}
+.med-hint{
+  font-size:12px;color:var(--muted);
+  padding:10px 12px;background:var(--accent-light);
+  border-radius:8px;margin-bottom:10px;
+  border-left:3px solid var(--accent);
+}
+.med-highlight{
+  background:var(--accent-light);color:var(--accent2);
+  padding:1px 4px;border-radius:3px;
+}
+.toast{
+  position:fixed;right:18px;bottom:18px;
+  background:var(--text);color:var(--card);
+  padding:12px 18px;border-radius:12px;
+  opacity:0;pointer-events:none;
+  transform:translateY(20px);
+  transition:.25s cubic-bezier(.4,0,.2,1);
+  z-index:999;font-size:13px;font-weight:600;
+  box-shadow:0 12px 32px rgba(0,0,0,.2);
+  display:flex;align-items:center;gap:8px;
+  max-width:360px;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{background:var(--success);color:#fff}
+.toast.error{background:var(--danger);color:#fff}
+.copied{background:var(--success) !important;color:#fff !important}
+footer{
+  text-align:center;color:var(--muted);
+  font-size:11px;padding:10px 0 30px;
+}
+@media(max-width:850px){
+  .controls{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .controls{grid-template-columns:1fr}
+  .container{margin:10px auto;padding:0 8px}
+  .panel{padding:12px}
+  h1{font-size:17px}
+  .subtitle{font-size:11px}
+  .cat-toolbar{flex-direction:column;align-items:stretch}
+  .cat-toolbar-left{overflow-x:auto;scrollbar-width:none}
+  .cat-toolbar-left::-webkit-scrollbar{display:none}
+  .copy-cat-btn{opacity:1}
+  .toast{right:12px;bottom:12px;left:12px;max-width:none}
+}
 </style>
 </head>
 <body>
